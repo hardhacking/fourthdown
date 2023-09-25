@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.badge-grey {
+  @apply inline-flex items-center rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600
+}
+.badge-red {
+  @apply inline-flex items-center rounded-full bg-red-100 px-2 py-1 text-xs font-medium text-red-700
+}
+.badge-yellow {
+  @apply inline-flex items-center rounded-full bg-yellow-100 px-2 py-1 text-xs font-medium text-yellow-800
+}
+.badge-green {
+  @apply inline-flex items-center rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-700
+}
+.badge-blue {
+  @apply inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700
+}
+.badge-indigo {
+  @apply inline-flex items-center rounded-full bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-700
+}
+.badge-purple {
+  @apply inline-flex items-center rounded-full bg-purple-100 px-2 py-1 text-xs font-medium text-purple-700
+}
+.badge-pink {
+  @apply inline-flex items-center rounded-full bg-pink-100 px-2 py-1 text-xs font-medium text-pink-700
+}

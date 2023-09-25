@@ -101,12 +101,12 @@ const scores = ref(null)
 onMounted(async () => {
   games.value = await store.games
   scores.value = await store.scores
-  console.log(games.value)
+  // console.log(games.value)
   // console.log(store.scores)
 })
 
 const getTeamLogo = (str) => {
-  console.log(str)
+  // console.log(str)
   if (str == 'NYG') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/nyg.png'
   if (str == 'SF') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sf.png'
   if (str == 'IND') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ind.png'

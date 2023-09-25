@@ -1,7 +1,10 @@
 <template>
   <div class="min-h-screen bg-gray-100 ">
-    <div class="flex items-center justify-center w-full p-5">
-      
+    <div class="relative flex items-center justify-center w-full p-5">
+      <button type="button" @click="navigateTo('/')" class="flex gap-2 items-center absolute lg:top-10 lg:left-10 top-5 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+        <ArrowLeftIcon class="w-4 h-4" />
+        Back
+      </button>
       <img src="../../assets/logo.png" class="h-20" alt="">
     </div>
     <div class="flex justify-center p-10 px-auto">
@@ -87,7 +90,7 @@
 </template>
 
 <script setup>
-import { CursorArrowRaysIcon } from '@heroicons/vue/24/outline'
+import { CursorArrowRaysIcon, ArrowLeftIcon } from '@heroicons/vue/24/outline'
 const route = useRoute()
 const id = ref(route.params.id)
 

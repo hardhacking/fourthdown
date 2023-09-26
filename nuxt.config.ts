@@ -18,4 +18,28 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['stores']
   },
+  routeRules: {
+    '/cbb': { redirect: '/' },
+    '/viz/nfl_4th_down': { redirect: '/' },
+    '/nba': { redirect: '/' },
+    '/nfl': { redirect: '/' },
+    '/apps': { redirect: '/' },
+    '/cfb': { redirect: '/' },
+    '/cfblines': { redirect: '/' },
+    '/cfblines+': { redirect: '/' },
+    '/nbalines': { redirect: '/' },
+    '/nbalines+': { redirect: '/' },
+    '/nfllines': { redirect: '/' },
+    '/nfllines+': { redirect: '/' },
+    '/cfb4thdown': { redirect: '/' },
+    '/cfbpredictor': { redirect: '/' },
+    '/livecfbepa': { redirect: '/' },
+    '/livemlb': { redirect: '/' },
+    '/mlbwpa': { redirect: '/' },
+    '/nflfpi+': { redirect: '/' },
+    '/nflpredictor': { redirect: '/' },
+    '/playstation': { redirect: '/' },
+    '/wnba': { redirect: '/' },
+    '/soccer': { redirect: '/' },
+  },
 })

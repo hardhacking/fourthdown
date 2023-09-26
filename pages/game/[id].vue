@@ -9,7 +9,7 @@
     </div>
     <div class="flex justify-center p-10 px-auto">
       <ul role="list" class="flex flex-wrap justify-start gap-10 h-fit w-fit">
-        <div v-for="play in games[id]" :key="play.Game" class="flip-card bg-white w-96 h-[215px]">
+        <div v-for="play in games[id]" :key="play.Game" class="flip-card bg-white w-96 h-[263px]">
           <div class="shadow flip-card-inner rounded-xl">
             <!-- Card Front -->
             <div class="flip-card-front">
@@ -26,6 +26,23 @@
                 </div>
               </div>
               <dl class="px-6 py-4 -my-3 overflow-hidden text-sm leading-6 bg-white divide-y divide-gray-100 rounded-b-xl">
+                <div class="flex justify-between py-3 gap-x-4">
+                  <dt class="text-gray-500">Win %</dt>
+                  <dd class="flex gap-4">
+                    <div class="flex gap-1">
+                      <div class="badge-yellow">P</div>
+                      <div class="text-gray-600">{{ play.winProbPunt + "%" }}</div>
+                    </div>
+                    <div class="flex gap-1">
+                      <div class="badge-purple">FG</div>
+                      <div class="text-gray-600">{{ play.winProbFG + "%" }}</div>
+                    </div>
+                    <div class="flex gap-1">
+                      <div class="badge-green">Go</div>
+                      <div class="text-gray-600">{{ play.winProbGo + "%" }}</div>
+                    </div>
+                  </dd>
+                </div>
                 <div class="flex justify-between py-3 gap-x-4">
                   <dt class="text-gray-500">Recommendation</dt>
                   <dd class="flex gap-2 text-gray-700">
@@ -45,23 +62,6 @@
             <div class="bg-white flip-card-back rounded-xl">
               <dl class="px-6 py-4 -my-3 text-sm leading-6 divide-y divide-gray-100">
                 <div class="flex justify-between py-3 gap-x-4">
-                  <dt class="text-gray-500">Win %</dt>
-                  <dd class="flex gap-4">
-                    <div class="flex gap-1">
-                      <div class="badge-yellow">P</div>
-                      <div class="text-yellow-600">{{ play.winProbPunt + "%" }}</div>
-                    </div>
-                    <div class="flex gap-1">
-                      <div class="badge-purple">FG</div>
-                      <div class="text-purple-600">{{ play.winProbFG + "%" }}</div>
-                    </div>
-                    <div class="flex gap-1">
-                      <div class="badge-green">Go</div>
-                      <div class="text-green-600">{{ play.winProbGo + "%" }}</div>
-                    </div>
-                  </dd>
-                </div>
-                <div class="flex justify-between py-3 gap-x-4">
                   <dt class="text-gray-500">First Down Chance</dt>
                   <dd class="flex items-start gap-x-2">
                     <div>{{ play.firstdnprob + '%' }}</div>
@@ -74,10 +74,13 @@
                   </dd>
                 </div>
                 <div class="flex justify-between py-3 gap-x-4">
-                  <dt class="text-gray-500">Break Even</dt>
+                  <dt class="text-gray-500">Break-even</dt>
                   <dd class="flex items-start gap-x-2">
                     <div :class="getColor(play.breakEvenGo, play.firstdnprob)">{{ play.breakEvenGo + '%' }}</div>
                   </dd>
+                </div>
+                <div class="flex justify-between py-3 gap-x-4">
+                  <dt class="text-gray-500">{{ play.text }}</dt>
                 </div>
               </dl>
             </div>

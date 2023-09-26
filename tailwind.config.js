@@ -1,4 +1,19 @@
 /** @type {import('tailwindcss').Config} */
+
+const plugin = require('tailwindcss/plugin')
+
+// Rotate X utilities
+const rotateY = plugin(function ({ addUtilities }) {
+  addUtilities({
+    '.rotate-y-90': {
+      transform: 'rotateY(90deg)',
+    },
+    '.rotate-y-180': {
+      transform: 'rotateY(180deg)',
+    },
+  })
+})
+
 export default {
   content: [
     "./components/**/*.{js,vue,ts}",
@@ -17,5 +32,6 @@ export default {
   },
   plugins: [
     require('@tailwindcss/forms'),
+    rotateY,
   ],
 }

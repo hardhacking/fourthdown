@@ -9,8 +9,8 @@
     </div>
     <div class="flex justify-center p-10 px-auto">
       <ul role="list" class="flex flex-wrap justify-start gap-10 h-fit w-fit">
-        <div v-for="play in games[id]" :key="play.Game" class="flip-card bg-white w-96 h-[263px]">
-          <div class="shadow flip-card-inner rounded-xl">
+        <div v-for="play in games[id]" :key="play.Game" class="flip-card bg-white sm:w-96 w-[375px] h-[263px]" @click="setFlip(play)" @mouseenter="flipIt(play)" @mouseleave="flipBack(play)">
+          <div :class="play.flipClass" class="shadow flip-card-inner rounded-xl">
             <!-- Card Front -->
             <div class="flip-card-front">
               <div class="relative flex items-center p-6 border-b bg-gray-50 gap-x-4 border-gray-900/5 rounded-t-xl">
@@ -79,7 +79,7 @@
                     <div :class="getColor(play.breakEvenGo, play.firstdnprob)">{{ play.breakEvenGo + '%' }}</div>
                   </dd>
                 </div>
-                <div class="flex justify-between py-3 gap-x-4">
+                <div class="flex justify-between py-3 gap-x-4 h-24 overflow-scroll">
                   <dt class="text-gray-500">{{ play.text }}</dt>
                 </div>
               </dl>
@@ -169,6 +169,18 @@ const getColor = (beProb, fdProb) => {
   if(beProb < fdProb) return 'text-green-600'
   else return 'text-red-600'
 }
+const setFlip = (play) => {
+  if (window.innerWidth <= 480) {
+    if (play.flipClass) play.flipClass = ''
+    else play.flipClass = 'flip-card-hover'
+  }
+}
+const flipIt = (play) => {
+  if (window.innerWidth > 480) play.flipClass = 'flip-card-hover'
+}
+const flipBack = (play) => {
+  if (window.innerWidth > 480) play.flipClass = ''
+}
 </script>
 
 <style scoped>
@@ -187,8 +199,12 @@ const getColor = (beProb, fdProb) => {
   transform-style: preserve-3d;
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
 }
+/* lg:hover:rotate-y-180  */
+/* .flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+} */
 
-.flip-card:hover .flip-card-inner {
+.flip-card-hover {
   transform: rotateY(180deg);
 }
 

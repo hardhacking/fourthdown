@@ -1,15 +1,18 @@
 <template>
   <div class="min-h-screen bg-gray-100 ">
     <div class="relative flex items-center justify-center w-full p-5">
-      <button type="button" @click="navigateTo('/nfldecision')" class="flex gap-2 items-center absolute lg:top-10 lg:left-10 top-5 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+      <button type="button" @click="navigateTo('/nfldecision')" class="hidden xs:flex gap-2 items-center absolute lg:top-10 lg:left-10 top-5 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
         <ArrowLeftIcon class="w-4 h-4" />
         Back
       </button>
-      <img src="../../assets/logo.png" class="h-20" alt="">
+      <button type="button" @click="navigateTo('/nfldecision')" class="xs:hidden flex gap-2 items-center absolute lg:top-10 lg:left-10 top-5 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+        <ArrowLeftIcon class="w-4 h-4" />
+      </button>
+      <img src="../../assets/logo.png" class="h-12 xs:h-20" alt="">
     </div>
     <div class="flex justify-center p-10 px-auto">
       <ul role="list" class="flex flex-wrap justify-start gap-10 h-fit w-fit">
-        <div v-for="play in games[id]" :key="play.Game" class="flip-card bg-white sm:w-96 w-[375px] h-[263px]" @click="setFlip(play)" @mouseenter="flipIt(play)" @mouseleave="flipBack(play)">
+        <div v-for="play in games[id]" :key="play.Game" class="flip-card bg-white xs:w-96 w-[300px] h-[240px] xs:h-[263px]" @click="setFlip(play)" @mouseenter="flipIt(play)" @mouseleave="flipBack(play)">
           <div :class="play.flipClass" class="shadow flip-card-inner rounded-xl">
             <!-- Card Front -->
             <div class="flip-card-front">
@@ -25,11 +28,12 @@
                   <div class="text-sm text-gray-700">{{ play.STARTPLAY_YARDSTOEZ }}</div>
                 </div>
               </div>
-              <dl class="px-6 py-4 -my-3 overflow-hidden text-sm leading-6 bg-white divide-y divide-gray-100 rounded-b-xl">
-                <div class="flex justify-between py-3 gap-x-4">
-                  <dt class="text-gray-500">Win %</dt>
-                  <dd class="flex gap-4">
-                    <div class="flex gap-1">
+              <dl class="px-6 py-4 -my-3 overflow-hidden text-xs xs:text-sm leading-6 bg-white divide-y divide-gray-100 rounded-b-xl">
+                <div class="flex justify-between py-2 xs:py-3 gap-x-4">
+                  <dt class="text-gray-500 block xs:hidden">W%</dt>
+                  <dt class="text-gray-500 hidden xs:block">Win %</dt>
+                  <dd class="flex gap-2 xs:gap-4">
+                    <div class="flex gap-0.5 xs:gap-1">
                       <div class="badge-yellow">P</div>
                       <div class="text-gray-600">{{ play.winProbPunt + "%" }}</div>
                     </div>
@@ -43,14 +47,15 @@
                     </div>
                   </dd>
                 </div>
-                <div class="flex justify-between py-3 gap-x-4">
-                  <dt class="text-gray-500">Recommendation</dt>
+                <div class="flex justify-between py-2 xs:py-3 gap-x-4">
+                  <dt class="text-gray-500 block xs:hidden">Rec</dt>
+                  <dt class="text-gray-500 hidden xs:block">Reccomendation</dt>
                   <dd class="flex gap-2 text-gray-700">
                     <div class="text-green-500">{{ getAbsoluteValue(play.goKickDelta) }}</div>
                     <div :class="getBadge(play.Rec)">{{ translateText(play.Rec) }}</div>
                   </dd>
                 </div>
-                <div class="flex justify-between py-3 gap-x-4">
+                <div class="flex justify-between py-2 xs:py-3 gap-x-4">
                   <dt class="flex gap-1 text-gray-500">Decision</dt>
                   <dd class="flex items-start gap-x-2">
                     <div :class="getBadge(play.play)">{{ translateText(play.play) }}</div>
@@ -170,16 +175,16 @@ const getColor = (beProb, fdProb) => {
   else return 'text-red-600'
 }
 const setFlip = (play) => {
-  if (window.innerWidth <= 480) {
+  if (window.innerWidth < 640) {
     if (play.flipClass) play.flipClass = ''
     else play.flipClass = 'flip-card-hover'
   }
 }
 const flipIt = (play) => {
-  if (window.innerWidth > 480) play.flipClass = 'flip-card-hover'
+  if (window.innerWidth >= 640) play.flipClass = 'flip-card-hover'
 }
 const flipBack = (play) => {
-  if (window.innerWidth > 480) play.flipClass = ''
+  if (window.innerWidth >= 640) play.flipClass = ''
 }
 </script>
 

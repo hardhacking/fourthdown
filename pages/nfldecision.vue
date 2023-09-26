@@ -25,9 +25,9 @@
         <li v-for="(game, index) in games" :key="index" class="flex flex-col max-w-md text-center bg-white rounded-lg shadow w-[400px] hover:shadow-lg">
           <div class="flex flex-col flex-1 p-8">
             <div class="flex items-center w-full justify-center">
-              <img class="h-28 md:h-32 object-fit" :src="game[0].firstTeamLogo" alt="" />
+              <img class="h-20 xs:h-28 md:h-32 object-fit" :src="game[0].firstTeamLogo" alt="" />
               <div class="px-2">at</div>
-              <img class="h-28 md:h-32 object-fit" :src="game[0].secondTeamLogo" alt="" />
+              <img class="h-20 xs:h-28 md:h-32 object-fit" :src="game[0].secondTeamLogo" alt="" />
             </div>
             <h3 class="mt-6 text-sm font-medium text-gray-900">{{ game[0].Game }}</h3>
             <dl class="flex flex-col justify-between flex-grow mt-1">

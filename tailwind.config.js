@@ -27,6 +27,10 @@ export default {
     extend: {
       colors: {
         'espn-red': 'rgb(195,30,50)'
+      }, 
+      screens: {
+        'xs': '385px',
+        // => @media (min-width: 385px) { ... }
       }
     },
   },

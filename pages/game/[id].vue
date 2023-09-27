@@ -1,11 +1,11 @@
 <template>
   <div class="min-h-screen bg-gray-100 ">
     <div class="relative flex items-center justify-center w-full p-5">
-      <button type="button" @click="navigateTo('/nfldecision')" class="hidden xs:flex gap-2 items-center absolute lg:top-10 lg:left-10 top-5 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+      <button type="button" @click="navigateTo('/decision')" class="hidden xs:flex gap-2 items-center absolute lg:top-10 lg:left-10 top-5 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
         <ArrowLeftIcon class="w-4 h-4" />
         Back
       </button>
-      <button type="button" @click="navigateTo('/nfldecision')" class="xs:hidden flex gap-2 items-center absolute lg:top-10 lg:left-10 top-5 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+      <button type="button" @click="navigateTo('/decision')" class="xs:hidden flex gap-2 items-center absolute lg:top-10 lg:left-10 top-5 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
         <ArrowLeftIcon class="w-4 h-4" />
       </button>
       <img src="../../assets/logo.png" class="h-12 xs:h-20" alt="">
@@ -33,15 +33,15 @@
                   <dt class="text-gray-500 block xs:hidden">W%</dt>
                   <dt class="text-gray-500 hidden xs:block">Win %</dt>
                   <dd class="flex gap-2 xs:gap-4">
-                    <div class="flex gap-0.5 xs:gap-1">
+                    <div class="flex items-center gap-1" v-if="play.winProbPunt && play.ydline > 30">
                       <div class="badge-yellow">P</div>
                       <div class="text-gray-600">{{ play.winProbPunt + "%" }}</div>
                     </div>
-                    <div class="flex gap-1">
+                    <div class="flex items-center gap-1" v-if="play.winProbFG && play.ydline <= 55">
                       <div class="badge-purple">FG</div>
                       <div class="text-gray-600">{{ play.winProbFG + "%" }}</div>
                     </div>
-                    <div class="flex gap-1">
+                    <div class="flex items-center gap-1" v-if="play.winProbGo">
                       <div class="badge-green">Go</div>
                       <div class="text-gray-600">{{ play.winProbGo + "%" }}</div>
                     </div>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="flex justify-between py-2 xs:py-3 gap-x-4">
                   <dt class="text-gray-500 block xs:hidden">Rec</dt>
-                  <dt class="text-gray-500 hidden xs:block">Reccomendation</dt>
+                  <dt class="text-gray-500 hidden xs:block">Recomendation</dt>
                   <dd class="flex gap-2 text-gray-700">
                     <div class="text-green-500">{{ getAbsoluteValue(play.goKickDelta) }}</div>
                     <div :class="getBadge(play.Rec)">{{ translateText(play.Rec) }}</div>
@@ -84,7 +84,7 @@
                     <div :class="getColor(play.breakEvenGo, play.firstdnprob)">{{ play.breakEvenGo + '%' }}</div>
                   </dd>
                 </div>
-                <div class="flex justify-between py-3 gap-x-4 h-24 overflow-scroll">
+                <div class="flex justify-between py-3 gap-x-4 h-24 overflow-y-scroll">
                   <dt class="text-gray-500">{{ play.text }}</dt>
                 </div>
               </dl>

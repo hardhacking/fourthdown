@@ -22,14 +22,14 @@
             </button>
           </div>
         </li> -->
-        <li v-for="(game, index) in games" :key="index" class="flex flex-col max-w-md text-center bg-white rounded-lg shadow w-[400px] hover:shadow-lg">
-          <div class="flex flex-col flex-1 p-8">
+        <li v-for="(game, index) in games" :key="index" class="flex flex-col max-w-md text-center bg-white rounded-lg shadow w-[300px] hover:shadow-lg">
+          <div class="flex flex-col flex-1 p-6">
             <div class="flex items-center w-full justify-center">
-              <img class="h-20 xs:h-28 md:h-32 object-fit" :src="game[0].firstTeamLogo" alt="" />
+              <img class="h-16 object-fit" :src="game[0].firstTeamLogo" alt="" />
               <div class="px-2">at</div>
-              <img class="h-20 xs:h-28 md:h-32 object-fit" :src="game[0].secondTeamLogo" alt="" />
+              <img class="h-16 object-fit" :src="game[0].secondTeamLogo" alt="" />
             </div>
-            <h3 class="mt-6 text-sm font-medium text-gray-900">{{ game[0].Game }}</h3>
+            <h3 class="mt-4 text-md font-medium text-gray-900">{{ game[0].Game }}</h3>
             <dl class="flex flex-col justify-between flex-grow mt-1">
               <dt class="sr-only">Title</dt>
               <dd class="text-sm text-gray-500">{{ getDate(game[0].SCHEDULE_ID) }}</dd>
@@ -38,7 +38,7 @@
               </dd> -->
             </dl>
           </div>
-          <div class="p-4">
+          <div class="pb-6 pt-1">
             <NuxtLink type="button" :to="'/game/' + index"
               class="inline-flex items-center gap-x-2 rounded-md bg-espn-red px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
               See 4th Downs

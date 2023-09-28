@@ -20,7 +20,9 @@
                 <CursorArrowRaysIcon class="absolute w-4 h-4 text-gray-900 top-1 right-1 animate-pulse lg:hidden" />
                 <img :src="getTeamLogo(play.team)" alt="logo" class="flex-none object-cover w-12 h-12 bg-white rounded-lg ring-1 ring-gray-900/10" />
                 <div>
-                  <div class="text-sm font-medium leading-6 text-gray-900">{{ 'Q' + play.QUARTER_STATUS + ' - ' + play.CLOCK_TIME }}</div>
+                  <div class="text-sm font-medium leading-6 text-gray-900" v-if="play.QUARTER_STATUS < 5">{{ 'Q' + play.QUARTER_STATUS + ' - ' + play.CLOCK_TIME }}</div>
+                  <div class="text-sm font-medium leading-6 text-gray-900" v-else-if="play.QUARTER_STATUS > 5">{{ play.QUARTER_STATUS - 4 + 'OT - ' + play.CLOCK_TIME }}</div>
+                  <div class="text-sm font-medium leading-6 text-gray-900" v-else>{{ 'OT - ' + play.CLOCK_TIME }}</div>
                   <div class="text-sm text-gray-700">{{ getScoreText(play.scorediff) }}</div>
                 </div>
                 <div class="flex flex-col gap-1 ml-auto text-right">
@@ -66,16 +68,16 @@
             <!-- Card Back -->
             <div class="bg-white flip-card-back rounded-xl">
               <dl class="px-6 py-4 -my-3 text-sm leading-6 divide-y divide-gray-100">
+                <div class="flex justify-between py-3 gap-x-4" v-if="play.ydline <= 55">
+                  <dt class="text-gray-500">Field Goal Chance</dt>
+                  <dd class="flex items-start gap-x-2">
+                    <div>{{ play.fgprob + '%' }}</div>
+                  </dd>
+                </div>
                 <div class="flex justify-between py-3 gap-x-4">
                   <dt class="text-gray-500">First Down Chance</dt>
                   <dd class="flex items-start gap-x-2">
                     <div>{{ play.firstdnprob + '%' }}</div>
-                  </dd>
-                </div>
-                <div class="flex justify-between py-3 gap-x-4">
-                  <dt class="text-gray-500">Field Goal Chance</dt>
-                  <dd class="flex items-start gap-x-2">
-                    <div>{{ play.fgprob + '%' }}</div>
                   </dd>
                 </div>
                 <div class="flex justify-between py-3 gap-x-4">
@@ -84,7 +86,10 @@
                     <div :class="getColor(play.breakEvenGo, play.firstdnprob)">{{ play.breakEvenGo + '%' }}</div>
                   </dd>
                 </div>
-                <div class="flex justify-between py-3 gap-x-4 h-24 overflow-y-scroll">
+                <div class="flex justify-between py-3 gap-x-4 h-24 overflow-y-scroll" v-if="play.ydline <= 55">
+                  <dt class="text-gray-500">{{ play.text }}</dt>
+                </div>
+                <div class="flex justify-between py-3 gap-x-4 h-36 overflow-y-scroll" v-else>
                   <dt class="text-gray-500">{{ play.text }}</dt>
                 </div>
               </dl>

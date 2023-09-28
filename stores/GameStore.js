@@ -44,7 +44,7 @@ export const useGameStore = defineStore('game', () => {
     if (gamesArray > 0) return gamesArray 
     else {
       const plays = await $fetch('https://espnanalyticsdata.s3.amazonaws.com/live_4th_down_data_current.json')
-
+      plays.reverse();
       const groupByGame = {};
 
       plays.forEach(play => {
@@ -56,6 +56,8 @@ export const useGameStore = defineStore('game', () => {
         if (play.fgprob) play.fgprob = (100 * play.fgprob.toFixed(3)).toFixed(1);
         if (play.breakEvenGo) play.breakEvenGo = (100 * play.breakEvenGo.toFixed(3)).toFixed(1);
         if (play.goKickDelta) play.goKickDelta = (100 * play.goKickDelta.toFixed(3)).toFixed(1);
+
+        if (play.STARTPLAY_YARDSTOEZ.includes('50')) play.STARTPLAY_YARDSTOEZ = 50;
 
         const parts = play.Game.split(' ');
         play.firstTeamLogo = getTeamLogo(parts[0])

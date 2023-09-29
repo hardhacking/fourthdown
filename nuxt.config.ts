@@ -1,5 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  generate: {
+    routes: ['game/0', 'game/1', 'game/2', 'game/3', 'game/4', 'game/5', 'game/6', 'game/7', 
+             'game/8', 'game/9', 'game/10', 'game/11', 'game/12', 'game/13', 'game/14', 'game/15']
+  },
   ssr: false,
   devtools: { enabled: true },
   modules: ['nuxt-headlessui', ['@pinia/nuxt', {autoImports: ['defnieStore', 'acceptHMRUpdate']}]],

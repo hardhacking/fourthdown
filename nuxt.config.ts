@@ -1,8 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   generate: {
-    routes: ['game/0', 'game/1', 'game/2', 'game/3', 'game/4', 'game/5', 'game/6', 'game/7', 
-             'game/8', 'game/9', 'game/10', 'game/11', 'game/12', 'game/13', 'game/14', 'game/15']
+    routes: ['/game/0', '/game/1', '/game/2', '/game/3', '/game/4', '/game/5', '/game/6', '/game/7', 
+             '/game/8', '/game/9', '/game/10', '/game/11', '/game/12', '/game/13', '/game/14', '/game/15', 
+             '/cbb', '/nfldecision', '/nflrtm', '/nba', '/nfl', '/apps', '/cfb', '/cfblines', '/cfblines+', 
+             '/nbalines', '/nbalines+', '/nfllines', '/nfllines+', '/cfb4thdown', '/cfbpredictor', 
+             '/livecfbepa', '/livemlb', '/mlbwpa', '/nflfpi+', '/nflpredictor', '/playstation', '/wnba', '/soccer']
   },
   ssr: false,
   devtools: { enabled: true },
@@ -24,7 +27,8 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/cbb': { redirect: '/' },
-    '/viz/nfl_4th_down': { redirect: '/' },
+    '/nfldecision': { redirect: '/' },
+    '/nflrtm': { redirect: '/' },
     '/nba': { redirect: '/' },
     '/nfl': { redirect: '/' },
     '/apps': { redirect: '/' },

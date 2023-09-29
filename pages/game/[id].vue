@@ -114,7 +114,10 @@ const scores = ref(null)
 onMounted(async () => {
   games.value = await store.games
   scores.value = await store.scores
-  // console.log(games.value)
+  
+  games.value[id.value] = games.value[id.value].filter(f => {
+    return !(translateText(f.play) == 'Punt' && f.ydline <= 30) && !(translateText(f.play) == 'Field Goal' && f.ydline > 55)
+  })
   // console.log(store.scores)
 })
 

@@ -49,7 +49,7 @@ const redirect = async (ms) => {
         </div>
         <div class="p-4">
           <button type="button" @click="navigateTo('/game')"
-            class="inline-flex items-center gap-x-2 rounded-md bg-espn-red px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
+            class="inline-flex items-center gap-x-2 rounded-md bg-espnred px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
             See all 4th Downs
             <ChartBarIcon class="-mr-0.5 h-5 w-5" aria-hidden="true" />
           </button>
@@ -73,7 +73,7 @@ const redirect = async (ms) => {
         </div>
         <div class="pb-6 pt-1">
           <NuxtLink type="button" :to="'/game/' + index"
-            class="inline-flex items-center gap-x-2 rounded-md bg-espn-red px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
+            class="inline-flex items-center gap-x-2 rounded-md bg-espnred px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
             See 4th Downs
             <ChartBarIcon class="-mr-0.5 h-5 w-5" aria-hidden="true" />
           </NuxtLink>

@@ -36,11 +36,11 @@
                   <dt class="text-gray-500 hidden xs:block">Win %</dt>
                   <dd class="flex gap-2 xs:gap-4">
                     <div class="flex items-center gap-1" v-if="play.winProbPunt && play.ydline > 30">
-                      <div class="badge-yellow">P</div>
+                      <div class="badge-red">P</div>
                       <div class="text-gray-600">{{ play.winProbPunt + "%" }}</div>
                     </div>
                     <div class="flex items-center gap-1" v-if="play.winProbFG && play.ydline <= 55">
-                      <div class="badge-purple">FG</div>
+                      <div class="badge-blue">FG</div>
                       <div class="text-gray-600">{{ play.winProbFG + "%" }}</div>
                     </div>
                     <div class="flex items-center gap-1" v-if="play.winProbGo">
@@ -122,18 +122,17 @@ onMounted(async () => {
 })
 
 const getTeamLogo = (str) => {
-  // console.log(str)
   if (str == 'NYG') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/nyg.png'
   if (str == 'SF') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sf.png'
   if (str == 'IND') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ind.png'
-  if (str == 'BLT') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/bal.png'
+  if (str == 'BLT' || str == 'BAL') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/bal.png'
   if (str == 'TEN') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ten.png'
-  if (str == 'CLV') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png'
+  if (str == 'CLV' || str == 'CLE') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png'
   if (str == 'ATL') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/atl.png'
   if (str == 'DET') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/det.png'
   if (str == 'NO') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/no.png'
   if (str == 'GB') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/gb.png'
-  if (str == 'HST') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/hou.png'
+  if (str == 'HST' || str == 'HOU') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/hou.png'
   if (str == 'JAX') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/jax.png'
   if (str == 'DEN') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/den.png'
   if (str == 'MIA') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/mia.png'
@@ -143,6 +142,7 @@ const getTeamLogo = (str) => {
   if (str == 'NYJ') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/nyj.png'
   if (str == 'BUF') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/buf.png'
   if (str == 'WSH' || str == 'WAS') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/wsh.png'
+  // else if (str == 'WAS') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/wsh.png'
   // Guesses
   if (str == 'ARZ' || str == 'AR' || str == 'ARI') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ari.png'
   if (str == 'CAR' || str == 'CAL' || str == 'CR') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/car.png'
@@ -164,8 +164,8 @@ const translateText = (str) => {
   else return 'Go'
 }
 const getBadge = (str) => {
-  if (str == 'P') return 'badge-yellow'
-  if (str == 'FG') return 'badge-purple'
+  if (str == 'P') return 'badge-red'
+  if (str == 'FG') return 'badge-blue'
   else return 'badge-green'
 }
 const getAbsoluteValue = (str) => {

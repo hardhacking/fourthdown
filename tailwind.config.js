@@ -26,8 +26,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        'espn-red': 'rgb(195,30,50)'
-      }, 
+        'espnred-50': 'rgba(195, 30, 50, 0.1)',
+        'espnred-600': 'rgba(195,30,50, 0.9)',
+        'espnred': 'rgb(195,30,50)',
+        'espncyan-50': 'rgba(0, 174, 239, .1)',
+        'espncyan-100': 'rgb(0, 174, 239)',
+        'espncyan-200': 'rgb(0, 167, 225)',
+        'espncyan-900': 'rgb(0, 100, 149)',
+        'espngray-100': 'rgb(242, 242, 242)',
+        'espngray-300': 'rgb(220, 220, 220)', 
+        'espngray-400': 'rgb(177, 177, 177)',
+        'espngray-600': 'rgb(95, 95, 95)',
+        'espngray-900': 'rgb(57, 57, 57)',
+        'espnblack': 'rgb(27, 36, 44)',
+      },
       screens: {
         'xs': '385px',
         // => @media (min-width: 385px) { ... }

@@ -28,7 +28,6 @@ export default defineNuxtConfig({
     dirs: ['stores']
   },
   routeRules: {
-    '/': { redirect: '/decision'},
     '/cbb': { redirect: '/decision' },
     '/nfldecision': { redirect: '/decision' },
     '/nflrtm': { redirect: '/decision' },

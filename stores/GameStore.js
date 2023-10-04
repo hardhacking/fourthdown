@@ -70,11 +70,11 @@ export const useGameStore = defineStore('game', () => {
         play.firstTeamLogo = getTeamLogo(parts[0])
         play.secondTeamLogo = getTeamLogo(parts[2])
 
-        if (play.play.includes("Punt")) play.play = "P";
-        else if (play.play.includes("Field")) play.play = "FG";
-        else if (play.play.includes("Pass")) play.play = "Go (Pass)";
-        else if (play.play.includes("Rush")) play.play = "Go (Rush)";
-        else if (play.play.includes("Sack")) play.play = "Go (Pass)";
+        if (play.play.toLowerCase().includes("punt")) play.play = "P";
+        else if (play.play.toLowerCase().includes("field")) play.play = "FG";
+        else if (play.play.toLowerCase().includes("pass")) play.play = "Go (Pass)";
+        else if (play.play.toLowerCase().includes("rush")) play.play = "Go (Rush)";
+        else if (play.play.toLowerCase().includes("sack")) play.play = "Go (Pass)";        
 
         // Check if the game is already a key in groupedArrays
         if (groupByGame[play.Game]) {

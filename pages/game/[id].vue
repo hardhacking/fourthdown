@@ -115,10 +115,10 @@ onMounted(async () => {
   games.value = await store.games
   scores.value = await store.scores
   
-  games.value[id.value] = games.value[id.value].filter(f => {
-    return !(translateText(f.play) == 'Punt' && f.ydline <= 30) && !(translateText(f.play) == 'Field Goal' && f.ydline > 55)
-  })
-  // console.log(store.scores)
+  // games.value[id.value] = games.value[id.value].filter(f => {
+  //   return !(translateText(f.play) == 'Punt' && f.ydline <= 30) && !(translateText(f.play) == 'Field Goal' && f.ydline > 55)
+  // })
+  // console.log(games.value)
 })
 
 const getTeamLogo = (str) => {
@@ -230,10 +230,10 @@ const flipBack = (play) => {
   backface-visibility: hidden;
 }
 
-.flip-card-front {
+/* .flip-card-front { */
   /* background-color: #bbb; */
   /* color: black; */
-}
+/* } */
 
 .flip-card-back {
   /* background-color: #2980b9; */

@@ -10,14 +10,15 @@
       </button>
       <img src="../../assets/logo.png" class="h-12 xs:h-20" alt="">
     </div>
-    <div class="flex justify-center p-10 px-auto">
+
+    <div class="flex justify-center p-10 px-auto absolute top-[120px] opacity-0">
       <ul role="list" class="flex flex-wrap justify-start gap-10 h-fit w-fit">
-        <div v-for="play in games[id]" :key="play.Game" class="flip-card bg-white xs:w-96 w-[300px] h-[240px] xs:h-[263px]" @click="setFlip(play)" @mouseenter="flipIt(play)" @mouseleave="flipBack(play)">
+        <div v-for="(play, i) in games[id]" :key="`${play.Game}hidden`" class="flip-card bg-white xs:w-96 w-[300px] h-[240px] xs:h-[263px]" @click="setFlip(play, $event)" @mousemove="flipIt(play, $event)" @mouseenter="flipIt(play, $event)" @mouseleave="flipBack(play, $event)">
           <div :class="play.flipClass" class="shadow flip-card-inner rounded-xl">
             <!-- Card Front -->
-            <div class="flip-card-front">
-              <div class="relative flex items-center p-6 border-b bg-gray-50 gap-x-4 border-gray-900/5 rounded-t-xl">
-                <CursorArrowRaysIcon class="absolute w-4 h-4 text-gray-900 top-1 right-1 animate-pulse lg:hidden" />
+            <div class="flip-card-front" ref="captureFront">
+              <div class="absolute bottom-2 left-1/4 xs:left-[30%] underline text-xs text-cyan-900">espnanalytics.com/decision</div>
+              <div class="relative flex items-center p-6 border-b bg-gray-50 gap-x-4 border-gray-900/5 rounded-t-xl">                
                 <img :src="getTeamLogo(play.team)" alt="logo" class="flex-none object-cover w-12 h-12 bg-white rounded-lg ring-1 ring-gray-900/10" />
                 <div>
                   <div class="text-sm font-medium leading-6 text-gray-900" v-if="play.QUARTER_STATUS < 5">{{ 'Q' + play.QUARTER_STATUS + ' - ' + play.CLOCK_TIME }}</div>
@@ -66,7 +67,8 @@
               </dl>
             </div>
             <!-- Card Back -->
-            <div class="bg-white flip-card-back rounded-xl">
+            <div class="bg-white flip-card-back-fake rounded-xl" ref="captureBack">
+              <div class="absolute bottom-2 left-1/4 xs:left-[30%] underline text-xs text-cyan-900">espnanalytics.com/decision</div>
               <dl class="px-6 py-4 -my-3 text-sm leading-6 divide-y divide-gray-100">
                 <div class="flex justify-between py-3 gap-x-4" v-if="play.ydline <= 55">
                   <dt class="text-gray-500">Field Goal Chance</dt>
@@ -99,11 +101,115 @@
 
       </ul>
     </div>
+    
+    <div class="flex justify-center p-10 px-auto">
+      <ul role="list" class="flex flex-wrap justify-start gap-10 h-fit w-fit">
+        <div v-for="(play, i) in games[id]" :key="play.Game" class="flip-card bg-white xs:w-96 w-[300px] h-[240px] xs:h-[263px]" @click="setFlip(play, $event)" @mousemove="flipIt(play, $event)" @mouseenter="flipIt(play, $event)" @mouseleave="flipBack(play, $event)">
+          <div :class="play.flipClass" class="shadow flip-card-inner rounded-xl">
+            <!-- Card Front -->
+            <div class="flip-card-front">
+              <div class="relative flex items-center p-6 border-b bg-gray-50 gap-x-4 border-gray-900/5 rounded-t-xl">
+                <CursorArrowRaysIcon class="absolute w-4 h-4 text-gray-900 top-1 left-1 animate-pulse sm:hidden" />
+                <ArrowUpOnSquareIcon class="absolute w-4 h-4 text-gray-900 top-0 right-0 cursor-pointer mx-4 my-10" @click="expCard(true, i)"/>
+                <img :src="getTeamLogo(play.team)" alt="logo" class="flex-none object-cover w-12 h-12 bg-white rounded-lg ring-1 ring-gray-900/10" />
+                <div>
+                  <div class="text-sm font-medium leading-6 text-gray-900" v-if="play.QUARTER_STATUS < 5">{{ 'Q' + play.QUARTER_STATUS + ' - ' + play.CLOCK_TIME }}</div>
+                  <div class="text-sm font-medium leading-6 text-gray-900" v-else-if="play.QUARTER_STATUS > 5">{{ play.QUARTER_STATUS - 4 + 'OT - ' + play.CLOCK_TIME }}</div>
+                  <div class="text-sm font-medium leading-6 text-gray-900" v-else>{{ 'OT - ' + play.CLOCK_TIME }}</div>
+                  <div class="text-sm text-gray-700">{{ getScoreText(play.scorediff) }}</div>
+                </div>
+                <div class="flex flex-col gap-1 ml-auto text-right pr-8">
+                  <div class="text-sm font-medium">4th & {{ play.STARTPLAY_DISTANCE }}</div>
+                  <div class="text-sm text-gray-700">{{ play.STARTPLAY_YARDSTOEZ }}</div>
+                </div>
+              </div>
+              <dl class="px-6 py-4 -my-3 overflow-hidden text-xs xs:text-sm leading-6 bg-white divide-y divide-gray-100 rounded-b-xl">
+                <div class="flex justify-between py-2 xs:py-3 gap-x-4">
+                  <dt class="text-gray-500 block xs:hidden">W%</dt>
+                  <dt class="text-gray-500 hidden xs:block">Win %</dt>
+                  <dd class="flex gap-2 xs:gap-4">
+                    <div class="flex items-center gap-1" v-if="play.winProbPunt && play.ydline > 30">
+                      <div class="badge-red">P</div>
+                      <div class="text-gray-600">{{ play.winProbPunt + "%" }}</div>
+                    </div>
+                    <div class="flex items-center gap-1" v-if="play.winProbFG && play.ydline <= 55">
+                      <div class="badge-blue">FG</div>
+                      <div class="text-gray-600">{{ play.winProbFG + "%" }}</div>
+                    </div>
+                    <div class="flex items-center gap-1" v-if="play.winProbGo">
+                      <div class="badge-green">Go</div>
+                      <div class="text-gray-600">{{ play.winProbGo + "%" }}</div>
+                    </div>
+                  </dd>
+                </div>
+                <div class="flex justify-between py-2 xs:py-3 gap-x-4">
+                  <dt class="text-gray-500 block xs:hidden">Rec</dt>
+                  <dt class="text-gray-500 hidden xs:block">Recomendation</dt>
+                  <dd class="flex gap-2 text-gray-700">
+                    <div class="text-green-500">{{ getAbsoluteValue(play.goKickDelta) }}</div>
+                    <div :class="getBadge(play.Rec)">{{ translateText(play.Rec) }}</div>
+                  </dd>
+                </div>
+                <div class="flex justify-between py-2 xs:py-3 gap-x-4">
+                  <dt class="flex gap-1 text-gray-500">Decision</dt>
+                  <dd class="flex items-start gap-x-2">
+                    <div :class="getBadge(play.play)">{{ translateText(play.play) }}</div>
+                  </dd>
+                </div>
+              </dl>
+            </div>
+            <!-- Card Back -->
+            <div class="bg-white flip-card-back rounded-xl">
+              <ArrowUpOnSquareIcon class="absolute w-4 h-4 text-gray-900 top-0 right-0 cursor-pointer mx-4 my-10" @click="expCard(false, i)"/>
+              <dl class="px-6 py-4 -my-3 text-sm leading-6 divide-y divide-gray-100">
+                <div class="flex justify-between py-3 gap-x-4 mr-8" v-if="play.ydline <= 55">
+                  <dt class="text-gray-500">Field Goal Chance</dt>
+                  <dd class="flex items-start gap-x-2">
+                    <div>{{ play.fgprob + '%' }}</div>
+                  </dd>
+                </div>
+                <div class="flex justify-between py-3 gap-x-4 mr-8">
+                  <dt class="text-gray-500">First Down Chance</dt>
+                  <dd class="flex items-start gap-x-2">
+                    <div>{{ play.firstdnprob + '%' }}</div>
+                  </dd>
+                </div>
+                <div class="relative flex justify-between py-3 gap-x-4 pr-8" v-if="play.ydline <= 55">
+                  <InformationCircleIcon class="absolute left-20 top-4 w-4 h-4" @mouseenter="toolTip(true)" @mouseleave="toolTip(false)"/>
+                  <dt class="text-gray-500">Break-even</dt>
+                  <div :class="showToolTip" class="text-center inline-flex items-center rounded-full bg-espncyan-50 px-2 py-1 text-espncyan-900 ring-1 ring-inset ring-espncyan-200/10 text-[10px] leading-3 font-light w-36 py-0.5 px-0 -mt-1 ml-3">The minimum First Down Chance that favors Go</div>
+                  <dd class="flex items-start gap-x-2">
+                    <div :class="getColor(play.breakEvenGo, play.firstdnprob)">{{ play.breakEvenGo + '%' }}</div>
+                  </dd>
+                </div>
+                <div class="relative flex justify-between py-3 gap-x-4 mr-8" v-else>
+                  <InformationCircleIcon class="absolute left-20 top-4 w-4 h-4" @mouseenter="toolTip(true)" @mouseleave="toolTip(false)"/>
+                  <dt class="text-gray-500">Break-even</dt>
+                  <div :class="showToolTip" class="text-center inline-flex items-center rounded-full bg-espncyan-50 px-2 py-1 text-espncyan-900 ring-1 ring-inset ring-espncyan-200/10 text-[10px] leading-3 font-light w-36 py-0.5 px-0 -mt-1 ml-3">The minimum First Down Chance that favors Go</div>
+                  <dd class="flex items-start gap-x-2">
+                    <div :class="getColor(play.breakEvenGo, play.firstdnprob)">{{ play.breakEvenGo + '%' }}</div>
+                  </dd>
+                </div>
+                <div class="flex justify-between py-3 gap-x-4 h-24 overflow-y-scroll" v-if="play.ydline <= 55">
+                  <dt class="text-gray-500">{{ play.text }}</dt>
+                </div>
+                <div class="flex justify-between py-3 gap-x-4 h-36 overflow-y-scroll" v-else>
+                  <dt class="text-gray-500">{{ play.text }}</dt>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+      </ul>
+    </div>
+
   </div>
 </template>
 
 <script setup>
-import { CursorArrowRaysIcon, ArrowLeftIcon } from '@heroicons/vue/24/outline'
+import { CursorArrowRaysIcon, ArrowLeftIcon, ArrowUpOnSquareIcon, InformationCircleIcon } from '@heroicons/vue/24/outline'
+import domtoimage from 'dom-to-image'
 const route = useRoute()
 const id = ref(route.params.id)
 
@@ -111,6 +217,10 @@ import { useGameStore } from '../stores/GameStore'
 const store = useGameStore()
 const games = ref([])
 const scores = ref(null)
+const captureFront = ref([])
+const captureBack = ref([])
+const showToolTip = ref(null)
+showToolTip.value = 'hidden'
 onMounted(async () => {
   games.value = await store.games
   scores.value = await store.scores
@@ -170,7 +280,7 @@ const getBadge = (str) => {
 }
 const getAbsoluteValue = (str) => {
   str = str.toString()
-  if (str.charAt(0) === '-') return "( +" + str.slice(1) + "% )";
+  if (str.charAt(0) === '-') return "( +" + str.slice(1) + "% )"
   else return "( +" + str + "% )"
 }
 const getScoreText = (score) => {
@@ -182,17 +292,75 @@ const getColor = (beProb, fdProb) => {
   if(beProb < fdProb) return 'text-green-600'
   else return 'text-red-600'
 }
-const setFlip = (play) => {
+const toolTip = (show) => {
+  console.log('test')
+  if (show) showToolTip.value = 'block'
+  else showToolTip.value = 'hidden'
+}
+const setFlip = (play, e) => {
+  console.log(e)
   if (window.innerWidth < 640) {
-    if (play.flipClass) play.flipClass = ''
-    else play.flipClass = 'flip-card-hover'
+    if (e.srcElement.outerText) {
+      if (e.layerX < 336 || e.layerY > 96) {
+        if (play.flipClass) play.flipClass = ''
+        else play.flipClass = 'flip-card-hover'
+      }
+    }
   }
 }
-const flipIt = (play) => {
-  if (window.innerWidth >= 640) play.flipClass = 'flip-card-hover'
+const flipIt = (play, e) => {
+  if(e.srcElement.outerText) {
+    if (e.layerX < 336 || e.layerY > 96) {
+      if (window.innerWidth >= 640) play.flipClass = 'flip-card-hover'
+    }
+  }
 }
-const flipBack = (play) => {
+const flipBack = (play, e) => {
   if (window.innerWidth >= 640) play.flipClass = ''
+}
+
+const expCard = async (front, i) => {
+  let el = null
+  // let elOther = null
+  if (front) {
+    el = captureFront
+    // elOther = captureBack
+  } else {
+    el = captureBack
+    // elOther = captureFront
+  }
+  if (navigator.share) {
+    console.log('here')
+    domtoimage.toBlob(el.value[i]).then(function (blob) {
+        const filesArray = [
+          new File(
+            [blob],
+            'decision.png', 
+            {
+              type: blob.type, 
+              lastModified: new Date().getTime()
+            }
+          )
+        ]
+        const shareData = {
+          title: '4th Down Decision',
+          text: 'Check out ESPN\'s analysis of this 4th Down decision on espnanalytics.com/decision',
+          url: 'https://www.espnanalytics.com/decision', 
+          files: filesArray,
+          dialogTitle: 'Share 4th Down Analysis'
+        }
+        navigator.share(shareData)
+      })
+  } else {
+    domtoimage.toBlob(el.value[i])
+      .then(function (blob) {
+        navigator.clipboard.write([new ClipboardItem({'image/png': blob})]).then(() => {
+          alert('Image copied successfully')
+        }).catch(() => {
+          alert('Something went wrong!')
+        })
+      })
+  }
 }
 </script>
 
@@ -222,7 +390,8 @@ const flipBack = (play) => {
 }
 
 .flip-card-front,
-.flip-card-back {
+.flip-card-back, 
+.flip-card-back-fake {
   position: absolute;
   width: 100%;
   height: 100%;

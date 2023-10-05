@@ -354,7 +354,7 @@ const expCard = async (front, i) => {
         const shareData = {
           title: '4th Down Analysis',
           text: 'Check out ESPN\'s analysis of this 4th Down decision on espnanalytics.com/decision',
-          url: 'https://espnanalytics.com/decision', 
+          url: '', 
           files: filesArray,
           dialogTitle: 'Share 4th Down Analysis'
         }

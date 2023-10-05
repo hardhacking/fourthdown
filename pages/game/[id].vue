@@ -360,7 +360,7 @@ const expCard = async (front, i) => {
         }
         navigator.share(shareData)
       })
-  } else if (typeof navigator.clipboard.readText !== "undefined") {
+  } else if (navigator.clipboard.readText) {
     domtoimage.toBlob(el.value[i])
       .then(function (blob) {
         navigator.clipboard.write([new ClipboardItem({'image/png': blob})]).then(() => {
@@ -369,12 +369,14 @@ const expCard = async (front, i) => {
           alert('Something went wrong!')
         })
       })
-  } else {
+  } else if (navigator.clipboard.writeText) {
     navigator.clipboard.writeText('https://espnanalytics.com/game/' + id.value).then(() => {
       alert('Link copied successfully')
     }).catch(() => {
       alert('Something went wrong!')
     })
+  } else {
+    alert('Sharing permissions off')
   }
 }
 </script>

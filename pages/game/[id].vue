@@ -370,7 +370,7 @@ const expCard = async (front, i) => {
         })
       })
   } else {
-    navigator.clipboard.writeText('https://espnanalytics.com/game/' + i).then(() => {
+    navigator.clipboard.writeText('https://espnanalytics.com/game/' + id.value).then(() => {
       alert('Link copied successfully')
     }).catch(() => {
       alert('Something went wrong!')

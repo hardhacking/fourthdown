@@ -96,7 +96,7 @@ export const useGameStore = defineStore('game', () => {
     localStorage.setItem('selectedGame', g);
   }
   const getGame = computed(async () => {
-    console.log(JSON.parse(localStorage.getItem('selectedGame')))
+    // console.log(JSON.parse(localStorage.getItem('selectedGame')))
     return JSON.parse(localStorage.getItem('selectedGame'))
   })
   // const getGame = computed(async () => {

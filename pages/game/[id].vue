@@ -175,17 +175,17 @@
                   </dd>
                 </div>
                 <div class="relative flex justify-between py-3 gap-x-4 pr-8" v-if="play.ydline <= 55">
-                  <InformationCircleIcon class="absolute left-20 top-4 w-4 h-4" @mouseenter="toolTip(true)" @mouseleave="toolTip(false)"/>
+                  <InformationCircleIcon class="absolute left-20 top-3.5 w-5 h-5" @click="setToolTip(play)" @mouseenter="flipTool(play)" @mouseleave="flipToolBack(play)"/>
                   <dt class="text-gray-500">Break-even</dt>
-                  <div :class="showToolTip" class="text-center inline-flex items-center rounded-full bg-espncyan-50 px-2 py-1 text-espncyan-900 ring-1 ring-inset ring-espncyan-200/10 text-[10px] leading-3 font-light w-36 py-0.5 px-0 -mt-1 ml-3">The minimum First Down Chance that favors Go</div>
+                  <div :class="play.toolClass" class="absolute left-[6.5rem] top-1 text-center inline-flex items-center rounded-full bg-espncyan-50 text-espncyan-900 ring-1 ring-inset ring-espncyan-200/10 text-xs w-36 py-1 px-1">The minimum 1st Down Chance that favors Go</div>
                   <dd class="flex items-start gap-x-2">
                     <div :class="getColor(play.breakEvenGo, play.firstdnprob)">{{ play.breakEvenGo + '%' }}</div>
                   </dd>
                 </div>
                 <div class="relative flex justify-between py-3 gap-x-4 mr-8" v-else>
-                  <InformationCircleIcon class="absolute left-20 top-4 w-4 h-4" @mouseenter="toolTip(true)" @mouseleave="toolTip(false)"/>
+                  <InformationCircleIcon class="absolute left-20 top-3.5 w-5 h-5" @click="setToolTip(play)" @mouseenter="flipTool(play)" @mouseleave="flipToolBack(play)"/>
                   <dt class="text-gray-500">Break-even</dt>
-                  <div :class="showToolTip" class="text-center inline-flex items-center rounded-full bg-espncyan-50 px-2 py-1 text-espncyan-900 ring-1 ring-inset ring-espncyan-200/10 text-[10px] leading-3 font-light w-36 py-0.5 px-0 -mt-1 ml-3">The minimum First Down Chance that favors Go</div>
+                  <div :class="play.toolClass" class="absolute left-[6.5rem] top-1 text-center inline-flex items-center rounded-full bg-espncyan-50 text-espncyan-900 ring-1 ring-inset ring-espncyan-200/10 text-xs w-36 py-1 px-1">The minimum 1st Down Chance that favors Go</div>
                   <dd class="flex items-start gap-x-2">
                     <div :class="getColor(play.breakEvenGo, play.firstdnprob)">{{ play.breakEvenGo + '%' }}</div>
                   </dd>
@@ -232,40 +232,38 @@ onMounted(async () => {
 })
 
 const getTeamLogo = (str) => {
-  if (str == 'NYG') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/nyg.png'
-  if (str == 'SF') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sf.png'
-  if (str == 'IND') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ind.png'
-  if (str == 'BLT' || str == 'BAL') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/bal.png'
-  if (str == 'TEN') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ten.png'
-  if (str == 'CLV' || str == 'CLE') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png'
-  if (str == 'ATL') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/atl.png'
-  if (str == 'DET') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/det.png'
-  if (str == 'NO') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/no.png'
-  if (str == 'GB') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/gb.png'
-  if (str == 'HST' || str == 'HOU') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/hou.png'
-  if (str == 'JAX') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/jax.png'
-  if (str == 'DEN') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/den.png'
-  if (str == 'MIA') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/mia.png'
-  if (str == 'LAC') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/lac.png'
-  if (str == 'MIN') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/min.png'
-  if (str == 'NE') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ne.png'
-  if (str == 'NYJ') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/nyj.png'
-  if (str == 'BUF') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/buf.png'
-  if (str == 'WSH' || str == 'WAS') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/wsh.png'
-  // else if (str == 'WAS') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/wsh.png'
-  // Guesses
-  if (str == 'ARZ' || str == 'AR' || str == 'ARI') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ari.png'
-  if (str == 'CAR' || str == 'CAL' || str == 'CR') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/car.png'
-  if (str == 'CHI') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/chi.png'
-  if (str == 'CIN') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cin.png'
-  if (str == 'DAL') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/dal.png'
-  if (str == 'KA' || str == 'KAN' || str == 'KC') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/kc.png'
-  if (str == 'LAS' || str == 'LV' || str == 'LAV') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/lv.png'
-  if (str == 'LOS' || str == 'LSA' || str == 'LAR' || str == 'LA') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/lar.png'
-  if (str == 'PIT' || str == 'PT') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/pit.png'
-  if (str == 'SEA' || str == 'SET' || str == 'SAT') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sea.png'
-  if (str == 'TAM' || str == 'TAB' || str == 'TB' || str == 'TA') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/tam.png'
-  if (str == 'PHI' || str == 'PHL' || str == 'PIL') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/phi.png'
+  if (str == 'NYG') return new URL('../../assets/nfl_logo/nyg.png', import.meta.url)
+  if (str == 'SF') return new URL('../../assets/nfl_logo/sf.png', import.meta.url)
+  if (str == 'IND') return new URL('../../assets/nfl_logo/ind.png', import.meta.url)
+  if (str == 'BLT' || str == 'BAL') return new URL('../../assets/nfl_logo/bal.png', import.meta.url)
+  if (str == 'TEN') return new URL('../../assets/nfl_logo/ten.png', import.meta.url)
+  if (str == 'CLV' || str == 'CLE') return new URL('../../assets/nfl_logo/cle.png', import.meta.url)
+  if (str == 'ATL') return new URL('../../assets/nfl_logo/atl.png', import.meta.url)
+  if (str == 'DET') return new URL('../../assets/nfl_logo/det.png', import.meta.url)
+  if (str == 'NO') return new URL('../../assets/nfl_logo/no.png', import.meta.url)
+  if (str == 'GB') return new URL('../../assets/nfl_logo/gb.png', import.meta.url)
+  if (str == 'HST' || str == 'HOU') return new URL('../../assets/nfl_logo/hou.png', import.meta.url)
+  if (str == 'JAX') return new URL('../../assets/nfl_logo/jax.png', import.meta.url)
+  if (str == 'DEN') return new URL('../../assets/nfl_logo/den.png', import.meta.url)
+  if (str == 'MIA') return new URL('../../assets/nfl_logo/mia.png', import.meta.url)
+  if (str == 'LAC') return new URL('../../assets/nfl_logo/lac.png', import.meta.url)
+  if (str == 'MIN') return new URL('../../assets/nfl_logo/min.png', import.meta.url)
+  if (str == 'NE') return new URL('../../assets/nfl_logo/ne.png', import.meta.url)
+  if (str == 'NYJ') return new URL('../../assets/nfl_logo/nyj.png', import.meta.url)
+  if (str == 'BUF') return new URL('../../assets/nfl_logo/buf.png', import.meta.url)
+  if (str == 'WSH' || str == 'WAS') return new URL('../../assets/nfl_logo/wsh.png', import.meta.url)
+  if (str == 'ARZ' || str == 'AR' || str == 'ARI') return new URL('../../assets/nfl_logo/ari.png', import.meta.url)
+  if (str == 'CAR' || str == 'CAL' || str == 'CR') return new URL('../../assets/nfl_logo/car.png', import.meta.url)
+  if (str == 'CHI') return new URL('../../assets/nfl_logo/chi.png', import.meta.url)
+  if (str == 'CIN') return new URL('../../assets/nfl_logo/cin.png', import.meta.url)
+  if (str == 'DAL') return new URL('../../assets/nfl_logo/dal.png', import.meta.url)
+  if (str == 'KA' || str == 'KAN' || str == 'KC') return new URL('../../assets/nfl_logo/kc.png', import.meta.url)
+  if (str == 'LAS' || str == 'LV' || str == 'LAV') return new URL('../../assets/nfl_logo/lv.png', import.meta.url)
+  if (str == 'LOS' || str == 'LSA' || str == 'LAR' || str == 'LA') return new URL('../../assets/nfl_logo/lar.png', import.meta.url)
+  if (str == 'PIT' || str == 'PT') return new URL('../../assets/nfl_logo/pit.png', import.meta.url)
+  if (str == 'SEA' || str == 'SET' || str == 'SAT') return new URL('../../assets/nfl_logo/sea.png', import.meta.url)
+  if (str == 'TAM' || str == 'TAB' || str == 'TB' || str == 'TA') return new URL('../../assets/nfl_logo/tb.png', import.meta.url)
+  if (str == 'PHI' || str == 'PHL' || str == 'PIL') return new URL('../../assets/nfl_logo/phi.png', import.meta.url)
 }
 
 const translateText = (str) => {
@@ -292,18 +290,27 @@ const getColor = (beProb, fdProb) => {
   if(beProb < fdProb) return 'text-green-600'
   else return 'text-red-600'
 }
-const toolTip = (show) => {
-  console.log('test')
-  if (show) showToolTip.value = 'block'
-  else showToolTip.value = 'hidden'
+const setToolTip = (play) => {
+  if (window.innerWidth < 640) {
+    if (play.toolClass == 'block') play.toolClass = 'hidden'
+    else play.toolClass = 'block'
+  }
+}
+const flipTool = (play) => {
+  if (window.innerWidth >= 640) play.toolClass = 'block'
+}
+const flipToolBack = (play) => {
+  if (window.innerWidth >= 640) play.toolClass = 'hidden'
 }
 const setFlip = (play, e) => {
-  console.log(e)
   if (window.innerWidth < 640) {
     if (e.srcElement.outerText) {
       if (e.layerX < 336 || e.layerY > 96) {
         if (play.flipClass) play.flipClass = ''
-        else play.flipClass = 'flip-card-hover'
+        else {
+          play.flipClass = 'flip-card-hover'
+          play.toolClass = 'hidden'
+        }
       }
     }
   }
@@ -311,7 +318,10 @@ const setFlip = (play, e) => {
 const flipIt = (play, e) => {
   if(e.srcElement.outerText) {
     if (e.layerX < 336 || e.layerY > 96) {
-      if (window.innerWidth >= 640) play.flipClass = 'flip-card-hover'
+      if (window.innerWidth >= 640) {
+        play.flipClass = 'flip-card-hover'
+        play.toolClass = 'hidden'
+      }
     }
   }
 }
@@ -330,7 +340,6 @@ const expCard = async (front, i) => {
     // elOther = captureFront
   }
   if (navigator.share) {
-    console.log('here')
     domtoimage.toBlob(el.value[i]).then(function (blob) {
         const filesArray = [
           new File(
@@ -343,9 +352,9 @@ const expCard = async (front, i) => {
           )
         ]
         const shareData = {
-          title: '4th Down Decision',
+          title: '4th Down Analysis',
           text: 'Check out ESPN\'s analysis of this 4th Down decision on espnanalytics.com/decision',
-          url: 'https://www.espnanalytics.com/decision', 
+          url: 'espnanalytics.com/decision', 
           files: filesArray,
           dialogTitle: 'Share 4th Down Analysis'
         }

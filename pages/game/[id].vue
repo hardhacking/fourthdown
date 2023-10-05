@@ -109,7 +109,7 @@
             <!-- Card Front -->
             <div class="flip-card-front">
               <div class="relative flex items-center p-6 border-b bg-gray-50 gap-x-4 border-gray-900/5 rounded-t-xl">
-                <CursorArrowRaysIcon class="absolute w-4 h-4 text-gray-900 top-1 left-1 animate-pulse sm:hidden" />
+                <CursorArrowRaysIcon class="absolute w-4 h-4 text-gray-900 top-1 left-1 animate-pulse lg:hidden" />
                 <ArrowUpOnSquareIcon class="absolute w-4 h-4 text-gray-900 top-0 right-0 cursor-pointer mx-4 my-10" @click="expCard(true, i)"/>
                 <img :src="getTeamLogo(play.team)" alt="logo" class="flex-none object-cover w-12 h-12 bg-white rounded-lg ring-1 ring-gray-900/10" />
                 <div>
@@ -291,19 +291,19 @@ const getColor = (beProb, fdProb) => {
   else return 'text-red-600'
 }
 const setToolTip = (play) => {
-  if (window.innerWidth < 640) {
+  if (window.innerWidth < 1024) {
     if (play.toolClass == 'block') play.toolClass = 'hidden'
     else play.toolClass = 'block'
   }
 }
 const flipTool = (play) => {
-  if (window.innerWidth >= 640) play.toolClass = 'block'
+  if (window.innerWidth >= 1024) play.toolClass = 'block'
 }
 const flipToolBack = (play) => {
-  if (window.innerWidth >= 640) play.toolClass = 'hidden'
+  if (window.innerWidth >= 1024) play.toolClass = 'hidden'
 }
 const setFlip = (play, e) => {
-  if (window.innerWidth < 640) {
+  if (window.innerWidth < 1024) {
     if (e.srcElement.outerText) {
       if (e.layerX < 336 || e.layerY > 96) {
         if (play.flipClass) play.flipClass = ''
@@ -318,7 +318,7 @@ const setFlip = (play, e) => {
 const flipIt = (play, e) => {
   if(e.srcElement.outerText) {
     if (e.layerX < 336 || e.layerY > 96) {
-      if (window.innerWidth >= 640) {
+      if (window.innerWidth >= 1024) {
         play.flipClass = 'flip-card-hover'
         play.toolClass = 'hidden'
       }
@@ -326,7 +326,7 @@ const flipIt = (play, e) => {
   }
 }
 const flipBack = (play, e) => {
-  if (window.innerWidth >= 640) play.flipClass = ''
+  if (window.innerWidth >= 1024) play.flipClass = ''
 }
 
 const expCard = async (front, i) => {
@@ -340,7 +340,8 @@ const expCard = async (front, i) => {
     // elOther = captureFront
   }
   if (navigator.share) {
-    domtoimage.toBlob(el.value[i]).then(function (blob) {
+    if (window.innerWidth < 1024) {
+      domtoimage.toBlob(el.value[i]).then(function (blob) {
         const filesArray = [
           new File(
             [blob],
@@ -360,6 +361,16 @@ const expCard = async (front, i) => {
         }
         navigator.share(shareData)
       })
+    } else {
+      domtoimage.toBlob(el.value[i])
+        .then(function (blob) {
+          navigator.clipboard.write([new ClipboardItem({'image/png': blob})]).then(() => {
+            alert('Image copied successfully')
+          }).catch(() => {
+            alert('Something went wrong!')
+          })
+        })
+    }
   } else if (navigator.clipboard.readText) {
     domtoimage.toBlob(el.value[i])
       .then(function (blob) {

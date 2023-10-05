@@ -177,7 +177,7 @@
                 <div class="relative flex justify-between py-3 gap-x-4 pr-8" v-if="play.ydline <= 55">
                   <InformationCircleIcon class="absolute left-20 top-3.5 w-5 h-5" @click="setToolTip(play)" @mouseenter="flipTool(play)" @mouseleave="flipToolBack(play)"/>
                   <dt class="text-gray-500">Break-even</dt>
-                  <div :class="play.toolClass" class="absolute left-[6.5rem] top-1 text-center inline-flex items-center rounded-full bg-espncyan-50 text-espncyan-900 ring-1 ring-inset ring-espncyan-200/10 text-xs w-36 py-1 px-1">The minimum 1st Down Chance that favors Go</div>
+                  <div :class="play.toolClass" class="absolute left-[6.5rem] top-1 text-center inline-flex items-center rounded-full bg-espncyan-50 text-espncyan-900 ring-1 ring-inset ring-espncyan-200/10 text-xs w-[9.5rem] py-1 px-1.5">The minimum first down chance that favors Go</div>
                   <dd class="flex items-start gap-x-2">
                     <div :class="getColor(play.breakEvenGo, play.firstdnprob)">{{ play.breakEvenGo + '%' }}</div>
                   </dd>
@@ -185,7 +185,7 @@
                 <div class="relative flex justify-between py-3 gap-x-4 mr-8" v-else>
                   <InformationCircleIcon class="absolute left-20 top-3.5 w-5 h-5" @click="setToolTip(play)" @mouseenter="flipTool(play)" @mouseleave="flipToolBack(play)"/>
                   <dt class="text-gray-500">Break-even</dt>
-                  <div :class="play.toolClass" class="absolute left-[6.5rem] top-1 text-center inline-flex items-center rounded-full bg-espncyan-50 text-espncyan-900 ring-1 ring-inset ring-espncyan-200/10 text-xs w-36 py-1 px-1">The minimum 1st Down Chance that favors Go</div>
+                  <div :class="play.toolClass" class="absolute left-[6.5rem] top-1 text-center inline-flex items-center rounded-full bg-espncyan-50 text-espncyan-900 ring-1 ring-inset ring-espncyan-200/10 text-xs w-[9.5rem] py-1 px-1.5">The minimum first down chance that favors Go</div>
                   <dd class="flex items-start gap-x-2">
                     <div :class="getColor(play.breakEvenGo, play.firstdnprob)">{{ play.breakEvenGo + '%' }}</div>
                   </dd>

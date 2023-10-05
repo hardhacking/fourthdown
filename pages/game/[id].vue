@@ -109,8 +109,9 @@
             <!-- Card Front -->
             <div class="flip-card-front">
               <div class="relative flex items-center p-6 border-b bg-gray-50 gap-x-4 border-gray-900/5 rounded-t-xl">
-                <CursorArrowRaysIcon class="absolute w-4 h-4 text-gray-900 top-1 left-1 animate-pulse lg:hidden" />
-                <ArrowUpOnSquareIcon class="absolute w-4 h-4 text-gray-900 top-0 right-0 cursor-pointer mx-4 my-10" @click="expCard(true, i)"/>
+                <CursorArrowRaysIcon class="absolute w-4 h-4 text-gray-900 top-1 left-1 animate-pulse sm:hidden" />
+                <ArrowUpOnSquareIcon class="block lg:hidden absolute w-5 h-5 text-gray-900 top-0 right-0 cursor-pointer mx-4 my-10" @click="expCard(true, i)"/>
+                <svg class="hidden lg:block absolute w-4 h-4 text-gray-900 top-0 right-0 cursor-pointer mx-4 my-10" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" @click="expCard(true, i)"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"/></svg>
                 <img :src="getTeamLogo(play.team)" alt="logo" class="flex-none object-cover w-12 h-12 bg-white rounded-lg ring-1 ring-gray-900/10" />
                 <div>
                   <div class="text-sm font-medium leading-6 text-gray-900" v-if="play.QUARTER_STATUS < 5">{{ 'Q' + play.QUARTER_STATUS + ' - ' + play.CLOCK_TIME }}</div>
@@ -160,7 +161,8 @@
             </div>
             <!-- Card Back -->
             <div class="bg-white flip-card-back rounded-xl">
-              <ArrowUpOnSquareIcon class="absolute w-4 h-4 text-gray-900 top-0 right-0 cursor-pointer mx-4 my-10" @click="expCard(false, i)"/>
+              <ArrowUpOnSquareIcon class="block lg:hidden absolute w-5 h-5 text-gray-900 top-0 right-0 cursor-pointer mx-4 my-10" @click="expCard(false, i)"/>
+              <svg class="hidden lg:block absolute w-4 h-4 text-gray-900 top-0 right-0 cursor-pointer mx-4 my-10" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" @click="expCard(false, i)"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"/></svg>
               <dl class="px-6 py-4 -my-3 text-sm leading-6 divide-y divide-gray-100">
                 <div class="flex justify-between py-3 gap-x-4 mr-8" v-if="play.ydline <= 55">
                   <dt class="text-gray-500">Field Goal Chance</dt>
@@ -318,7 +320,7 @@ const setFlip = (play, e) => {
 const flipIt = (play, e) => {
   if(e.srcElement.outerText) {
     if (e.layerX < 336 || e.layerY > 96) {
-      if (window.innerWidth >= 1024) {
+      if (window.innerWidth >= 640) {
         play.flipClass = 'flip-card-hover'
         play.toolClass = 'hidden'
       }
@@ -326,7 +328,9 @@ const flipIt = (play, e) => {
   }
 }
 const flipBack = (play, e) => {
-  if (window.innerWidth >= 1024) play.flipClass = ''
+  if (window.innerWidth >= 640) {
+    play.flipClass = ''
+  }
 }
 
 const expCard = async (front, i) => {

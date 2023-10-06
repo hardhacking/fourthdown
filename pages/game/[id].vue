@@ -383,7 +383,8 @@ const expCard = async (front, i) => {
     } else {
       alert('Sharing permissions off')
     }
-  } else if (typeof navigator.clipboard.write !== "undefined") {
+  } else if (navigator.clipboard.write) {
+    console.log(navigator.clipboard.write)
     domtoimage.toBlob(el.value[i])
       .then(function (blob) {
         navigator.clipboard.write([new ClipboardItem({'image/png': blob})]).then(() => {

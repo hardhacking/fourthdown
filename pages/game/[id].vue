@@ -389,8 +389,8 @@ const expCard = async (front, i) => {
       .then(function (blob) {
         navigator.clipboard.write([new ClipboardItem({'image/png': blob})]).then(() => {
           alert('Image copied successfully')
-        }).catch(() => {
-          alert('Something went wrong! 3-1')
+        }).catch((error) => {
+          alert(error)
         })
       })
   } else if (navigator.share) {

@@ -343,8 +343,8 @@ const expCard = async (front, i) => {
     el = captureBack
     // elOther = captureFront
   }
-  if (navigator.share) {
-    if (window.innerWidth < 1024) {
+  if (window.innerWidth < 1024) {
+    if (navigator.share) {
       domtoimage.toBlob(el.value[i]).then(function (blob) {
         const filesArray = [
           new File(

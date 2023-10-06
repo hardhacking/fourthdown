@@ -371,14 +371,14 @@ const expCard = async (front, i) => {
           navigator.clipboard.write([new ClipboardItem({'image/png': blob})]).then(() => {
             alert('Image copied successfully')
           }).catch(() => {
-            alert('Something went wrong! 1')
+            alert('Something went wrong!')
           })
         })
     } else if (navigator.clipboard.writeText) {
       navigator.clipboard.writeText('https://espnanalytics.com/game/' + id.value).then(() => {
         alert('Link copied successfully')
       }).catch(() => {
-        alert('Something went wrong! 2')
+        alert('Something went wrong!')
       })
     } else {
       alert('Sharing permissions off')
@@ -389,8 +389,35 @@ const expCard = async (front, i) => {
       .then(function (blob) {
         navigator.clipboard.write([new ClipboardItem({'image/png': blob})]).then(() => {
           alert('Image copied successfully')
-        }).catch((error) => {
-          alert(error)
+        }).catch(() => {
+          if (navigator.share) {
+            const filesArray = [
+              new File(
+                [blob],
+                'decision.png', 
+                {
+                  type: blob.type, 
+                  lastModified: new Date().getTime()
+                }
+              )
+            ]
+            const shareData = {
+              title: '4th Down Analysis',
+              text: 'Check out ESPN\'s analysis of this 4th Down decision on espnanalytics.com/decision',
+              url: '', 
+              files: filesArray,
+              dialogTitle: 'Share 4th Down Analysis'
+            }
+            navigator.share(shareData)
+          } else if (navigator.clipboard.writeText) {
+            navigator.clipboard.writeText('https://espnanalytics.com/game/' + id.value).then(() => {
+              alert('Link copied successfully')
+            }).catch(() => {
+              alert('Something went wrong!')
+            })
+          } else {
+            alert('Something went wrong!')
+          }
         })
       })
   } else if (navigator.share) {
@@ -418,7 +445,7 @@ const expCard = async (front, i) => {
     navigator.clipboard.writeText('https://espnanalytics.com/game/' + id.value).then(() => {
       alert('Link copied successfully')
     }).catch(() => {
-      alert('Something went wrong! 4')
+      alert('Something went wrong!')
     })
   } else {
     alert('Sharing permissions off')

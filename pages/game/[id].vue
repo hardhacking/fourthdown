@@ -375,7 +375,7 @@ const expCard = async (front, i) => {
           })
         })
     }
-  } else if (navigator.clipboard.write) {
+  } else if (typeof navigator.clipboard.write !== "undefined") {
     domtoimage.toBlob(el.value[i])
       .then(function (blob) {
         navigator.clipboard.write([new ClipboardItem({'image/png': blob})]).then(() => {

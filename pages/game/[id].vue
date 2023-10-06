@@ -365,7 +365,7 @@ const expCard = async (front, i) => {
         }
         navigator.share(shareData)
       })
-    } else {
+    } else if (navigator.clipboard.write) {
       domtoimage.toBlob(el.value[i])
         .then(function (blob) {
           navigator.clipboard.write([new ClipboardItem({'image/png': blob})]).then(() => {
@@ -374,8 +374,16 @@ const expCard = async (front, i) => {
             alert('Something went wrong!')
           })
         })
+    } else if (navigator.clipboard.writeText) {
+      navigator.clipboard.writeText('https://espnanalytics.com/game/' + id.value).then(() => {
+        alert('Link copied successfully')
+      }).catch(() => {
+        alert('Something went wrong!')
+      })
+    } else {
+      alert('Sharing permissions off')
     }
-  } else if (typeof navigator.clipboard.write !== "undefined") {
+  } else if (navigator.clipboard.write) {
     domtoimage.toBlob(el.value[i])
       .then(function (blob) {
         navigator.clipboard.write([new ClipboardItem({'image/png': blob})]).then(() => {
@@ -384,6 +392,27 @@ const expCard = async (front, i) => {
           alert('Something went wrong!')
         })
       })
+  } else if (navigator.share) {
+    domtoimage.toBlob(el.value[i]).then(function (blob) {
+      const filesArray = [
+        new File(
+          [blob],
+          'decision.png', 
+          {
+            type: blob.type, 
+            lastModified: new Date().getTime()
+          }
+        )
+      ]
+      const shareData = {
+        title: '4th Down Analysis',
+        text: 'Check out ESPN\'s analysis of this 4th Down decision on espnanalytics.com/decision',
+        url: '', 
+        files: filesArray,
+        dialogTitle: 'Share 4th Down Analysis'
+      }
+      navigator.share(shareData)
+    })
   } else if (navigator.clipboard.writeText) {
     navigator.clipboard.writeText('https://espnanalytics.com/game/' + id.value).then(() => {
       alert('Link copied successfully')

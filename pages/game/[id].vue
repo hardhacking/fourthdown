@@ -371,14 +371,14 @@ const expCard = async (front, i) => {
           navigator.clipboard.write([new ClipboardItem({'image/png': blob})]).then(() => {
             alert('Image copied successfully')
           }).catch(() => {
-            alert('Something went wrong!')
+            alert('Something went wrong! 1')
           })
         })
     } else if (navigator.clipboard.writeText) {
       navigator.clipboard.writeText('https://espnanalytics.com/game/' + id.value).then(() => {
         alert('Link copied successfully')
       }).catch(() => {
-        alert('Something went wrong!')
+        alert('Something went wrong! 2')
       })
     } else {
       alert('Sharing permissions off')
@@ -389,7 +389,7 @@ const expCard = async (front, i) => {
         navigator.clipboard.write([new ClipboardItem({'image/png': blob})]).then(() => {
           alert('Image copied successfully')
         }).catch(() => {
-          alert('Something went wrong!')
+          alert('Something went wrong! 3')
         })
       })
   } else if (navigator.share) {
@@ -417,7 +417,7 @@ const expCard = async (front, i) => {
     navigator.clipboard.writeText('https://espnanalytics.com/game/' + id.value).then(() => {
       alert('Link copied successfully')
     }).catch(() => {
-      alert('Something went wrong!')
+      alert('Something went wrong! 4')
     })
   } else {
     alert('Sharing permissions off')

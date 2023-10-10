@@ -52,7 +52,7 @@
                 </div>
                 <div class="flex justify-between py-2 xs:py-3 gap-x-4">
                   <dt class="text-gray-500 block xs:hidden">Rec</dt>
-                  <dt class="text-gray-500 hidden xs:block">Recomendation</dt>
+                  <dt class="text-gray-500 hidden xs:block">Recommendation</dt>
                   <dd class="flex gap-2 text-gray-700">
                     <div class="text-green-500">{{ getAbsoluteValue(play.goKickDelta) }}</div>
                     <div :class="getBadge(play.Rec)">{{ translateText(play.Rec) }}</div>
@@ -145,7 +145,7 @@
                 </div>
                 <div class="flex justify-between py-2 xs:py-3 gap-x-4">
                   <dt class="text-gray-500 block xs:hidden">Rec</dt>
-                  <dt class="text-gray-500 hidden xs:block">Recomendation</dt>
+                  <dt class="text-gray-500 hidden xs:block">Recommendation</dt>
                   <dd class="flex gap-2 text-gray-700">
                     <div class="text-green-500">{{ getAbsoluteValue(play.goKickDelta) }}</div>
                     <div :class="getBadge(play.Rec)">{{ translateText(play.Rec) }}</div>

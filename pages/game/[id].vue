@@ -88,10 +88,10 @@
                     <div :class="getColor(play.breakEvenGo, play.firstdnprob)">{{ play.breakEvenGo + '%' }}</div>
                   </dd>
                 </div>
-                <div class="flex justify-between py-3 gap-x-4 h-24 overflow-y-scroll" v-if="play.ydline <= 55">
+                <div class="flex justify-between py-3 gap-x-4 h-24 overflow-y-hidden" v-if="play.ydline <= 55">
                   <dt class="text-gray-500">{{ play.text }}</dt>
                 </div>
-                <div class="flex justify-between py-3 gap-x-4 h-36 overflow-y-scroll" v-else>
+                <div class="flex justify-between py-3 gap-x-4 h-36 overflow-y-hidden" v-else>
                   <dt class="text-gray-500">{{ play.text }}</dt>
                 </div>
               </dl>
@@ -192,10 +192,10 @@
                     <div :class="getColor(play.breakEvenGo, play.firstdnprob)">{{ play.breakEvenGo + '%' }}</div>
                   </dd>
                 </div>
-                <div class="flex justify-between py-3 gap-x-4 h-24 overflow-y-scroll" v-if="play.ydline <= 55">
+                <div class="flex justify-between py-3 gap-x-4 h-24 overflow-y-auto" v-if="play.ydline <= 55">
                   <dt class="text-gray-500">{{ play.text }}</dt>
                 </div>
-                <div class="flex justify-between py-3 gap-x-4 h-36 overflow-y-scroll" v-else>
+                <div class="flex justify-between py-3 gap-x-4 h-36 overflow-y-auto" v-else>
                   <dt class="text-gray-500">{{ play.text }}</dt>
                 </div>
               </dl>

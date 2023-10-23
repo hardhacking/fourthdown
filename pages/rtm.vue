@@ -407,7 +407,6 @@ export default {
                           },
                       },
                       x: {
-                          offset: false,
                           display: false,
                           max: overallArr.length + 1,
                           // type: 'linear',
@@ -496,6 +495,7 @@ export default {
             this.chart.options.scales.x.max = overallArr.length + 1;
             this.chart.options.scales.x.offset = false;
           } else {
+            this.chart.options.scales.x.max = overallArr.length + 1;
             this.chart.options.scales.x.offset = true;
           }
           this.chart.update();
@@ -737,7 +737,6 @@ export default {
                   previous = player[value];
               }
           })
-        //   console.log(window.innerWidth);
           const final = this.mergeObjectsWithSameScore(top5, value);
           switch (value) {
               case "overall":

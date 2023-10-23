@@ -110,7 +110,7 @@
                                 <canvas id="chart2"></canvas>
                             </div>
                         </div>
-                        <div class="overflow-x-scroll">
+                        <div class="overflow-x-auto">
                             <div class="relative cursor-crosshair h-96 -ml-[11px]" id="chart_container">
                                 <canvas id="chart"></canvas>
                             </div>

@@ -12,7 +12,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
               </svg>
           </button> -->
-              <img src="@/assets/ea3.png" class="h-14 xs:h-20" alt="">
+              <img src="@/assets/ea3.png" @click="navigateTo('/')" class="h-14 xs:h-20 cursor-pointer" alt="">
       </div>
         <div class="flex flex-col items-center gap-4">
             <div class="text-4xl font-bold text-center text-espngray-900">The Best NFL Receivers</div>
@@ -78,12 +78,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex justify-start gap-8 pt-2">
-                        <!-- <select class="rounded-sm w-32 xs:w-fit bg-gray-50 border border-espngray-300 text-espngray-900 text-sm focus:ring-blue-500 focus:border-blue-500 p-2.5" v-model="chartTeams" @change="updateScatterData()">
+                    <div class="flex justify-start gap-4 pt-2">
+                        <select class="rounded-sm w-32 xs:w-fit bg-gray-50 border border-espngray-300 text-espngray-900 text-sm focus:ring-blue-500 focus:border-blue-500 p-2.5" v-model="chartTeams" @change="updateScatterData()">
                             <option value="all">All teams</option>
                             <option v-for="team in teams" :value="team.tm">{{ team.team_name }}</option>
-                        </select> -->
-                        <select class="rounded-sm ml-1.5 bg-gray-50 border border-espngray-300 text-espngray-900 text-sm focus:ring-blue-500 focus:border-blue-500 p-2.5" v-model="chartPos" @change="updateScatterData()">
+                        </select>
+                        <select class="rounded-sm bg-gray-50 border border-espngray-300 text-espngray-900 text-sm focus:ring-blue-500 focus:border-blue-500" v-model="chartPos" @change="updateScatterData()">
                             <option value="wrte">WR/TE</option>
                             <option value="WR">WR</option>
                             <option value="TE">TE</option>
@@ -104,7 +104,7 @@
                             <div class="text-espngray-900 text-center hidden xs:block cursor-pointer p-1.5 m-0.5 rounded-sm border border-espngray-900 w-24 hover:bg-espngray-600 hover:font-semibold hover:text-espngray-100" :class="overallBtn" @click="updateChartSort('overall')">OVERALL</div>
                         </div>
                     </div>
-                    <div class="flex">
+                    <div class="flex justify-center">
                         <div>
                             <div class="relative cursor-crosshair w-8 h-96 ml-1" id="chart_container2">
                                 <canvas id="chart2"></canvas>
@@ -407,6 +407,7 @@ export default {
                           },
                       },
                       x: {
+                          offset: false,
                           display: false,
                           max: overallArr.length + 1,
                           // type: 'linear',
@@ -491,7 +492,12 @@ export default {
           this.chart.data.datasets[2].allData = overallMap;
           this.chart.data.datasets[3].data = yacArr;
           this.chart.data.datasets[3].allData = overallMap;
-          this.chart.options.scales.x.max = overallArr.length + 1;
+          if (overallArr.length > 3) {
+            this.chart.options.scales.x.max = overallArr.length + 1;
+            this.chart.options.scales.x.offset = false;
+          } else {
+            this.chart.options.scales.x.offset = true;
+          }
           this.chart.update();
           this.chart.resize();
       },
@@ -727,10 +733,11 @@ export default {
                   player['gap' + value] = 0;
               }
               else {
-                  player['gap' + value] = (previous - player[value]) * (window.innerWidth - 300 - 77.5 - 34.93 - 34.93 - 52) / 21  - 52;
+                  player['gap' + value] = (previous - player[value]) * (window.innerWidth * .75 - 77.5 - 34.93 - 34.93 - 52) / 21  - 52;
                   previous = player[value];
               }
           })
+        //   console.log(window.innerWidth);
           const final = this.mergeObjectsWithSameScore(top5, value);
           switch (value) {
               case "overall":

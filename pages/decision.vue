@@ -1,7 +1,7 @@
 <template>
     <div class="relative min-h-screen bg-gray-100 ">
       <div class="flex items-center justify-center w-full p-5">
-        <img src="../assets/logo.png" class="h-20" alt="">
+        <img src="../assets/logo.png" @click="navigateTo('/')" class="h-20 cursor-pointer" alt="">
       </div>
       <ul role="list" class="flex flex-wrap justify-center gap-10 p-10 pt-5">
         <!-- <li class="flex flex-col max-w-md text-center bg-white rounded-lg shadow w-[400px] hover:shadow-lg">

@@ -87,10 +87,17 @@ onMounted(async () => {
               ydline = away + ' ' + response.yardsToEndzone
             }
           }
+          if (response.down == "-1") {
+            let prevPlay = JSON.parse(localStorage.getItem('lastPlay_' + id.value))
+            response.down = prevPlay.down
+            response.distance = prevPlay.distance
+          }
           colArray.value = {
             'green': response.green,
             'yellow': response.yellow,
             'red': response.red,
+            'down': response.down,
+            'distance': response.distance,
             'title1': event.value.shortName,
             'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)'))
           }
@@ -186,7 +193,7 @@ span {
 }
 
 #g-cont, #y-cont {
-  height: 60px;
+  /* height: 60px; */
 }
 
 h1 {

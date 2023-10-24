@@ -193,7 +193,7 @@ span {
 }
 
 #g-cont, #y-cont {
-  height: 60px;
+  /* height: 60px; */
 }
 
 h1 {

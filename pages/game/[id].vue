@@ -1,23 +1,23 @@
 <template>
   <div class="min-h-screen bg-gray-100 ">
     <div class="relative flex items-center justify-center w-full p-5">
-      <button type="button" @click="navigateTo('/decision')" class="hidden xs:flex gap-2 items-center absolute lg:top-10 lg:left-10 top-5 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+      <button type="button" @click="navigateTo('/decision')" class="hidden xxs:flex gap-2 items-center absolute lg:top-10 lg:left-10 top-5 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
         <ArrowLeftIcon class="w-4 h-4" />
         Back
       </button>
-      <button type="button" @click="navigateTo('/decision')" class="xs:hidden flex gap-2 items-center absolute lg:top-10 lg:left-10 top-5 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+      <button type="button" @click="navigateTo('/decision')" class="xxs:hidden flex gap-2 items-center absolute lg:top-10 lg:left-10 top-5 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
         <ArrowLeftIcon class="w-4 h-4" />
       </button>
-      <img src="../../assets/logo.png" @click="navigateTo('/')" class="h-12 xs:h-20 cursor-pointer" alt="">
+      <img src="../../assets/logo.png" @click="navigateTo('/')" class="h-12 xxs:h-20 cursor-pointer" alt="">
     </div>
 
-    <div class="flex justify-center p-10 px-0 xs:px-auto absolute top-[120px] opacity-0">
+    <div class="flex justify-center p-10 px-0 xxs:px-auto absolute top-[120px] opacity-0">
       <ul role="list" class="flex flex-wrap justify-start gap-10 h-fit w-fit">
-        <div v-for="(play, i) in games[id]" :key="`${play.Game}hidden`" class="flip-card bg-white xs:w-96 w-[300px] h-[240px] xs:h-[263px]" @click="setFlip(play, $event)" @mousemove="flipIt(play, $event)" @mouseenter="flipIt(play, $event)" @mouseleave="flipBack(play, $event)">
+        <div v-for="(play, i) in games[id]" :key="`${play.Game}hidden`" class="flip-card bg-white xxs:w-96 w-[300px] h-[240px] xxs:h-[263px]" @click="setFlip(play, $event)" @mousemove="flipIt(play, $event)" @mouseenter="flipIt(play, $event)" @mouseleave="flipBack(play, $event)">
           <div :class="play.flipClass" class="shadow flip-card-inner rounded-xl">
             <!-- Card Front -->
             <div class="flip-card-front" ref="captureFront">
-              <div class="absolute bottom-2 left-1/4 xs:left-[30%] underline text-xs text-cyan-900">espnanalytics.com/decision</div>
+              <div class="absolute bottom-2 left-1/4 xxs:left-[30%] underline text-xs text-cyan-900">espnanalytics.com/decision</div>
               <div class="relative flex items-center p-6 border-b bg-gray-50 gap-x-4 border-gray-900/5 rounded-t-xl">                
                 <img :src="getTeamLogo(play.team)" alt="logo" class="flex-none object-cover w-12 h-12 bg-white rounded-lg ring-1 ring-gray-900/10" />
                 <div>
@@ -31,11 +31,11 @@
                   <div class="text-sm text-gray-700">{{ play.STARTPLAY_YARDSTOEZ }}</div>
                 </div>
               </div>
-              <dl class="px-6 py-4 -my-3 overflow-hidden text-xs xs:text-sm leading-6 bg-white divide-y divide-gray-100 rounded-b-xl">
-                <div class="flex justify-between py-2 xs:py-3 gap-x-4">
-                  <dt class="text-gray-500 block xs:hidden">W%</dt>
-                  <dt class="text-gray-500 hidden xs:block">Win %</dt>
-                  <dd class="flex gap-2 xs:gap-4">
+              <dl class="px-6 py-4 -my-3 overflow-hidden text-xs xxs:text-sm leading-6 bg-white divide-y divide-gray-100 rounded-b-xl">
+                <div class="flex justify-between py-2 xxs:py-3 gap-x-4">
+                  <dt class="text-gray-500 block xxs:hidden">W%</dt>
+                  <dt class="text-gray-500 hidden xxs:block">Win %</dt>
+                  <dd class="flex gap-2 xxs:gap-4">
                     <div class="flex items-center gap-1" v-if="play.winProbPunt && play.ydline > 30">
                       <div class="badge-red">P</div>
                       <div class="text-gray-600">{{ play.winProbPunt + "%" }}</div>
@@ -50,15 +50,15 @@
                     </div>
                   </dd>
                 </div>
-                <div class="flex justify-between py-2 xs:py-3 gap-x-4">
-                  <dt class="text-gray-500 block xs:hidden">Rec</dt>
-                  <dt class="text-gray-500 hidden xs:block">Recommendation</dt>
+                <div class="flex justify-between py-2 xxs:py-3 gap-x-4">
+                  <dt class="text-gray-500 block xxs:hidden">Rec</dt>
+                  <dt class="text-gray-500 hidden xxs:block">Recommendation</dt>
                   <dd class="flex gap-2 text-gray-700">
                     <div class="text-green-500">{{ getAbsoluteValue(play.goKickDelta) }}</div>
                     <div :class="getBadge(play.Rec)">{{ translateText(play.Rec) }}</div>
                   </dd>
                 </div>
-                <div class="flex justify-between py-2 xs:py-3 gap-x-4">
+                <div class="flex justify-between py-2 xxs:py-3 gap-x-4">
                   <dt class="flex gap-1 text-gray-500">Decision</dt>
                   <dd class="flex items-start gap-x-2">
                     <div :class="getBadge(play.play)">{{ translateText(play.play) }}</div>
@@ -68,7 +68,7 @@
             </div>
             <!-- Card Back -->
             <div class="bg-white flip-card-back-fake rounded-xl" ref="captureBack">
-              <div class="absolute bottom-2 left-1/4 xs:left-[30%] underline text-xs text-cyan-900">espnanalytics.com/decision</div>
+              <div class="absolute bottom-2 left-1/4 xxs:left-[30%] underline text-xs text-cyan-900">espnanalytics.com/decision</div>
               <dl class="px-6 py-4 -my-3 text-sm leading-6 divide-y divide-gray-100">
                 <div class="flex justify-between py-3 gap-x-4" v-if="play.ydline <= 55">
                   <dt class="text-gray-500">Field Goal Chance</dt>
@@ -104,7 +104,7 @@
     
     <div class="flex justify-center p-10 px-auto">
       <ul role="list" class="flex flex-wrap justify-start gap-10 h-fit w-fit">
-        <div v-for="(play, i) in games[id]" :key="play.Game" class="flip-card bg-white xs:w-96 w-[300px] h-[240px] xs:h-[263px]" @click="setFlip(play, $event)" @mousemove="flipIt(play, $event)" @mouseenter="flipIt(play, $event)" @mouseleave="flipBack(play, $event)">
+        <div v-for="(play, i) in games[id]" :key="play.Game" class="flip-card bg-white xxs:w-96 w-[300px] h-[240px] xxs:h-[263px]" @click="setFlip(play, $event)" @mousemove="flipIt(play, $event)" @mouseenter="flipIt(play, $event)" @mouseleave="flipBack(play, $event)">
           <div :class="play.flipClass" class="shadow flip-card-inner rounded-xl">
             <!-- Card Front -->
             <div class="flip-card-front">
@@ -124,11 +124,11 @@
                   <div class="text-sm text-gray-700">{{ play.STARTPLAY_YARDSTOEZ }}</div>
                 </div>
               </div>
-              <dl class="px-6 py-4 -my-3 overflow-hidden text-xs xs:text-sm leading-6 bg-white divide-y divide-gray-100 rounded-b-xl">
-                <div class="flex justify-between py-2 xs:py-3 gap-x-4">
-                  <dt class="text-gray-500 block xs:hidden">W%</dt>
-                  <dt class="text-gray-500 hidden xs:block">Win %</dt>
-                  <dd class="flex gap-2 xs:gap-4">
+              <dl class="px-6 py-4 -my-3 overflow-hidden text-xs xxs:text-sm leading-6 bg-white divide-y divide-gray-100 rounded-b-xl">
+                <div class="flex justify-between py-2 xxs:py-3 gap-x-4">
+                  <dt class="text-gray-500 block xxs:hidden">W%</dt>
+                  <dt class="text-gray-500 hidden xxs:block">Win %</dt>
+                  <dd class="flex gap-2 xxs:gap-4">
                     <div class="flex items-center gap-1" v-if="play.winProbPunt && play.ydline > 30">
                       <div class="badge-red">P</div>
                       <div class="text-gray-600">{{ play.winProbPunt + "%" }}</div>
@@ -143,15 +143,15 @@
                     </div>
                   </dd>
                 </div>
-                <div class="flex justify-between py-2 xs:py-3 gap-x-4">
-                  <dt class="text-gray-500 block xs:hidden">Rec</dt>
-                  <dt class="text-gray-500 hidden xs:block">Recommendation</dt>
+                <div class="flex justify-between py-2 xxs:py-3 gap-x-4">
+                  <dt class="text-gray-500 block xxs:hidden">Rec</dt>
+                  <dt class="text-gray-500 hidden xxs:block">Recommendation</dt>
                   <dd class="flex gap-2 text-gray-700">
                     <div class="text-green-500">{{ getAbsoluteValue(play.goKickDelta) }}</div>
                     <div :class="getBadge(play.Rec)">{{ translateText(play.Rec) }}</div>
                   </dd>
                 </div>
-                <div class="flex justify-between py-2 xs:py-3 gap-x-4">
+                <div class="flex justify-between py-2 xxs:py-3 gap-x-4">
                   <dt class="flex gap-1 text-gray-500">Decision</dt>
                   <dd class="flex items-start gap-x-2">
                     <div :class="getBadge(play.play)">{{ translateText(play.play) }}</div>

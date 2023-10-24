@@ -19,17 +19,17 @@
                 <div class="stop-light" id="stop-light">
                     <div class="bulb bg-stoplight-red">
                         <span><div id="red-cont" class="red-cont">
-                            <h1 class="bulb-text" id="red-text">{{ colArray.red }}</h1>
+                            <h1 class="bulb-text w-40 overflow-x-auto" id="red-text">{{ colArray.red }}</h1>
                         </div></span>
                     </div>
                     <div class="bulb bg-stoplight-yellow">
                         <span><div id="y-cont" class="y-cont">
-                            <h1 class="bulb-text" id="yellow-text">{{ colArray.yellow }}</h1>
+                            <h1 class="bulb-text w-40 overflow-x-auto" id="yellow-text">{{ colArray.yellow }}</h1>
                         </div></span>
                     </div>
                     <div class="bulb bg-stoplight-green">
                         <span><div id="g-cont" class="g-cont">
-                            <h1 class="bulb-text" id="green-text">{{ colArray.green }}</h1>
+                            <h1 class="bulb-text w-40 overflow-x-auto" id="green-text">{{ colArray.green }}</h1>
                         </div></span>
                     </div>
                 </div>
@@ -193,7 +193,7 @@ span {
 }
 
 #g-cont, #y-cont {
-  /* height: 60px; */
+  height: 60px;
 }
 
 h1 {

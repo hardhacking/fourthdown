@@ -45,6 +45,8 @@ import { cfbGameStore } from '../stores/CfbStore'
 const route = useRoute()
 const id = ref(route.params.id)
 
+
+
 const store = cfbGameStore()
 const events = ref([])
 const event = ref({})
@@ -52,7 +54,6 @@ let colArray = ref({})
 onMounted(async () => {
     let temp = await store.events
     events.value = temp.events
-
     event.value = events.value[id.value]
 
     const supabase = createClient('https://oeaoxcbbfdmnrrujkmwj.supabase.co', 
@@ -101,8 +102,7 @@ onMounted(async () => {
             'title1': event.value.shortName,
             'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)'))
           }
-
-          localStorage.setItem('lastPlay_' + id.value, colArray.value);
+          localStorage.setItem('lastPlay_' + id.value, JSON.stringify(colArray.value))
         } else {
             colArray.value = JSON.parse(localStorage.getItem('lastPlay_' + id.value))
             if (!colArray.value) {

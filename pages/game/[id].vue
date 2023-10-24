@@ -11,7 +11,7 @@
       <img src="../../assets/logo.png" @click="navigateTo('/')" class="h-12 xs:h-20 cursor-pointer" alt="">
     </div>
 
-    <div class="flex justify-center p-10 px-auto absolute top-[120px] opacity-0">
+    <div class="flex justify-center p-10 px-0 xs:px-auto absolute top-[120px] opacity-0">
       <ul role="list" class="flex flex-wrap justify-start gap-10 h-fit w-fit">
         <div v-for="(play, i) in games[id]" :key="`${play.Game}hidden`" class="flip-card bg-white xs:w-96 w-[300px] h-[240px] xs:h-[263px]" @click="setFlip(play, $event)" @mousemove="flipIt(play, $event)" @mouseenter="flipIt(play, $event)" @mouseleave="flipBack(play, $event)">
           <div :class="play.flipClass" class="shadow flip-card-inner rounded-xl">
@@ -306,13 +306,17 @@ const flipToolBack = (play) => {
 }
 const setFlip = (play, e) => {
   if (window.innerWidth < 1024) {
+    console.log(e.layerX)
+    console.log(e.layerY)
     if (e.srcElement.outerText) {
       if (e.layerX < 336 || e.layerY > 96) {
+        console.log(play.flipClass)
         if (play.flipClass) play.flipClass = ''
         else {
           play.flipClass = 'flip-card-hover'
           play.toolClass = 'hidden'
         }
+        console.log(play.flipClass)
       }
     }
   }
@@ -320,7 +324,7 @@ const setFlip = (play, e) => {
 const flipIt = (play, e) => {
   if(e.srcElement.outerText) {
     if (e.layerX < 336 || e.layerY > 96) {
-      if (window.innerWidth >= 640) {
+      if (window.innerWidth >= 1024) {
         play.flipClass = 'flip-card-hover'
         play.toolClass = 'hidden'
       }
@@ -328,7 +332,7 @@ const flipIt = (play, e) => {
   }
 }
 const flipBack = (play, e) => {
-  if (window.innerWidth >= 640) {
+  if (window.innerWidth >= 1024) {
     play.flipClass = ''
   }
 }

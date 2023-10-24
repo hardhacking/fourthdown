@@ -7,7 +7,17 @@ export default defineNuxtConfig({
              '/nbalines', '/nbalines+', '/nfllines', '/nfllines+', '/cfb4thdown', '/cfbpredictor', 
              '/livecfbepa', '/livemlb', '/mlbwpa', '/nflfpi+', '/nflpredictor', '/playstation', '/wnba', '/soccer', 
              '/nfl-sim', '/nfl-draft', '/mcbb', '/wcbb', '/mcbb-title', '/wcbb-title', '/mcbb-games', '/mcbb-games',
-             '/wcbb-all', '/mcbb-all']
+             '/wcbb-all', '/mcbb-all', '/stoplight/0', '/stoplight/1', '/stoplight/2', '/stoplight/3', '/stoplight/4', 
+             '/stoplight/5', '/stoplight/6', '/stoplight/7', '/stoplight/8', '/stoplight/9', '/stoplight/10', '/stoplight/11', 
+             '/stoplight/12', '/stoplight/13', '/stoplight/14', '/stoplight/15', '/stoplight/16', '/stoplight/17', '/stoplight/18', 
+             '/stoplight/19', '/stoplight/20', '/stoplight/21', '/stoplight/22', '/stoplight/23', '/stoplight/24', '/stoplight/25', 
+             '/stoplight/26', '/stoplight/27', '/stoplight/28', '/stoplight/29', '/stoplight/30', '/stoplight/31', '/stoplight/32', 
+             '/stoplight/33', '/stoplight/34', '/stoplight/35', '/stoplight/36', '/stoplight/37', '/stoplight/38', '/stoplight/39', 
+             '/stoplight/40', '/stoplight/41', '/stoplight/42', '/stoplight/43', '/stoplight/44', '/stoplight/45', '/stoplight/46', 
+             '/stoplight/47', '/stoplight/48', '/stoplight/49', '/stoplight/50', '/stoplight/51', '/stoplight/52', '/stoplight/53', 
+             '/stoplight/54', '/stoplight/55', '/stoplight/56', '/stoplight/57', '/stoplight/58', '/stoplight/59', '/stoplight/60', 
+             '/stoplight/61', '/stoplight/62', '/stoplight/63', '/stoplight/64', '/stoplight/65', '/stoplight/66', '/stoplight/67', 
+             '/stoplight/68', '/stoplight/69', '/stoplight/70', '/stoplight/71', '/stoplight/72', '/stoplight/73', '/stoplight/74', ]
   },
   ssr: false,
   devtools: { enabled: true },

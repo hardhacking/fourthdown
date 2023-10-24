@@ -46,23 +46,40 @@ const id = ref(route.params.id)
 
 const store = cfbGameStore()
 const events = ref([])
+const event = ref({})
 let colArray = ref({})
 onMounted(async () => {
     let temp = await store.events
     events.value = temp.events
 
+    event.value = events.value[id.value]
+
     const supabase = createClient('https://oeaoxcbbfdmnrrujkmwj.supabase.co', 
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9lYW94Y2JiZmRtbnJydWprbXdqIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTYwNDAyMTYsImV4cCI6MjAxMTYxNjIxNn0.hStQulqxb14rENfHdpTsuBkkWLwkiDiVU8Uj8fCeTGc')
-    let fullResponse = await supabase.functions.invoke('cfb-gonogo', {body: {id: events.value[id.value].id}})
+    let fullResponse = await supabase.functions.invoke('cfb-gonogo', {body: {id: event.value.id}})
     let response = fullResponse.data
 
     if (response.playId) {
         if (response.green) {
+          let ydline = ''
+          if (response.yardsToEndzone == response.ballSpot) {
+            if (response.yardsToEndzone > 50) {
+              ydline = 'HOME ' + (100 - response.yardsToEndzone)
+            } else {
+              ydline = 'AWAY ' + response.yardsToEndzone
+            }
+          } else {
+            if (response.yardsToEndzone > 50) {
+              ydline = 'AWAY ' + (100 - response.yardsToEndzone)
+            } else {
+              ydline = 'HOME ' + response.yardsToEndzone
+            }
+          }
             colArray.value = {
                 'green': response.green,
                 'yellow': response.yellow,
                 'red': response.red,
-                'title': response.down + 'D & ' + response.distance + ': ' + response.yardsToEndzone + ' at ' + response.clock
+                'title': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ': ' + ydline + ' at ?Q'
             }
 
             localStorage.setItem('lastPlay_' + id.value, colArray.value);

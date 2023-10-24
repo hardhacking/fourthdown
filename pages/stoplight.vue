@@ -37,7 +37,7 @@ const events = ref([])
 onMounted(async () => {
     let temp = await store.events
     events.value = temp.events
-    console.log(events.value)
+    // console.log(events.value)
 })
 
 const getDate = (str) => {

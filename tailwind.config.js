@@ -39,9 +39,13 @@ export default {
         'espngray-600': 'rgb(95, 95, 95)',
         'espngray-900': 'rgb(57, 57, 57)',
         'espnblack': 'rgb(27, 36, 44)',
+        'stoplight-red': '#bc544b',
+        'stoplight-yellow': '#f9e076',
+        'stoplight-green': '#3cb043',
       },
       screens: {
-        'xs': '385px',
+        'xxs': '385px',
+        'xs': '480px',
         // => @media (min-width: 385px) { ... }
       }
     },

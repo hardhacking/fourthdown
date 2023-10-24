@@ -86,7 +86,6 @@ const redirect = async (ms) => {
 <script setup>
 import { ChartBarIcon } from '@heroicons/vue/24/outline'
 import { useGameStore } from '../stores/GameStore'
-import { createClient } from '@supabase/supabase-js'
 
 const store = useGameStore()
 const games = ref([])
@@ -94,11 +93,6 @@ const scores = ref(null)
 onMounted(async () => {
   games.value = await store.games
   scores.value = await store.scores
-
-  const supabase = createClient('https://oeaoxcbbfdmnrrujkmwj.supabase.co', 
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9lYW94Y2JiZmRtbnJydWprbXdqIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTYwNDAyMTYsImV4cCI6MjAxMTYxNjIxNn0.hStQulqxb14rENfHdpTsuBkkWLwkiDiVU8Uj8fCeTGc')
-  let response = await supabase.functions.invoke('cfb-gonogo', {body: {id: '401532427'}})
-  console.log(response)
 })
 
 // Computerd

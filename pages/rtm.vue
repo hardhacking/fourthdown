@@ -16,7 +16,7 @@
       </div>
         <div class="flex flex-col items-center gap-4">
             <div class="text-4xl font-bold text-center text-espngray-900">The Best NFL Receivers</div>
-            <div class="text-espngray-600 font-normal text-sm">Updated through Week 6</div>
+            <div class="text-espngray-600 font-normal text-sm">Updated through Week 7</div>
             <div class="p-2 lg:p-0 max-w-4xl text-center font-medium text-espngray-600">These ratings, updated weekly, use player-tracking data from NFL Next Gen Stats to evaluate every route a pass catcher runs and scores his performance in three phases of the
             game, from 0 to 99.</div>
         </div>
@@ -189,7 +189,7 @@
                 </div>
             </div>
         </div>
-        <div class="p-2 lg:p-0 lg:mt-4 max-w-5xl mx-auto py-5 text-left text-xs text-espngray-600">Wide receivers and tight ends with at least 20 targets and running backs with at least 12 in the 2023 season are eligible for a score. Only WR/TE are eligible for the Top 5 leaderboard graphic. For prior seasons, all players with at least 48 targets are included.</div>
+        <div class="p-2 lg:p-0 lg:mt-4 max-w-5xl mx-auto py-5 text-left text-xs text-espngray-600">Wide receivers and tight ends with at least 20 targets and running backs with at least 14 in the 2023 season are eligible for a score. Only WR/TE are eligible for the Top 5 leaderboard graphic. For prior seasons, all players with at least 48 targets are included.</div>
         <div class="p-2 lg:p-0 lg:pb-4 lg:mt-4 max-w-5xl mx-auto pt-5 pb-10 text-left text-xs text-espngray-600"><a class="text-blue-600 underline" href="https://www.espn.com/nfl/story/_/id/34649390/espn-receiver-tracking-metrics-how-new-nfl-stats-work-open-catch-yac-scores" target="_blank">Read more</a> about how ESPN Analytics's receiver ratings work.</div>
         <!-- <div class="footnote">Design ideas from <a href="https://fivethirtyeight.com/contributors/ryan-best/" target="_blank">Ryan Best</a>. Statistical model by Brian Burke. Additional contributions by <a href="https://benjaminharden.vercel.app/" target="_blank">Ben Harden</a>, Henry Gargiulo, Matt Morris and Chris Harden.</div> -->
     </div>

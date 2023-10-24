@@ -31,8 +31,8 @@
             <div ref="catchRef"><LineScale v-if="showCatch" :arr="catches" value="catch_score" title="Catch" /></div>
             <div ref="yacRef"><LineScale v-if="showYards" :arr="yards" value="yac_score" title="YAC" /></div>
         </div>
-        <div class="hidden sm:block p-2 lg:p-0 max-w-5xl text-left text-xs m-auto text-espngray-600">Wide receivers and tight ends with at least 20 targets in the 2023 season are eligible for leaderboards. Running backs are not eligible, as different weights 
-            are used to construct their composite scores than wide receiver and tight end composite scores.</div>
+        <!-- <div class="hidden sm:block p-2 lg:p-0 max-w-5xl text-left text-xs m-auto text-espngray-600">Wide receivers and tight ends with at least 20 targets in the 2023 season are eligible for leaderboards. Running backs are not eligible, as different weights 
+            are used to construct their composite scores than wide receiver and tight end composite scores.</div> -->
         <div class="text-xl pt-5 text-center font-bold text-espngray-900">Where Every NFL Pass Catcher Stands</div>
         <div class="p-2 text-center font-medium text-espngray-600">Open, Catch, YAC and Overall receiver ratings</div>
         <div class="max-w-5xl m-auto">
@@ -189,7 +189,7 @@
                 </div>
             </div>
         </div>
-        <div class="p-2 lg:p-0 lg:mt-4 max-w-5xl mx-auto py-5 text-left text-xs text-espngray-600">Eligible players are wide receivers and tight ends with at least 20 targets and running backs with at least 12 in the 2023 season. For prior seasons, all players with at least 48 targets are included. All receiving statistics for a given player are analyzed for each timeframe. A player’s displayed team is the one for which he most recently played in that timeframe.</div>
+        <div class="p-2 lg:p-0 lg:mt-4 max-w-5xl mx-auto py-5 text-left text-xs text-espngray-600">Wide receivers and tight ends with at least 20 targets and running backs with at least 12 in the 2023 season are eligible for a score. Only WR/TE are eligible for the Top 5 leaderboard. For prior seasons, all players with at least 48 targets are included.</div>
         <div class="p-2 lg:p-0 lg:pb-4 lg:mt-4 max-w-5xl mx-auto pt-5 pb-10 text-left text-xs text-espngray-600"><a class="text-blue-600 underline" href="https://www.espn.com/nfl/story/_/id/34649390/espn-receiver-tracking-metrics-how-new-nfl-stats-work-open-catch-yac-scores" target="_blank">Read more</a> about how ESPN Analytics's receiver ratings work.</div>
         <!-- <div class="footnote">Design ideas from <a href="https://fivethirtyeight.com/contributors/ryan-best/" target="_blank">Ryan Best</a>. Statistical model by Brian Burke. Additional contributions by <a href="https://benjaminharden.vercel.app/" target="_blank">Ben Harden</a>, Henry Gargiulo, Matt Morris and Chris Harden.</div> -->
     </div>

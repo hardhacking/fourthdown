@@ -52,12 +52,118 @@ const events = ref([])
 const event = ref({})
 let colArray = ref({})
 onMounted(async () => {
-    let temp = await store.events
-    events.value = temp.events
-    event.value = events.value[id.value]
+  let temp = await store.events
+  events.value = temp.events
+  event.value = events.value[id.value]
 
-    const supabase = createClient('https://oeaoxcbbfdmnrrujkmwj.supabase.co', 
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9lYW94Y2JiZmRtbnJydWprbXdqIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTYwNDAyMTYsImV4cCI6MjAxMTYxNjIxNn0.hStQulqxb14rENfHdpTsuBkkWLwkiDiVU8Uj8fCeTGc')
+  const supabase = createClient('https://oeaoxcbbfdmnrrujkmwj.supabase.co', 
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9lYW94Y2JiZmRtbnJydWprbXdqIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTYwNDAyMTYsImV4cCI6MjAxMTYxNjIxNn0.hStQulqxb14rENfHdpTsuBkkWLwkiDiVU8Uj8fCeTGc')
+  let fullResponse = await supabase.functions.invoke('cfb-gonogo', {body: {id: event.value.id}})
+  let response = fullResponse.data
+
+  if (response.playId) {
+      if (response.green) {
+        let home = ''
+        let away = ''
+        let ydline = ''
+        const gameString = event.value.shortName
+        const regex = /(\w+)\s@\s(\w+)/
+        const result = regex.exec(gameString)
+        if (result !== null) {
+          const [_, team1, team2] = result
+          const teams = [{ team: team1 }, { team: team2 }]
+          home = teams[1].team
+          away = teams[0].team
+        }
+        if (response.yardsToEndzone == response.ballSpot) {
+          if (response.yardsToEndzone > 50) {
+            ydline = away + ' ' + (100 - response.yardsToEndzone)
+          } else {
+            ydline = home + ' ' + response.yardsToEndzone
+          }
+        } else {
+          if (response.yardsToEndzone > 50) {
+            ydline = home + ' ' + (100 - response.yardsToEndzone)
+          } else {
+            ydline = away + ' ' + response.yardsToEndzone
+          }
+        }
+        if (response.down == "-1") {
+          let prevPlay = JSON.parse(localStorage.getItem('lastPlay_' + event.value.id))
+          if (!prevPlay) {
+            colArray.value = {
+              'green': '',
+              'yellow': '',
+              'red': '',
+              'title1': event.value.shortName,
+              'title2': 'Waiting for Next Drive'
+            }
+          } else {
+            if (response.yardsToEndzone == 0) {
+              ydline = prevPlay.ydline
+            }
+            response.down = prevPlay.down
+            response.distance = prevPlay.distance
+            colArray.value = {
+              'green': response.green,
+              'yellow': response.yellow,
+              'red': response.red,
+              'down': response.down,
+              'distance': response.distance,
+              'ydline': ydline,
+              'title1': event.value.shortName,
+              'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)'))
+            }
+            localStorage.setItem('lastPlay_' + event.value.id, JSON.stringify(colArray.value))
+          }
+        } else {
+          if (response.yardsToEndzone == 0) {
+            let prevPlay = JSON.parse(localStorage.getItem('lastPlay_' + event.value.id))
+            if (prevPlay) {
+              ydline = prevPlay.ydline
+            }
+          }
+          colArray.value = {
+            'green': response.green,
+            'yellow': response.yellow,
+            'red': response.red,
+            'down': response.down,
+            'distance': response.distance,
+            'ydline': ydline,
+            'title1': event.value.shortName,
+            'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)'))
+          }
+          localStorage.setItem('lastPlay_' + event.value.id, JSON.stringify(colArray.value))
+        }
+      } else {
+          colArray.value = JSON.parse(localStorage.getItem('lastPlay_' + event.value.id))
+          if (!colArray.value) {
+            colArray.value = {
+              'green': '',
+              'yellow': '',
+              'red': '',
+              'down': '', 
+              'distance': '',
+              'ydline': '',
+              'title1': event.value.shortName,
+              'title2': 'Waiting for Next Drive'
+            }
+          }
+      }
+  } else {
+    colArray.value = {
+      'green': '',
+      'yellow': '',
+      'red': '',
+      'down': '', 
+      'distance': '',
+      'ydline': '',
+      'title1': event.value.shortName,
+      'title2': 'Upcoming'
+    }
+  }
+
+  async function refreshing() {
     let fullResponse = await supabase.functions.invoke('cfb-gonogo', {body: {id: event.value.id}})
     let response = fullResponse.data
 
@@ -162,6 +268,9 @@ onMounted(async () => {
         'title2': 'Upcoming'
       }
     }
+    console.log("refreshing")
+  }
+  setInterval(() => refreshing(), 15000);
     
 })
 

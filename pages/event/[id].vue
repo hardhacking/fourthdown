@@ -11,9 +11,9 @@
             <img src="../../assets/logo.png" @click="navigateTo('/')" class="h-12 xxs:h-20 cursor-pointer" alt="">
         </div>
         <div class="mycontainer w-full"> 
-            <div class="stoplight-cont">
+            <div class="stoplight-cont" v-if="colArray.title1">
                 <div id = "outer" class="play-info-container">
-                    <h2 class="text-espngray-900 text-xl font-medium" id="title">{{ colArray.title1 }}</h2>
+                    <h2 class="text-espngray-900 text-xl font-medium" id="title"><strong v-if="colArray.away != ''">{{ Math.round(colArray.away) }}</strong> {{ colArray.title1 }} <strong v-if="colArray.away != ''">{{ Math.round(colArray.home) }}</strong></h2>
                     <h2 class="text-espngray-900 text-xl font-medium" id="title">{{ colArray.title2 }}</h2>
                 </div>
                 <div class="stop-light" id="stop-light">
@@ -69,14 +69,16 @@ onMounted(async () => {
 
   if (event.value.status.type.state == 'post') {
     colArray.value = {
-      'green': '',
-      'yellow': '',
-      'red': '',
+      'green': '-',
+      'yellow': '-',
+      'red': '-',
       'down': '', 
       'distance': '',
       'ydline': '',
       'title1': event.value.shortName,
-      'title2': 'Final'
+      'title2': 'Final',
+      'home': response.homeScore,
+      'away': response.awayScore
     }
   } else if (event.value.status.type.state == 'pre') {
     colArray.value = {
@@ -87,7 +89,9 @@ onMounted(async () => {
       'distance': '',
       'ydline': '',
       'title1': event.value.shortName,
-      'title2': 'Upcoming'
+      'title2': 'Upcoming',
+      'home': '', 
+      'away': ''
     }
   } else {
     if (response.playId) {
@@ -125,7 +129,9 @@ onMounted(async () => {
               'yellow': '',
               'red': '',
               'title1': event.value.shortName,
-              'title2': 'Waiting for Next Drive'
+              'title2': 'Waiting for Next Drive',
+              'home': response.homeScore,
+              'away': response.awayScore
             }
           } else {
             if (response.yardsToEndzone == 0) {
@@ -141,7 +147,9 @@ onMounted(async () => {
               'distance': response.distance,
               'ydline': ydline,
               'title1': event.value.shortName,
-              'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)'))
+              'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)')),
+              'home': response.homeScore,
+              'away': response.awayScore
             }
             localStorage.setItem('lastPlay_' + event.value.id, JSON.stringify(colArray.value))
           }
@@ -160,7 +168,9 @@ onMounted(async () => {
             'distance': response.distance,
             'ydline': ydline,
             'title1': event.value.shortName,
-            'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)'))
+            'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)')),
+            'home': response.homeScore,
+            'away': response.awayScore
           }
           localStorage.setItem('lastPlay_' + event.value.id, JSON.stringify(colArray.value))
         }
@@ -175,7 +185,9 @@ onMounted(async () => {
               'distance': '',
               'ydline': '',
               'title1': event.value.shortName,
-              'title2': 'Waiting for Next Drive'
+              'title2': 'Waiting for Next Drive',
+              'home': response.homeScore,
+              'away': response.awayScore
             }
           }
       }
@@ -188,21 +200,25 @@ onMounted(async () => {
         'distance': '',
         'ydline': '',
         'title1': event.value.shortName,
-        'title2': 'Starting'
+        'title2': 'Starting',
+        'home': response.homeScore,
+        'away': response.awayScore
       }
     }
 
     async function refreshing() {
       if (event.value.status.type.state == 'post') {
         colArray.value = {
-          'green': '',
-          'yellow': '',
-          'red': '',
+          'green': '-',
+          'yellow': '-',
+          'red': '-',
           'down': '', 
           'distance': '',
           'ydline': '',
           'title1': event.value.shortName,
-          'title2': 'Starting'
+          'title2': 'Final',
+          'home': response.homeScore,
+          'away': response.awayScore
         }
         clearInterval(refreshInterval)
       } else {
@@ -244,7 +260,9 @@ onMounted(async () => {
                     'yellow': '',
                     'red': '',
                     'title1': event.value.shortName,
-                    'title2': 'Waiting for Next Drive'
+                    'title2': 'Waiting for Next Drive',
+                    'home': response.homeScore,
+                    'away': response.awayScore
                   }
                 } else {
                   if (response.yardsToEndzone == 0) {
@@ -260,7 +278,9 @@ onMounted(async () => {
                     'distance': response.distance,
                     'ydline': ydline,
                     'title1': event.value.shortName,
-                    'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)'))
+                    'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)')),
+                    'home': response.homeScore,
+                    'away': response.awayScore
                   }
                   localStorage.setItem('lastPlay_' + event.value.id, JSON.stringify(colArray.value))
                 }
@@ -279,7 +299,9 @@ onMounted(async () => {
                   'distance': response.distance,
                   'ydline': ydline,
                   'title1': event.value.shortName,
-                  'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)'))
+                  'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)')),
+                  'home': response.homeScore,
+                  'away': response.awayScore
                 }
                 localStorage.setItem('lastPlay_' + event.value.id, JSON.stringify(colArray.value))
               }
@@ -294,7 +316,9 @@ onMounted(async () => {
                     'distance': '',
                     'ydline': '',
                     'title1': event.value.shortName,
-                    'title2': 'Waiting for Next Drive'
+                    'title2': 'Waiting for Next Drive',
+                    'home': response.homeScore,
+                    'away': response.awayScore
                   }
                 }
             }
@@ -307,7 +331,9 @@ onMounted(async () => {
             'distance': '',
             'ydline': '',
             'title1': event.value.shortName,
-            'title2': 'Upcoming'
+            'title2': 'Starting',
+            'home': response.homeScore,
+            'away': response.awayScore
           }
         }
         // console.log("refreshing")

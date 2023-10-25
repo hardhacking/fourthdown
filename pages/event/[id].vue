@@ -90,19 +90,48 @@ onMounted(async () => {
           }
           if (response.down == "-1") {
             let prevPlay = JSON.parse(localStorage.getItem('lastPlay_' + id.value))
-            response.down = prevPlay.down
-            response.distance = prevPlay.distance
+            if (!prevPlay) {
+              colArray.value = {
+                'green': '',
+                'yellow': '',
+                'red': '',
+                'title1': event.value.shortName,
+                'title2': 'Waiting for Next Drive'
+              }
+            } else {
+              if (response.yardsToEndzone == 0) {
+                ydline = response.ydline
+              }
+              response.down = prevPlay.down
+              response.distance = prevPlay.distance
+              colArray.value = {
+                'green': response.green,
+                'yellow': response.yellow,
+                'red': response.red,
+                'down': response.down,
+                'distance': response.distance,
+                'ydline': ydline,
+                'title1': event.value.shortName,
+                'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)'))
+              }
+              localStorage.setItem('lastPlay_' + id.value, JSON.stringify(colArray.value))
+            }
+          } else {
+            if (response.yardsToEndzone == 0) {
+              ydline = response.ydline
+            }
+            colArray.value = {
+              'green': response.green,
+              'yellow': response.yellow,
+              'red': response.red,
+              'down': response.down,
+              'distance': response.distance,
+              'ydline': ydline,
+              'title1': event.value.shortName,
+              'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)'))
+            }
+            localStorage.setItem('lastPlay_' + id.value, JSON.stringify(colArray.value))
           }
-          colArray.value = {
-            'green': response.green,
-            'yellow': response.yellow,
-            'red': response.red,
-            'down': response.down,
-            'distance': response.distance,
-            'title1': event.value.shortName,
-            'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)'))
-          }
-          localStorage.setItem('lastPlay_' + id.value, JSON.stringify(colArray.value))
         } else {
             colArray.value = JSON.parse(localStorage.getItem('lastPlay_' + id.value))
             if (!colArray.value) {
@@ -110,6 +139,9 @@ onMounted(async () => {
                 'green': '',
                 'yellow': '',
                 'red': '',
+                'down': '', 
+                'distance': '',
+                'ydline': '',
                 'title1': event.value.shortName,
                 'title2': 'Waiting for Next Drive'
               }
@@ -120,6 +152,9 @@ onMounted(async () => {
         'green': '',
         'yellow': '',
         'red': '',
+        'down': '', 
+        'distance': '',
+        'ydline': '',
         'title1': event.value.shortName,
         'title2': 'Upcoming'
       }

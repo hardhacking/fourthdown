@@ -89,7 +89,7 @@ onMounted(async () => {
             }
           }
           if (response.down == "-1") {
-            let prevPlay = JSON.parse(localStorage.getItem('lastPlay_' + id.value))
+            let prevPlay = JSON.parse(localStorage.getItem('lastPlay_' + event.value.id))
             if (!prevPlay) {
               colArray.value = {
                 'green': '',
@@ -114,7 +114,7 @@ onMounted(async () => {
                 'title1': event.value.shortName,
                 'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)'))
               }
-              localStorage.setItem('lastPlay_' + id.value, JSON.stringify(colArray.value))
+              localStorage.setItem('lastPlay_' + event.value.id, JSON.stringify(colArray.value))
             }
           } else {
             if (response.yardsToEndzone == 0) {
@@ -130,10 +130,10 @@ onMounted(async () => {
               'title1': event.value.shortName,
               'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)'))
             }
-            localStorage.setItem('lastPlay_' + id.value, JSON.stringify(colArray.value))
+            localStorage.setItem('lastPlay_' + event.value.id, JSON.stringify(colArray.value))
           }
         } else {
-            colArray.value = JSON.parse(localStorage.getItem('lastPlay_' + id.value))
+            colArray.value = JSON.parse(localStorage.getItem('lastPlay_' + event.value.id))
             if (!colArray.value) {
               colArray.value = {
                 'green': '',

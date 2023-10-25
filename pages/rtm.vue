@@ -1,4 +1,7 @@
 <template>
+    <Head>
+        <Title>Receiver Tracking Metrics</Title>
+    </Head>
     <div class="bg-espngray-100">
       <div class="relative flex items-center justify-center w-full p-5">
           <!-- <button type="button" onclick="location.href='http://internal.espnanalytics.com/nfl/';" class="hidden xs:flex gap-2 items-center absolute lg:top-10 lg:left-10 top-5 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
@@ -18,7 +21,7 @@
             <div class="text-4xl font-bold text-center text-espngray-900">The Best NFL Receivers</div>
             <div class="text-espngray-600 font-normal text-sm">Updated through Week 7</div>
             <div class="p-2 lg:p-0 max-w-4xl text-center font-medium text-espngray-600">These ratings, updated weekly, use player-tracking data from NFL Next Gen Stats to evaluate every route a pass catcher runs and scores his performance in three phases of the
-            game, from 0 to 99.</div>
+            game, from 0 to 99<sup class="cursor-pointer" @click="clickedFootnote()">1</sup>.</div>
         </div>
         <div class="hidden sm:block text-xl pt-5 text-center font-bold text-espngray-900">The Top Five: Four Different Ways</div>
       <!-- <div class="flex flex-col justify-center pt-5">
@@ -78,7 +81,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex justify-start gap-4 pt-2">
+                    <div class="flex justify-start gap-4 pt-2 flex-wrap">
                         <select class="rounded-sm w-32 xs:w-fit bg-gray-50 border border-espngray-300 text-espngray-900 text-sm focus:ring-blue-500 focus:border-blue-500 p-2.5" v-model="chartTeams" @change="updateScatterData()">
                             <option value="all">All teams</option>
                             <option v-for="team in teams" :value="team.tm">{{ team.team_name }}</option>
@@ -89,7 +92,7 @@
                             <option value="TE">TE</option>
                             <option value="RB">RB</option>
                         </select>
-                        <!-- <input type="search"> -->
+                        <input class="rounded-sm bg-gray-50 border border-espngray-300 text-espngray-900 text-sm focus:ring-blue-500 focus:border-blue-500" type="search" placeholder="Search" v-model="searchString" @keyup="updateScatterData()" @click="handleClick()">
                     </div>
                 </div>
                 <div class="mt-4 lg:-mt-[3.2em]">
@@ -190,7 +193,7 @@
             </div>
         </div>
         <div class="p-2 lg:p-0 lg:mt-4 max-w-5xl mx-auto py-5 text-left text-xs text-espngray-600">Wide receivers and tight ends with at least 20 targets and running backs with at least 14 in the 2023 season are eligible for a score. Only WR/TE are eligible for the Top 5 leaderboard graphic. For prior seasons, all players with at least 48 targets are included.</div>
-        <div class="p-2 lg:p-0 lg:pb-4 lg:mt-4 max-w-5xl mx-auto pt-5 pb-10 text-left text-xs text-espngray-600"><a class="text-blue-600 underline" href="https://www.espn.com/nfl/story/_/id/34649390/espn-receiver-tracking-metrics-how-new-nfl-stats-work-open-catch-yac-scores" target="_blank">Read more</a> about how ESPN Analytics's receiver ratings work.</div>
+        <div class="p-2 lg:p-0 lg:pb-4 lg:mt-4 max-w-5xl mx-auto pt-5 pb-10 text-left text-xs text-espngray-600"><sup>1</sup><a class="text-blue-600 underline" href="https://www.espn.com/nfl/story/_/id/34649390/espn-receiver-tracking-metrics-how-new-nfl-stats-work-open-catch-yac-scores" target="_blank">Read more</a> about how ESPN Analytics's receiver ratings work.</div>
         <!-- <div class="footnote">Design ideas from <a href="https://fivethirtyeight.com/contributors/ryan-best/" target="_blank">Ryan Best</a>. Statistical model by Brian Burke. Additional contributions by <a href="https://benjaminharden.vercel.app/" target="_blank">Ben Harden</a>, Henry Gargiulo, Matt Morris and Chris Harden.</div> -->
     </div>
   </template>
@@ -199,6 +202,15 @@
 import Chart from 'chart.js/auto'
 import * as d3 from 'd3'
 import axios from 'axios'
+
+// useSeoMeta({
+    // title: 'Receiver Tracking Metrics',
+    // ogTitle: 'Receiver Tracking Metrics',
+    // description: 'This is my amazing site, let me tell you all about it.',
+    // ogDescription: 'This is my amazing site, let me tell you all about it.',
+    // ogImage: 'https://example.com/image.png',
+    // twitterCard: 'summary_large_image',
+// })
 
 export default {
   data() {
@@ -226,6 +238,7 @@ export default {
           chartSort: 'overall',
           prevChartSort: -1,
           chartTeams: 'all',
+          searchString: '',
           openBtn: '',
           catchBtn: '',
           yacBtn: '',
@@ -264,6 +277,14 @@ export default {
       this.teams.sort((a, b) => d3.ascending(a.team_name, b.team_name));
   },
   methods: {
+    handleClick() {
+        if (this.searchString != '') {
+            setTimeout(this.updateScatterData, 300)
+        }
+    },
+    clickedFootnote() {
+        window.scrollTo(0, document.body.scrollHeight)
+    },
     async getData() {
         const response = await axios.get('https://nfl-player-metrics.s3.amazonaws.com/rtm/rtm_data.json');
         this.json = response.data;
@@ -712,11 +733,39 @@ export default {
               }
           }
           if (this.chartTeams != 'all') {
-              this.chartArr = tmpArr.filter((player) => {
-                  return player.tm == this.chartTeams;
+            if (this.searchString != '') {
+                let search = this.searchString.replace(/ /g, '')
+                search = search.replace(/\./g, '')
+                search = search.replace(/\-/g, '')
+                search = search.replace(/\'/g, '').toLowerCase()
+                this.chartArr = tmpArr.filter((player) => {
+                    let nm = player.full_nm.replace(/ /g, '')
+                    nm = nm.replace(/\./g, '')
+                    nm = nm.replace(/\-/g, '')
+                    nm = nm.replace(/\'/g, '').toLowerCase()
+                    return player.tm == this.chartTeams && nm.includes(search)
+                });
+            } else {
+                this.chartArr = tmpArr.filter((player) => {
+                  return player.tm == this.chartTeams
               });
+            }
           } else {
-              this.chartArr = tmpArr;
+            if (this.searchString != '') {
+                let search = this.searchString.replace(/ /g, '')
+                search = search.replace(/\./g, '')
+                search = search.replace(/\-/g, '')
+                search = search.replace(/\'/g, '').toLowerCase()
+                this.chartArr = tmpArr.filter((player) => {
+                    let nm = player.full_nm.replace(/ /g, '')
+                    nm = nm.replace(/\./g, '')
+                    nm = nm.replace(/\-/g, '')
+                    nm = nm.replace(/\'/g, '').toLowerCase()
+                    return nm.includes(search)
+                });
+            } else {
+                this.chartArr = tmpArr
+            }
           }
       },
       getTopFive(arr, value) {

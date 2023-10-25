@@ -1,4 +1,7 @@
 <template>
+  <Head>
+      <Title>{{ (games[id] ? games[id][0].Game : '') }} 4th Downs</Title>
+  </Head>
   <div class="min-h-screen bg-gray-100 ">
     <div class="relative flex items-center justify-center w-full p-5">
       <button type="button" @click="navigateTo('/decision')" class="hidden xxs:flex gap-2 items-center absolute lg:top-10 lg:left-10 top-5 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">

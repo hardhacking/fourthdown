@@ -1,4 +1,7 @@
 <template>
+  <Head>
+      <Title>4th Downs Decision Analysis</Title>
+  </Head>
     <div class="relative min-h-screen bg-gray-100 ">
       <div class="flex items-center justify-center w-full p-5">
         <img src="../assets/logo.png" @click="navigateTo('/')" class="h-20 cursor-pointer" alt="">

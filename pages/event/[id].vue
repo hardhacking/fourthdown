@@ -76,7 +76,7 @@ onMounted(async () => {
       'distance': '',
       'ydline': '',
       'title1': event.value.shortName,
-      'title2': 'Upcoming'
+      'title2': 'Final'
     }
   } else if (event.value.status.type.state == 'pre') {
     colArray.value = {
@@ -87,7 +87,7 @@ onMounted(async () => {
       'distance': '',
       'ydline': '',
       'title1': event.value.shortName,
-      'title2': 'Final'
+      'title2': 'Upcoming'
     }
   } else {
     if (response.playId) {

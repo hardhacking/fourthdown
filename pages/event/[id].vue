@@ -52,6 +52,12 @@ const events = ref([])
 const event = ref({})
 let colArray = ref({})
 onMounted(async () => {
+  function stopRefresh() {
+    clearInterval(refreshInterval)
+    alert('Please refresh or close page')
+  }
+  let refreshTimer = setTimeout(stopRefresh, 600000)
+
   let temp = await store.events
   events.value = temp.events
   event.value = events.value[id.value]
@@ -270,7 +276,7 @@ onMounted(async () => {
     }
     console.log("refreshing")
   }
-  setInterval(() => refreshing(), 15000);
+  let refreshInterval = setInterval(() => refreshing(), 15000);
     
 })
 

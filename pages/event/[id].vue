@@ -54,7 +54,7 @@ let colArray = ref({})
 onMounted(async () => {
   function stopRefresh() {
     clearInterval(refreshInterval)
-    alert('Please refresh or close page')
+    alert('Timed out, please reload page.')
   }
   let refreshTimer = setTimeout(stopRefresh, 600000)
 
@@ -67,7 +67,30 @@ onMounted(async () => {
   let fullResponse = await supabase.functions.invoke('cfb-gonogo', {body: {id: event.value.id}})
   let response = fullResponse.data
 
-  if (response.playId) {
+  if (event.value.status.type.state == 'post') {
+    colArray.value = {
+      'green': '',
+      'yellow': '',
+      'red': '',
+      'down': '', 
+      'distance': '',
+      'ydline': '',
+      'title1': event.value.shortName,
+      'title2': 'Upcoming'
+    }
+  } else if (event.value.status.type.state == 'pre') {
+    colArray.value = {
+      'green': '',
+      'yellow': '',
+      'red': '',
+      'down': '', 
+      'distance': '',
+      'ydline': '',
+      'title1': event.value.shortName,
+      'title2': 'Final'
+    }
+  } else {
+    if (response.playId) {
       if (response.green) {
         let home = ''
         let away = ''
@@ -156,112 +179,6 @@ onMounted(async () => {
             }
           }
       }
-  } else {
-    colArray.value = {
-      'green': '',
-      'yellow': '',
-      'red': '',
-      'down': '', 
-      'distance': '',
-      'ydline': '',
-      'title1': event.value.shortName,
-      'title2': 'Upcoming'
-    }
-  }
-
-  async function refreshing() {
-    let fullResponse = await supabase.functions.invoke('cfb-gonogo', {body: {id: event.value.id}})
-    let response = fullResponse.data
-
-    if (response.playId) {
-        if (response.green) {
-          let home = ''
-          let away = ''
-          let ydline = ''
-          const gameString = event.value.shortName
-          const regex = /(\w+)\s@\s(\w+)/
-          const result = regex.exec(gameString)
-          if (result !== null) {
-            const [_, team1, team2] = result
-            const teams = [{ team: team1 }, { team: team2 }]
-            home = teams[1].team
-            away = teams[0].team
-          }
-          if (response.yardsToEndzone == response.ballSpot) {
-            if (response.yardsToEndzone > 50) {
-              ydline = away + ' ' + (100 - response.yardsToEndzone)
-            } else {
-              ydline = home + ' ' + response.yardsToEndzone
-            }
-          } else {
-            if (response.yardsToEndzone > 50) {
-              ydline = home + ' ' + (100 - response.yardsToEndzone)
-            } else {
-              ydline = away + ' ' + response.yardsToEndzone
-            }
-          }
-          if (response.down == "-1") {
-            let prevPlay = JSON.parse(localStorage.getItem('lastPlay_' + event.value.id))
-            if (!prevPlay) {
-              colArray.value = {
-                'green': '',
-                'yellow': '',
-                'red': '',
-                'title1': event.value.shortName,
-                'title2': 'Waiting for Next Drive'
-              }
-            } else {
-              if (response.yardsToEndzone == 0) {
-                ydline = prevPlay.ydline
-              }
-              response.down = prevPlay.down
-              response.distance = prevPlay.distance
-              colArray.value = {
-                'green': response.green,
-                'yellow': response.yellow,
-                'red': response.red,
-                'down': response.down,
-                'distance': response.distance,
-                'ydline': ydline,
-                'title1': event.value.shortName,
-                'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)'))
-              }
-              localStorage.setItem('lastPlay_' + event.value.id, JSON.stringify(colArray.value))
-            }
-          } else {
-            if (response.yardsToEndzone == 0) {
-              let prevPlay = JSON.parse(localStorage.getItem('lastPlay_' + event.value.id))
-              if (prevPlay) {
-                ydline = prevPlay.ydline
-              }
-            }
-            colArray.value = {
-              'green': response.green,
-              'yellow': response.yellow,
-              'red': response.red,
-              'down': response.down,
-              'distance': response.distance,
-              'ydline': ydline,
-              'title1': event.value.shortName,
-              'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)'))
-            }
-            localStorage.setItem('lastPlay_' + event.value.id, JSON.stringify(colArray.value))
-          }
-        } else {
-            colArray.value = JSON.parse(localStorage.getItem('lastPlay_' + event.value.id))
-            if (!colArray.value) {
-              colArray.value = {
-                'green': '',
-                'yellow': '',
-                'red': '',
-                'down': '', 
-                'distance': '',
-                'ydline': '',
-                'title1': event.value.shortName,
-                'title2': 'Waiting for Next Drive'
-              }
-            }
-        }
     } else {
       colArray.value = {
         'green': '',
@@ -271,12 +188,135 @@ onMounted(async () => {
         'distance': '',
         'ydline': '',
         'title1': event.value.shortName,
-        'title2': 'Upcoming'
+        'title2': 'Starting'
       }
     }
-    console.log("refreshing")
+
+    async function refreshing() {
+      if (event.value.status.type.state == 'post') {
+        colArray.value = {
+          'green': '',
+          'yellow': '',
+          'red': '',
+          'down': '', 
+          'distance': '',
+          'ydline': '',
+          'title1': event.value.shortName,
+          'title2': 'Starting'
+        }
+        clearInterval(refreshInterval)
+      } else {
+        let fullResponse = await supabase.functions.invoke('cfb-gonogo', {body: {id: event.value.id}})
+        let response = fullResponse.data
+
+        if (response.playId) {
+            if (response.green) {
+              let home = ''
+              let away = ''
+              let ydline = ''
+              const gameString = event.value.shortName
+              const regex = /(\w+)\s@\s(\w+)/
+              const result = regex.exec(gameString)
+              if (result !== null) {
+                const [_, team1, team2] = result
+                const teams = [{ team: team1 }, { team: team2 }]
+                home = teams[1].team
+                away = teams[0].team
+              }
+              if (response.yardsToEndzone == response.ballSpot) {
+                if (response.yardsToEndzone > 50) {
+                  ydline = away + ' ' + (100 - response.yardsToEndzone)
+                } else {
+                  ydline = home + ' ' + response.yardsToEndzone
+                }
+              } else {
+                if (response.yardsToEndzone > 50) {
+                  ydline = home + ' ' + (100 - response.yardsToEndzone)
+                } else {
+                  ydline = away + ' ' + response.yardsToEndzone
+                }
+              }
+              if (response.down == "-1") {
+                let prevPlay = JSON.parse(localStorage.getItem('lastPlay_' + event.value.id))
+                if (!prevPlay) {
+                  colArray.value = {
+                    'green': '',
+                    'yellow': '',
+                    'red': '',
+                    'title1': event.value.shortName,
+                    'title2': 'Waiting for Next Drive'
+                  }
+                } else {
+                  if (response.yardsToEndzone == 0) {
+                    ydline = prevPlay.ydline
+                  }
+                  response.down = prevPlay.down
+                  response.distance = prevPlay.distance
+                  colArray.value = {
+                    'green': response.green,
+                    'yellow': response.yellow,
+                    'red': response.red,
+                    'down': response.down,
+                    'distance': response.distance,
+                    'ydline': ydline,
+                    'title1': event.value.shortName,
+                    'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)'))
+                  }
+                  localStorage.setItem('lastPlay_' + event.value.id, JSON.stringify(colArray.value))
+                }
+              } else {
+                if (response.yardsToEndzone == 0) {
+                  let prevPlay = JSON.parse(localStorage.getItem('lastPlay_' + event.value.id))
+                  if (prevPlay) {
+                    ydline = prevPlay.ydline
+                  }
+                }
+                colArray.value = {
+                  'green': response.green,
+                  'yellow': response.yellow,
+                  'red': response.red,
+                  'down': response.down,
+                  'distance': response.distance,
+                  'ydline': ydline,
+                  'title1': event.value.shortName,
+                  'title2': response.down + ((response.down == "1") ? 'st' : ((response.down == "2") ? 'nd' : ((response.down == "3") ? 'rd' : 'th'))) + ' & ' + response.distance + ' at ' + ydline + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)'))
+                }
+                localStorage.setItem('lastPlay_' + event.value.id, JSON.stringify(colArray.value))
+              }
+            } else {
+                colArray.value = JSON.parse(localStorage.getItem('lastPlay_' + event.value.id))
+                if (!colArray.value) {
+                  colArray.value = {
+                    'green': '',
+                    'yellow': '',
+                    'red': '',
+                    'down': '', 
+                    'distance': '',
+                    'ydline': '',
+                    'title1': event.value.shortName,
+                    'title2': 'Waiting for Next Drive'
+                  }
+                }
+            }
+        } else {
+          colArray.value = {
+            'green': '',
+            'yellow': '',
+            'red': '',
+            'down': '', 
+            'distance': '',
+            'ydline': '',
+            'title1': event.value.shortName,
+            'title2': 'Upcoming'
+          }
+        }
+        // console.log("refreshing")
+      }
+      }
+    let refreshInterval = setInterval(() => refreshing(), 15000);
   }
-  let refreshInterval = setInterval(() => refreshing(), 15000);
+
+  
     
 })
 

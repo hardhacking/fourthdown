@@ -100,7 +100,7 @@ onMounted(async () => {
               }
             } else {
               if (response.yardsToEndzone == 0) {
-                ydline = response.ydline
+                ydline = prevPlay.ydline
               }
               response.down = prevPlay.down
               response.distance = prevPlay.distance
@@ -118,7 +118,10 @@ onMounted(async () => {
             }
           } else {
             if (response.yardsToEndzone == 0) {
-              ydline = response.ydline
+              let prevPlay = JSON.parse(localStorage.getItem('lastPlay_' + event.value.id))
+              if (prevPlay) {
+                ydline = prevPlay.ydline
+              }
             }
             colArray.value = {
               'green': response.green,

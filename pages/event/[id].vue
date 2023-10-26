@@ -204,17 +204,32 @@ onMounted(async () => {
           // }
       }
     } else {
-      colArray.value = {
-        'green': '',
-        'yellow': '',
-        'red': '',
-        'down': '', 
-        'distance': '',
-        'ydline': '',
-        'title1': event.value.shortName,
-        'title2': 'Starting',
-        'home': response.homeScore,
-        'away': response.awayScore
+      if (response.homeScore > 0) {
+        colArray.value = {
+          'green': '-',
+          'yellow': '-',
+          'red': '-',
+          'down': '', 
+          'distance': '',
+          'ydline': '',
+          'title1': event.value.shortName,
+          'title2': 'Final',
+          'home': response.homeScore,
+          'away': response.awayScore
+        }
+      } else {
+        colArray.value = {
+          'green': '',
+          'yellow': '',
+          'red': '',
+          'down': '', 
+          'distance': '',
+          'ydline': '',
+          'title1': event.value.shortName,
+          'title2': 'Starting',
+          'home': response.homeScore,
+          'away': response.awayScore
+        }
       }
     }
 
@@ -319,17 +334,32 @@ onMounted(async () => {
                 }
           }
         } else {
-          colArray.value = {
-            'green': '',
-            'yellow': '',
-            'red': '',
-            'down': '', 
-            'distance': '',
-            'ydline': '',
-            'title1': event.value.shortName,
-            'title2': 'Starting',
-            'home': response.homeScore,
-            'away': response.awayScore
+          if (response.homeScore > 0) {
+            colArray.value = {
+              'green': '-',
+              'yellow': '-',
+              'red': '-',
+              'down': '', 
+              'distance': '',
+              'ydline': '',
+              'title1': event.value.shortName,
+              'title2': 'Final',
+              'home': response.homeScore,
+              'away': response.awayScore
+            }
+          } else {
+            colArray.value = {
+              'green': '',
+              'yellow': '',
+              'red': '',
+              'down': '', 
+              'distance': '',
+              'ydline': '',
+              'title1': event.value.shortName,
+              'title2': 'Starting',
+              'home': response.homeScore,
+              'away': response.awayScore
+            }
           }
         }
       }

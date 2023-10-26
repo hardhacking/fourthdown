@@ -41,19 +41,12 @@ onMounted(async () => {
 })
 
 const getDate = (str) => {
-    // Extract the date part (first 8 characters)
-    const datePart = str.substring(0, 10);
-    // Convert it to a Date object
-    const date = new Date(Date.UTC(
-        datePart.substring(0, 4),
-        datePart.substring(5, 7) - 1, // Subtract 1 from month to adjust for 0-based indexing
-        datePart.substring(8, 10),
-        12, // Noon (12:00:00) in UTC
-        0,  // Minutes
-        0   // Seconds
-    ));
-    // Format it as a nice date string
-    const niceDateString = date.toDateString();
+    var utcDate = new Date(str);
+
+    var nyTimeZone = 'America/New_York';
+    var nyDate = new Intl.DateTimeFormat('en-US', { timeZone: nyTimeZone }).format(utcDate);
+    
+    const niceDateString = nyDate
     return niceDateString;
 }
 </script>

@@ -131,7 +131,7 @@ onMounted(async () => {
               'yellow': '',
               'red': '',
               'title1': event.value.shortName,
-              'title2': 'Waiting for Next Set of Downs',
+              'title2': 'Waiting for Next Set of Downs' + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)')),
               'home': response.homeScore,
               'away': response.awayScore
             }
@@ -166,7 +166,7 @@ onMounted(async () => {
               'yellow': '',
               'red': '',
               'title1': event.value.shortName,
-              'title2': 'Waiting for Next Set of Downs',
+              'title2': 'Waiting for Next Set of Downs' + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)')),
               'home': response.homeScore,
               'away': response.awayScore
             }
@@ -197,39 +197,24 @@ onMounted(async () => {
               'distance': '',
               'ydline': '',
               'title1': event.value.shortName,
-              'title2': 'Waiting for Next Set of Downs',
+              'title2': 'Waiting for Next Set of Downs' + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)')),
               'home': response.homeScore,
               'away': response.awayScore
             }
           // }
       }
     } else {
-      if (response.homeScore > 0) {
-        colArray.value = {
-          'green': '-',
-          'yellow': '-',
-          'red': '-',
-          'down': '', 
-          'distance': '',
-          'ydline': '',
-          'title1': event.value.shortName,
-          'title2': 'Final',
-          'home': response.homeScore,
-          'away': response.awayScore
-        }
-      } else {
-        colArray.value = {
-          'green': '',
-          'yellow': '',
-          'red': '',
-          'down': '', 
-          'distance': '',
-          'ydline': '',
-          'title1': event.value.shortName,
-          'title2': 'Starting',
-          'home': response.homeScore,
-          'away': response.awayScore
-        }
+      colArray.value = {
+        'green': '',
+        'yellow': '',
+        'red': '',
+        'down': '', 
+        'distance': '',
+        'ydline': '',
+        'title1': event.value.shortName,
+        'title2': 'Waiting for Next Set of Downs' + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)')),
+        'home': response.homeScore,
+        'away': response.awayScore
       }
     }
 
@@ -289,7 +274,7 @@ onMounted(async () => {
                   'yellow': '',
                   'red': '',
                   'title1': event.value.shortName,
-                  'title2': 'Waiting for Next Set of Downs',
+                  'title2': 'Waiting for Next Set of Downs' + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)')),
                   'home': response.homeScore,
                   'away': response.awayScore
                 }
@@ -300,7 +285,7 @@ onMounted(async () => {
                   'yellow': '',
                   'red': '',
                   'title1': event.value.shortName,
-                  'title2': 'Waiting for Next Set of Downs',
+                  'title2': 'Waiting for Next Set of Downs' + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)')),
                   'home': response.homeScore,
                   'away': response.awayScore
                 }
@@ -328,38 +313,23 @@ onMounted(async () => {
                   'distance': '',
                   'ydline': '',
                   'title1': event.value.shortName,
-                  'title2': 'Waiting for Next Set of Downs',
+                  'title2': 'Waiting for Next Set of Downs' + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)')),
                   'home': response.homeScore,
                   'away': response.awayScore
                 }
           }
         } else {
-          if (response.homeScore > 0) {
-            colArray.value = {
-              'green': '-',
-              'yellow': '-',
-              'red': '-',
-              'down': '', 
-              'distance': '',
-              'ydline': '',
-              'title1': event.value.shortName,
-              'title2': 'Final',
-              'home': response.homeScore,
-              'away': response.awayScore
-            }
-          } else {
-            colArray.value = {
-              'green': '',
-              'yellow': '',
-              'red': '',
-              'down': '', 
-              'distance': '',
-              'ydline': '',
-              'title1': event.value.shortName,
-              'title2': 'Starting',
-              'home': response.homeScore,
-              'away': response.awayScore
-            }
+          colArray.value = {
+            'green': '',
+            'yellow': '',
+            'red': '',
+            'down': '', 
+            'distance': '',
+            'ydline': '',
+            'title1': event.value.shortName,
+            'title2': 'Waiting for Next Set of Downs' + ' (' + ((event.value.status.period < 2) ? '1Q)' : ((event.value.status.period < 5) ? event.value.status.period + 'Q)' : event.value.status.period - 4 + 'OT)')),
+            'home': response.homeScore,
+            'away': response.awayScore
           }
         }
       }
@@ -369,7 +339,7 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => {
-  console.log('destroyed')
+  // console.log('destroyed')
   clearInterval(refreshInterval.value)
   clearTimeout(refreshTimer.value)
 })

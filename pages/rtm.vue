@@ -19,7 +19,7 @@
       </div>
         <div class="flex flex-col items-center gap-4">
             <div class="text-4xl font-bold text-center text-espngray-900">The Best NFL Receivers</div>
-            <div class="text-espngray-600 font-normal text-sm">Updated through Week 8</div>
+            <div class="text-espngray-600 font-normal text-sm">Updated through Week {{ weekUpdate }}</div>
             <div class="p-2 lg:p-0 max-w-4xl text-center font-medium text-espngray-600">These ratings, updated weekly, use player-tracking data from NFL Next Gen Stats to evaluate every route a pass catcher runs and scores his performance in three phases of the
             game, from 0 to 99<sup class="cursor-pointer" @click="clickedFootnote()">1</sup>.</div>
         </div>
@@ -137,8 +137,8 @@
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white">
-                                        <tr v-for="(player, i) in tableArr" class="odd:bg-espngray-100 even:bg-gray-50">
-                                            <td class="whitespace-nowrap text-left py-3 pl-0.5 xs:pl-1 pr-0.5 text-[10px] xs:text-xs font-medium text-espnblack">{{ i + 1 }}</td>
+                                        <tr v-for="player in tableArr" class="odd:bg-espngray-100 even:bg-gray-50">
+                                            <td class="whitespace-nowrap text-left py-3 pl-0.5 xs:pl-1 pr-0.5 text-[10px] xs:text-xs font-medium text-espnblack">{{ player.table_rk }}</td>
                                             <td class="hidden xs:table-cell whitespace-nowrap text-left py-3 pl-0.5 pr-0.5 xs:pr-1 text-xs xs:text-base font-medium text-espnblack" v-if="player.max_season != player.min_season">{{ player.full_nm }} <span class="-ml-0.5 text-espngray-600 font-normal text-xs">{{ player.min_season + '-' + player.max_season.toString().substring(2) }}</span></td>
                                             <td class="hidden xs:table-cell whitespace-nowrap text-left py-3 pl-0.5 pr-0.5 xs:pr-1 text-xs xs:text-base font-medium text-espnblack border-r-2 border-dashed sm:border-0" v-else>{{ player.full_nm }} <span class="-ml-0.5 text-espngray-600 font-normal text-xs">{{ player.max_season }}</span></td>
                                             <td class="table-cell xs:hidden whitespace-nowrap text-left py-3 pl-0.5 pr-0.5 xs:pr-1 text-[10px] xs:text-base font-medium text-espnblack" v-if="player.max_season != player.min_season">{{ player.first_nm.substring(0, 1) + ". " + player.last_nm }} <span class="-ml-0.5 text-espngray-600 font-normal text-[10px]">{{ '\'' + player.min_season.toString().substring(2) + '-' + player.max_season.toString().substring(2) }}</span></td>
@@ -192,7 +192,7 @@
                 </div>
             </div>
         </div>
-        <div class="p-2 lg:p-0 lg:mt-4 max-w-5xl mx-auto py-5 text-left text-xs text-espngray-600">Wide receivers and tight ends with at least 22 targets and running backs with at least 15 in the 2023 season are eligible for a score. Only WR/TE are eligible for the Top 5 leaderboard graphic. For prior seasons, all players with at least 48 targets are included.</div>
+        <div class="p-2 lg:p-0 lg:mt-4 max-w-5xl mx-auto py-5 text-left text-xs text-espngray-600">Wide receivers and tight ends with at least {{ minWrTgt }} targets and running backs with at least {{ minRbTgt }} in the 2023 season are eligible for a score. Only WR/TE are eligible for the Top 5 leaderboard graphic. For prior seasons, all players with at least 48 targets are included.</div>
         <div class="p-2 lg:p-0 lg:pb-4 lg:mt-4 max-w-5xl mx-auto pt-5 pb-10 text-left text-xs text-espngray-600"><sup>1</sup><a class="text-blue-600 underline" href="https://www.espn.com/nfl/story/_/id/34649390/espn-receiver-tracking-metrics-how-new-nfl-stats-work-open-catch-yac-scores" target="_blank">Read more</a> about how ESPN Analytics's receiver ratings work.</div>
         <!-- <div class="footnote">Design ideas from <a href="https://fivethirtyeight.com/contributors/ryan-best/" target="_blank">Ryan Best</a>. Statistical model by Brian Burke. Additional contributions by <a href="https://benjaminharden.vercel.app/" target="_blank">Ben Harden</a>, Henry Gargiulo, Matt Morris and Chris Harden.</div> -->
     </div>
@@ -225,6 +225,7 @@ export default {
           teams: [],
           tableArr: [],
           json: [],
+          response: null,
 
           showOverall: false,
           showOpen: false,
@@ -254,12 +255,25 @@ export default {
           tgtsHeader: '',
           ydsPerRtHeader: '',
           overallHeader: 'overall_header',
-          testData: 112,
+          minWrTgt: 22,
+          minRbTgt: 15,
+          weekUpdate: null,
       }
   },
   async mounted() {
     await this.getData();
+    this.minWrTgt = this.json.filter(f => {
+        return f.min_season == 2023 & f.max_season == 2023 & (f.position == 'WR' | f.position == 'TE')
+    })[0].min_rtm_targets
+    this.minRbTgt = this.json.filter(f => {
+        return f.min_season == 2023 & f.max_season == 2023 & (f.position == 'RB' | f.position == 'FB')
+    })[0].min_rtm_targets
+    const lastMod = new Date(this.response.headers['last-modified'])
+    const week0 = new Date("2023-09-05")
+    const timeDifferenceInMilliseconds = lastMod.getTime() - week0.getTime()
+    this.weekUpdate = Math.round(timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24) / 7)
       await this.getSeason(this.json);
+      
       this.buildPage();
       this.buildScatter();
       window.addEventListener('resize', this.handleResize);
@@ -286,8 +300,8 @@ export default {
         window.scrollTo(0, document.body.scrollHeight)
     },
     async getData() {
-        const response = await axios.get('https://nfl-player-metrics.s3.amazonaws.com/rtm/rtm_data.json');
-        this.json = response.data;
+        this.response = await axios.get('https://nfl-player-metrics.s3.amazonaws.com/rtm/rtm_data.json');
+        this.json = this.response.data;
         this.json.map(player => {
             player.first_last_nm = player.first_nm.substring(0, 1) + ". " + player.last_nm;
             player.yds_per_rt = (player.yds / player.rtm_routes).toFixed(1)
@@ -556,11 +570,21 @@ export default {
                 arr.sort((a, b) => a[sortMetric] - b[sortMetric]);
             }
         }
-          arr.map((d, i) => {
-              d.rk = i + 1;
-              return d;
-          });
-          return arr;
+        arr.reverse()
+        let rank = 1;
+        let prevValue = null;
+        arr.map((d, i) => {
+            d.rk = i + 1
+            if (d[sortMetric] === prevValue) {
+                d.table_rk = rank;
+            } else {
+                rank = i + 1;
+                d.table_rk = rank;
+            }
+            prevValue = d[sortMetric];
+            return d;
+        });
+        return arr.reverse();
       },
       sortFromTable(value) {
         if (value == 'yds') {

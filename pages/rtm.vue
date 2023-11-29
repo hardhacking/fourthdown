@@ -18,7 +18,7 @@
               <img src="@/assets/ea3.png" @click="navigateTo('/')" class="h-14 xs:h-20 cursor-pointer" alt="">
       </div>
         <div class="flex flex-col items-center gap-4">
-            <div class="text-4xl font-bold text-center text-espngray-900">The Best NFL Receivers</div>
+            <div class="text-4xl font-bold text-center text-espngray-900">Top-rated NFL Receivers</div>
             <div class="text-espngray-600 font-normal text-sm">Updated through Week {{ weekUpdate }}</div>
             <div class="p-2 lg:p-0 max-w-4xl text-center font-medium text-espngray-600">These ratings, updated weekly, use player-tracking data from NFL Next Gen Stats to evaluate every route a pass catcher runs and scores his performance in three phases of the
             game, from 0 to 99<sup class="cursor-pointer" @click="clickedFootnote()">1</sup>.</div>
@@ -806,7 +806,7 @@ export default {
                   player['gap' + value] = 0;
               }
               else {
-                  player['gap' + value] = (previous - player[value]) * (window.innerWidth * .75 - 77.5 - 34.93 - 34.93 - 52) / 21  - 52;
+                  player['gap' + value] = (previous - player[value]) * (window.innerWidth * .79 - 77.5 - 34.93 - 34.93 - 52) / 15  - 52;
                   previous = player[value];
               }
           })

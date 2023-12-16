@@ -123,7 +123,7 @@ onMounted(async () => {
             ydline = away + ' ' + response.yardsToEndzone
           }
         }
-        if (response.down == "-1") {
+        if (response.down == "-1" | response.down == "0") {
           // let prevPlay = JSON.parse(localStorage.getItem('lastPlay_' + event.value.id))
           // if (!prevPlay) {
             colArray.value = {

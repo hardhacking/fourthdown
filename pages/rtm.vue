@@ -806,7 +806,7 @@ export default {
                   player['gap' + value] = 0;
               }
               else {
-                  player['gap' + value] = (previous - player[value]) * (window.innerWidth * .79 - 77.5 - 34.93 - 34.93 - 52) / 21  - 52;
+                  player['gap' + value] = (previous - player[value]) * (window.innerWidth * .77 - 77.5 - 34.93 - 34.93 - 52) / 16  - 52;
                   previous = player[value];
               }
           })

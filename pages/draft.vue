@@ -19,10 +19,10 @@
             </tr>
             <tr class="table-row" id="my-table-row" v-for="(odds,index) in current">
               <th class="td-odds first-col">{{ odds.NICK }}</th>
-              <td class="td-odds cell-odds font-semibold" style="color: black" :style="{backgroundColor: `rgba(${128},${0},${128},${odds.pick2})`}">{{ odds.pick2_text }}</td>
-              <td class="td-odds cell-odds font-semibold" style="color: black" :style="{backgroundColor: `rgba(${128},${0},${128},${odds.pick3})`}">{{ odds.pick3_text }}</td>
-              <td class="td-odds cell-odds font-semibold" style="color: black" :style="{backgroundColor: `rgba(${128},${0},${128},${odds.pick4})`}">{{ odds.pick4_text }}</td>
-              <td class="td-odds cell-odds font-semibold" style="color: black" :style="{backgroundColor: `rgba(${128},${0},${128},${odds.pick5})`}">{{ odds.pick5_text }}</td>
+              <td class="td-odds cell-odds font-semibold" style="color: black" :style="{backgroundColor: `rgba(${170},${0},${170},${odds.pick2})`}">{{ odds.pick2_text }}</td>
+              <td class="td-odds cell-odds font-semibold" style="color: black" :style="{backgroundColor: `rgba(${170},${0},${170},${odds.pick3})`}">{{ odds.pick3_text }}</td>
+              <td class="td-odds cell-odds font-semibold" style="color: black" :style="{backgroundColor: `rgba(${170},${0},${170},${odds.pick4})`}">{{ odds.pick4_text }}</td>
+              <td class="td-odds cell-odds font-semibold" style="color: black" :style="{backgroundColor: `rgba(${170},${0},${170},${odds.pick5})`}">{{ odds.pick5_text }}</td>
               <td class="td-odds last-col cell-odds">{{ odds.proj }}</td>
             </tr>
           </table>
@@ -69,12 +69,13 @@
 
 <script>
 import Chart from 'chart.js/auto'
-import * as d3 from 'd3'
+// import * as d3 from 'd3'
 import 'chartjs-adapter-date-fns'
 
 export default {
     name: 'PlayoffProj',
     data() {
+        this.charts = []
         return {
             pick2: [],
             pick3: [],
@@ -83,7 +84,6 @@ export default {
             overall: [],
             current: [],
             timer: null,
-            charts: [],
             keyIn: 0,
             projections: [],
         }
@@ -93,9 +93,10 @@ export default {
         this.loadPage();
         // window.addEventListener('resize', this.handleResize);
         
-        // this.timer = setInterval(() => {
-        //     this.updatePage()
-        // }, 45000)
+        this.timer = setInterval(() => {
+            this.updatePage()
+            // console.log('updated')
+        }, 45000)
         // setTimeout(() => {
         //   this.fillColor();
         // }, 1000);
@@ -135,20 +136,20 @@ export default {
 //         },
         async updatePage() {
             this.overall = await this.getS3Data('draft_timeseries.json');
+            this.projections = this.overall.map(({NICK, ts, proj}) => ({NICK, ts, proj}));
             this.pick2 = this.overall.map(({NICK, ts, pick2}) => ({NICK, ts, pick2}));
             this.pick3 = this.overall.map(({NICK, ts, pick3}) => ({NICK, ts, pick3}));
             this.pick4 = this.overall.map(({NICK, ts, pick4}) => ({NICK, ts, pick4}));
             this.pick5 = this.overall.map(({NICK, ts, pick5}) => ({NICK, ts, pick5}));
-            this.seed9 = this.overall.map(({NICK, ts, seed9}) => ({NICK, ts, seed9}));
-            this.current = this.overall.slice(-5).map(d => {
+            this.current = this.overall.slice(-7).map(d => {
                 if (d.pick2 == 0) {
                     d.pick2_text = '--';
                 } else if (d.pick2 < 0.01) {
                     d.pick2_text = '<1%';
                 } else if (d.pick2 == 1) {
                     d.pick2_text = '100%';
-                } else if (d.pick2 > 0.99) {
-                    d.pick2_text = '100%';
+                }  else if (d.pick2 > 0.99) {
+                    d.pick2_text = '100%'
                 } else {
                     d.pick2_text = Math.round(d.pick2 * 100) + '%';
                 }
@@ -156,8 +157,8 @@ export default {
                     d.pick3_text = '--';
                 } else if (d.pick3 < 0.01) {
                     d.pick3_text = '<1%';
-                } else if (d.pick2 == 1) {
-                    d.pick2_text = '100%';
+                } else if (d.pick3 == 1) {
+                    d.pick3_text = '100%';
                 }  else if (d.pick3 > 0.99) {
                     d.pick3_text = '100%';
                 } else {
@@ -167,8 +168,8 @@ export default {
                     d.pick4_text = '--';
                 } else if (d.pick4 < 0.01) {
                     d.pick4_text = '<1%';
-                } else if (d.pick2 == 1) {
-                    d.pick2_text = '100%';
+                } else if (d.pick4 == 1) {
+                    d.pick4_text = '100%';
                 }  else if (d.pick4 > 0.99) {
                     d.pick4_text = '100%';
                 } else {
@@ -178,54 +179,53 @@ export default {
                     d.pick5_text = '--';
                 } else if (d.pick5 < 0.01) {
                     d.pick5_text = '<1%';
-                } else if (d.pick2 == 1) {
-                    d.pick2_text = '100%';
+                } else if (d.pick5 == 1) {
+                    d.pick5_text = '100%';
                 }  else if (d.pick5 > 0.99) {
                     d.pick5_text = '100%';
                 } else {
                     d.pick5_text = Math.round(d.pick5 * 100) + '%';
                 }
-                // if (d.seed9 == 0) {
-                //     d.seed9_text = '--';
-                // } else if (d.seed9 < 0.01) {
-                //     d.seed9_text = '<1%';
-                // } else if (d.pick2 == 1) {
-                //     d.pick2_text = '100%';
-                // }  else if (d.seed9 > 0.99) {
-                //     d.seed9_text = '100%';
-                // } else {
-                //     d.seed9_text = Math.round(d.seed9 * 100) + '%';
-                // }
                 return d;
             })
-            this.charts[0].data.datasets[0].data = this.pick4.filter(f => f.NICK == 'Lakers').map(obj => obj.pick4 * 100);
-            this.charts[0].data.datasets[1].data = this.pick4.filter(f => f.NICK == 'Pelicans').map(obj => obj.pick4 * 100);
-            this.charts[0].data.datasets[2].data = this.pick4.filter(f => f.NICK == 'Warriors').map(obj => obj.pick4 * 100);
-            this.charts[0].data.datasets[3].data = this.pick4.filter(f => f.NICK == 'Clippers').map(obj => obj.pick4 * 100);
-            this.charts[0].data.datasets[4].data = this.pick4.filter(f => f.NICK == 'Timberwolves').map(obj => obj.pick4 * 100);
-            this.charts[0].data.labels = this.pick4.filter(f => f.NICK == 'Pelicans').map(obj => obj.ts);
+            this.charts[0].data.datasets[0].data = this.pick2.filter(f => f.NICK == 'Commanders').map(obj => obj.pick2 * 100);
+            this.charts[0].data.datasets[1].data = this.pick2.filter(f => f.NICK == 'Patriots').map(obj => obj.pick2 * 100);
+            this.charts[0].data.datasets[2].data = this.pick2.filter(f => f.NICK == 'Cardinals').map(obj => obj.pick2 * 100);
+            this.charts[0].data.datasets[3].data = this.pick2.filter(f => f.NICK == 'Giants').map(obj => obj.pick2 * 100);
+            this.charts[0].data.labels = this.pick2.filter(f => f.NICK == 'Commanders').map(obj => obj.ts);
             this.charts[0].update();
-            this.charts[1].data.datasets[0].data = this.pick3.filter(f => f.NICK == 'Lakers').map(obj => obj.pick3 * 100);
-            this.charts[1].data.datasets[1].data = this.pick3.filter(f => f.NICK == 'Pelicans').map(obj => obj.pick3 * 100);
-            this.charts[1].data.datasets[2].data = this.pick3.filter(f => f.NICK == 'Warriors').map(obj => obj.pick3 * 100);
-            this.charts[1].data.datasets[3].data = this.pick3.filter(f => f.NICK == 'Clippers').map(obj => obj.pick3 * 100);
-            this.charts[1].data.labels = this.pick3.filter(f => f.NICK == 'Pelicans').map(obj => obj.ts);
+            this.charts[1].data.datasets[0].data = this.pick3.filter(f => f.NICK == 'Patriots').map(obj => obj.pick3 * 100);
+            this.charts[1].data.datasets[1].data = this.pick3.filter(f => f.NICK == 'Cardinals').map(obj => obj.pick3 * 100);
+            this.charts[1].data.datasets[2].data = this.pick3.filter(f => f.NICK == 'Commanders').map(obj => obj.pick3 * 100);
+            this.charts[1].data.datasets[3].data = this.pick3.filter(f => f.NICK == 'Giants').map(obj => obj.pick3 * 100);
+            this.charts[1].data.labels = this.pick3.filter(f => f.NICK == 'Commanders').map(obj => obj.ts);
             this.charts[1].update();
-            this.charts[2].data.datasets[0].data = this.pick2.filter(f => f.NICK == 'Pelicans').map(obj => obj.pick2 * 100);
-            this.charts[2].data.datasets[1].data = this.pick2.filter(f => f.NICK == 'Warriors').map(obj => obj.pick2 * 100);
-            this.charts[2].data.datasets[2].data = this.pick2.filter(f => f.NICK == 'Clippers').map(obj => obj.pick2 * 100);
-            this.charts[2].data.labels = this.pick2.filter(f => f.NICK == 'Pelicans').map(obj => obj.ts);
+            this.charts[2].data.datasets[0].data = this.pick4.filter(f => f.NICK == 'Giants').map(obj => obj.pick4 * 100);
+            this.charts[2].data.datasets[1].data = this.pick4.filter(f => f.NICK == 'Patriots').map(obj => obj.pick4 * 100);
+            this.charts[2].data.datasets[2].data = this.pick4.filter(f => f.NICK == 'Cardinals').map(obj => obj.pick4 * 100);
+            this.charts[2].data.datasets[3].data = this.pick4.filter(f => f.NICK == 'Commanders').map(obj => obj.pick4 * 100);
+            this.charts[2].data.datasets[4].data = this.pick4.filter(f => f.NICK == 'Titans').map(obj => obj.pick4 * 100);
+            this.charts[2].data.datasets[5].data = this.pick4.filter(f => f.NICK == 'Chargers').map(obj => obj.pick4 * 100);
+            this.charts[2].data.labels = this.pick4.filter(f => f.NICK == 'Commanders').map(obj => obj.ts);
             this.charts[2].update();
-            this.charts[3].data.datasets[0].data = this.pick5.filter(f => f.NICK == 'Lakers').map(obj => obj.pick5 * 100);
-            this.charts[3].data.datasets[1].data = this.pick5.filter(f => f.NICK == 'Pelicans').map(obj => obj.pick5 * 100);
-            this.charts[3].data.datasets[2].data = this.pick5.filter(f => f.NICK == 'Warriors').map(obj => obj.pick5 * 100);
-            this.charts[3].data.datasets[3].data = this.pick5.filter(f => f.NICK == 'Timberwolves').map(obj => obj.pick5 * 100);
-            this.charts[3].data.labels = this.pick5.filter(f => f.NICK == 'Pelicans').map(obj => obj.ts);
+            this.charts[3].data.datasets[0].data = this.pick5.filter(f => f.NICK == 'Giants').map(obj => obj.pick5 * 100);
+            this.charts[3].data.datasets[1].data = this.pick5.filter(f => f.NICK == 'Titans').map(obj => obj.pick5 * 100);
+            this.charts[3].data.datasets[2].data = this.pick5.filter(f => f.NICK == 'Chargers').map(obj => obj.pick5 * 100);
+            this.charts[3].data.datasets[3].data = this.pick5.filter(f => f.NICK == 'Patriots').map(obj => obj.pick5 * 100);
+            this.charts[3].data.datasets[4].data = this.pick5.filter(f => f.NICK == 'Cardinals').map(obj => obj.pick5 * 100);
+            this.charts[3].data.datasets[5].data = this.pick5.filter(f => f.NICK == 'Commanders').map(obj => obj.pick5 * 100);
+            this.charts[3].data.datasets[6].data = this.pick5.filter(f => f.NICK == 'Jets').map(obj => obj.pick5 * 100);
+            this.charts[3].data.labels = this.pick5.filter(f => f.NICK == 'Commanders').map(obj => obj.ts);
             this.charts[3].update();
-            // this.charts[4].data.datasets[0].data = this.seed9.filter(f => f.NICK == 'Pelicans').map(obj => obj.seed9 * 100);
-            // this.charts[4].data.datasets[1].data = this.seed9.filter(f => f.NICK == 'Timberwolves').map(obj => obj.seed9 * 100);
-            // this.charts[4].data.labels = this.seed9.filter(f => f.NICK == 'Pelicans').map(obj => obj.ts);
-            // this.charts[4].update();
+            this.charts[4].data.datasets[0].data = this.projections.filter(f => f.NICK == 'Commanders').map(obj => obj.proj);
+            this.charts[4].data.datasets[1].data = this.projections.filter(f => f.NICK == 'Patriots').map(obj => obj.proj);
+            this.charts[4].data.datasets[2].data = this.projections.filter(f => f.NICK == 'Cardinals').map(obj => obj.proj);
+            this.charts[4].data.datasets[3].data = this.projections.filter(f => f.NICK == 'Giants').map(obj => obj.proj);
+            this.charts[4].data.datasets[4].data = this.projections.filter(f => f.NICK == 'Chargers').map(obj => obj.proj);
+            this.charts[4].data.datasets[5].data = this.projections.filter(f => f.NICK == 'Titans').map(obj => obj.proj);
+            this.charts[4].data.datasets[6].data = this.projections.filter(f => f.NICK == 'Jets').map(obj => obj.proj);
+            this.charts[4].data.labels = this.projections.filter(f => f.NICK == 'Commanders').map(obj => obj.ts);
+            this.charts[4].update();
             this.keyIn += 1;
         },
         async loadPage() {

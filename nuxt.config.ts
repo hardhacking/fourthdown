@@ -32,6 +32,12 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'ESPN Analytics',
+      script: [
+        {
+          src: 'https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1329.0/aws-sdk.min.js',
+          // Other attributes like async, defer, etc., if needed
+        },
+      ],
     }
   },
   imports: {

@@ -147,9 +147,10 @@ export default {
                 } else if (d.pick2 < 0.01) {
                     d.pick2_text = '<1%';
                 } else if (d.pick2 == 1) {
+                    console.log(d.pick2);
                     d.pick2_text = '100%';
                 }  else if (d.pick2 > 0.99) {
-                    d.pick2_text = '100%'
+                    d.pick2_text = '>99%'
                 } else {
                     d.pick2_text = Math.round(d.pick2 * 100) + '%';
                 }
@@ -160,7 +161,7 @@ export default {
                 } else if (d.pick3 == 1) {
                     d.pick3_text = '100%';
                 }  else if (d.pick3 > 0.99) {
-                    d.pick3_text = '100%';
+                    d.pick3_text = '>99%';
                 } else {
                     d.pick3_text = Math.round(d.pick3 * 100) + '%';
                 }
@@ -171,7 +172,7 @@ export default {
                 } else if (d.pick4 == 1) {
                     d.pick4_text = '100%';
                 }  else if (d.pick4 > 0.99) {
-                    d.pick4_text = '100%';
+                    d.pick4_text = '>99%';
                 } else {
                     d.pick4_text = Math.round(d.pick4 * 100) + '%';
                 }
@@ -182,7 +183,7 @@ export default {
                 } else if (d.pick5 == 1) {
                     d.pick5_text = '100%';
                 }  else if (d.pick5 > 0.99) {
-                    d.pick5_text = '100%';
+                    d.pick5_text = '>99%';
                 } else {
                     d.pick5_text = Math.round(d.pick5 * 100) + '%';
                 }
@@ -245,7 +246,7 @@ export default {
                 } else if (d.pick2 == 1) {
                     d.pick2_text = '100%';
                 }  else if (d.pick2 > 0.99) {
-                    d.pick2_text = '100%'
+                    d.pick2_text = '>99%'
                 } else {
                     d.pick2_text = Math.round(d.pick2 * 100) + '%';
                 }
@@ -256,7 +257,7 @@ export default {
                 } else if (d.pick3 == 1) {
                     d.pick3_text = '100%';
                 }  else if (d.pick3 > 0.99) {
-                    d.pick3_text = '100%';
+                    d.pick3_text = '>99%';
                 } else {
                     d.pick3_text = Math.round(d.pick3 * 100) + '%';
                 }
@@ -267,7 +268,7 @@ export default {
                 } else if (d.pick4 == 1) {
                     d.pick4_text = '100%';
                 }  else if (d.pick4 > 0.99) {
-                    d.pick4_text = '100%';
+                    d.pick4_text = '>99%';
                 } else {
                     d.pick4_text = Math.round(d.pick4 * 100) + '%';
                 }
@@ -278,7 +279,7 @@ export default {
                 } else if (d.pick5 == 1) {
                     d.pick5_text = '100%';
                 }  else if (d.pick5 > 0.99) {
-                    d.pick5_text = '100%';
+                    d.pick5_text = '>99%';
                 } else {
                     d.pick5_text = Math.round(d.pick5 * 100) + '%';
                 }

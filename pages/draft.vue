@@ -26,6 +26,12 @@
               <td class="td-odds last-col cell-odds">{{ odds.proj }}</td>
             </tr>
           </table>
+        <div class="flex justify-center">
+          <select class="rounded-sm bg-gray-50 border border-espngray-300 text-espngray-900 text-sm focus:ring-blue-500 focus:border-blue-500 p-2.5 pr-8" v-model="dataDate" @change="updatePage()">
+              <option value="2024-01-06">Sat, Jan 6</option>
+              <option value="2024-01-07">Sun, Jan 7</option>
+          </select>
+        </div>
         <div class="charts" id="cjs-charts">
             <div class="chart-cont">
                 <canvas id="chart1">
@@ -86,6 +92,7 @@ export default {
             timer: null,
             keyIn: 0,
             projections: [],
+            dataDate: '2024-01-07',
         }
     },
     mounted() {
@@ -93,10 +100,10 @@ export default {
         this.loadPage();
         // window.addEventListener('resize', this.handleResize);
         
-        this.timer = setInterval(() => {
-            this.updatePage()
-            // console.log('updated')
-        }, 45000)
+        // this.timer = setInterval(() => {
+        //     this.updatePage()
+        //     // console.log('updated')
+        // }, 45000)
         // setTimeout(() => {
         //   this.fillColor();
         // }, 1000);
@@ -135,7 +142,11 @@ export default {
 //                 });
 //         },
         async updatePage() {
-            this.overall = await this.getS3Data('draft_timeseries.json');
+            if (this.dataDate == '2024-01-07') {
+                this.overall = await this.getS3Data('draft_timeseries.json');
+            } else {
+                this.overall = await this.getS3Data('draft_timeseries_20240106.json');
+            }
             this.projections = this.overall.map(({NICK, ts, proj}) => ({NICK, ts, proj}));
             this.pick2 = this.overall.map(({NICK, ts, pick2}) => ({NICK, ts, pick2}));
             this.pick3 = this.overall.map(({NICK, ts, pick3}) => ({NICK, ts, pick3}));
@@ -231,7 +242,11 @@ export default {
         },
         async loadPage() {
             // const parseTime = d3.timeParse('%Y-%m-%dT%H:%M:%SZ');
-            this.overall = await this.getS3Data('draft_timeseries.json');
+            if (this.dataDate == '2024-01-07') {
+                this.overall = await this.getS3Data('draft_timeseries.json');
+            } else {
+                this.overall = await this.getS3Data('draft_timeseries_20240106.json');
+            }
             this.projections = this.overall.map(({NICK, ts, proj}) => ({NICK, ts, proj}));
             this.pick2 = this.overall.map(({NICK, ts, pick2}) => ({NICK, ts, pick2}));
             this.pick3 = this.overall.map(({NICK, ts, pick3}) => ({NICK, ts, pick3}));
@@ -349,17 +364,15 @@ export default {
                 scales: {
                     x: {
                         // display: false,
-                        type: 'time',
+                        type: 'timeseries',
                         time: {
                             unit: 'minute',
                         },
                         afterTickToLabelConversion: (ctx) => {
-                            // console.log(ctx.ticks);
-                            let int = Math.round(ctx.ticks.length / 30);
+                            // let int = Math.round(ctx.ticks.length / 12);
                             ctx.ticks.map((tick, i) => {
-                                if ((i % int)) {
+                                if ((i % 5) > 0) {
                                     tick.label = '';
-                                    tick.value = null;
                                 }
                                 return tick;
                             });
@@ -410,17 +423,17 @@ export default {
                 scales: {
                     x: {
                         // display: false,
-                        type: 'time',
+                        type: 'timeseries',
                         time: {
                             unit: 'minute',
                         },
                         afterTickToLabelConversion: (ctx) => {
                             // console.log(ctx.ticks);
-                            let int = Math.round(ctx.ticks.length / 30);
+                            // let int = Math.round(ctx.ticks.length / 30);
                             ctx.ticks.map((tick, i) => {
-                                if ((i % int)) {
+                                if ((i % 5) > 0) {
                                     tick.label = '';
-                                    tick.value = null;
+                                    // tick.value = null;
                                 }
                                 return tick;
                             });
@@ -471,17 +484,17 @@ export default {
                 scales: {
                     x: {
                         // display: false,
-                        type: 'time',
+                        type: 'timeseries',
                         time: {
                             unit: 'minute',
                         },
                         afterTickToLabelConversion: (ctx) => {
                             // console.log(ctx.ticks);
-                            let int = Math.round(ctx.ticks.length / 30);
+                            // let int = Math.round(ctx.ticks.length / 30);
                             ctx.ticks.map((tick, i) => {
-                                if ((i % int)) {
+                                if ((i % 5) > 0) {
                                     tick.label = '';
-                                    tick.value = null;
+                                    // tick.value = null;
                                 }
                                 return tick;
                             });
@@ -532,17 +545,17 @@ export default {
                 scales: {
                     x: {
                         // display: false,
-                        type: 'time',
+                        type: 'timeseries',
                         time: {
                             unit: 'minute',
                         },
                         afterTickToLabelConversion: (ctx) => {
                             // console.log(ctx.ticks);
-                            let int = Math.round(ctx.ticks.length / 30);
+                            // let int = Math.round(ctx.ticks.length / 30);
                             ctx.ticks.map((tick, i) => {
-                                if ((i % int)) {
+                                if ((i % 5) > 0) {
                                     tick.label = '';
-                                    tick.value = null;
+                                    // tick.value = null;
                                 }
                                 return tick;
                             });
@@ -712,17 +725,17 @@ export default {
                 scales: {
                     x: {
                         // display: false,
-                        type: 'time',
+                        type: 'timeseries',
                         time: {
                             unit: 'minute',
                         },
                         afterTickToLabelConversion: (ctx) => {
                             // console.log(ctx.ticks);
-                            let int = Math.round(ctx.ticks.length / 30);
+                            // let int = Math.round(ctx.ticks.length / 30);
                             ctx.ticks.map((tick, i) => {
-                                if ((i % int)) {
+                                if ((i % 5) > 0) {
                                     tick.label = '';
-                                    tick.value = null;
+                                    // tick.value = null;
                                 }
                                 return tick;
                             });
@@ -740,7 +753,7 @@ export default {
                     y: {
                         reverse: true,
                         min: 2,
-                        max: 9,
+                        max: 10,
                         ticks: {
                             stepSize: 1,
                             beginAtZero: false

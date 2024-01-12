@@ -6,9 +6,23 @@
           
           <div class="games-page">
             <!-- <div class="s16-title">April 1<sup>st</sup></div> -->
-            <form class="form-round" id="form-round">
-              <label class="label-round" id="label-round" for="round">Round:</label>
-              <select class="round-input" name="round" id="round-input" v-model="chosenDate" @change="changeDate()">
+            <form class="form-round flex items-center justify-center" id="form-round">
+              <label class="label-round p-2" id="label-round" for="round">Charts: </label>
+              <select class="round-input" name="round" id="round-input" v-model="chosenData" @change="changePage()">
+                <option value=0>Probability Charts</option>
+                <option value=1>Plays Table</option>
+              </select>
+            </form>
+            <form class="form-round flex items-center justify-center" id="form-round">
+              <label class="label-round p-2" id="label-round" for="round">Bet: </label>
+              <select class="round-input" name="round" id="round-input" v-model="chosenBet" @change="changePage()">
+                <option value=0>Total</option>
+                <option value=1>Spread</option>
+              </select>
+            </form>
+            <form class="form-round flex items-center justify-center" id="form-round">
+              <label class="label-round p-2" id="label-round" for="round">Date: </label>
+              <select class="round-input" name="round" id="round-input" v-model="chosenDate" @change="changePage()">
                 <option v-for="date in dates" :value="date">{{ date }}</option>
               </select>
             </form>
@@ -60,6 +74,40 @@
                 </div>
               </div> -->
             </div>
+            <div class="flex justify-center">
+              <table class="min-w-[32%] mt-4 xs:mt-[1.075em] divide-y divide-gray-900">
+                <thead>
+                    <tr>
+                        <th scope="col" class="hidden xs:table-cell py-1 pl-0.5 pr-0.5 xs:pr-1 text-left text-[10px] xs:text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('full_nm')">GAME</th>
+                        <th scope="col" class="table-cell xs:hidden py-1 pl-0.5 pr-0.5 xs:pr-1 text-left text-[10px] xs:text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('first_last_nm')">GAME</th>
+                        <th scope="col" class="px-1 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('full_nm')">QUARTER</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('position')">CLOCK</th>
+                        <th scope="col" class="px-1 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('tm')">SEC LEFT</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 0">PREV OVER %</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>PREV COVER %</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 0">NEW OVER %</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>NEW COVER %</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 0">CHANGE IN OVER %</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>CHANGE IN COVER %</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+                    <tr v-for="play in tableData" class="odd:bg-espngray-100 even:bg-gray-50">
+                        <td class="hidden xs:table-cell whitespace-nowrap text-left py-3 pl-0.5 pr-0.5 xs:pr-1 text-xs xs:text-base font-medium text-espnblack">{{ play.OPP_NICKNAME + ' @ ' + play.TEAM_NICKNAME }} </td>
+                        <td class="table-cell xs:hidden whitespace-nowrap text-left py-3 pl-0.5 pr-0.5 xs:pr-1 text-[10px] xs:text-base font-medium text-espnblack">{{ play.OPP_NICKNAME + ' @ ' + play.TEAM_NICKNAME }}</td>
+                        <td class="whitespace-nowrap text-right py-3 pl-0.5 xs:pl-1 pr-0.5 text-[10px] xs:text-xs font-medium text-espnblack">{{ play.PERIOD }}</td>
+                        <td class="whitespace-nowrap text-right px-1 py-4 text-sm text-espngray-900 hidden sm:table-cell">{{ play.CLOCK_TEXT }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 text-xs text-espngray-900 sm:border-r-2 sm:border-dashed hidden sm:table-cell">{{ play.SECLEFT }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 0">{{ (play.PREV_OVER * 100).toFixed(2) + '%' }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else>{{ (play.PREV_COVER * 100).toFixed(2) + '%' }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 0">{{ (play.OVER_PROB * 100).toFixed(2) + '%' }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else>{{ (play.COVER_PROB * 100).toFixed(2) + '%' }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 0">{{ (play.OVER_CHANGE * 100).toFixed(2) + '%' }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else>{{ (play.COVER_CHANGE * 100).toFixed(2) + '%' }}</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         <!-- <CBBFooter :espnLink="setEspnLink"/> -->
@@ -84,10 +132,13 @@
         live_chartsArr: [],
         curr_game_ids: [],
         // old_game_ids: [],
+        chosenBet: 1,
+        chosenData: 0,
         test_bool: [],
         animation_bool: true,
         chosenDate: null,
         filtered_ids: [],
+        tableData: [],
       }
     },
     created() {
@@ -102,7 +153,7 @@
     mounted() {
       // this.setZoomLevel()
       // window.addEventListener('resize', this.setZoomLevel)
-  
+      
       this.loadPage();
       // this.timer = setInterval(() => {
       //   this.updatePageTemp()
@@ -140,31 +191,61 @@
         // console.log(this.filtered_ids);
         // d3.select('#cjs-charts').selectAll('*').remove();
         this.animation_bool = true;
-        this.createAllCharts(this.data);
+        if (this.chosenData == 0) {
+          this.createAllCharts(this.data);
+          this.displayTable(this.data);
+        } else {
+          this.displayTable(this.data);
+        }
         // let game = this.data.filter(function(p) {return p.game_id == 401524079});
         // this.makeTestChart();
       },
-      createWPChart(game, chartId, idIndex) {
+      displayTable(fullData) {
+        fullData = fullData.filter(f => f.date == this.chosenDate)
+        fullData = fullData.sort((a,b) => {
+          return d3.ascending(a.SECLEFT, b.SECLEFT)
+        }).sort((a, b) => {
+          return d3.descending(a.EVENT_ID, b.EVENT_ID)
+        })
+        fullData = fullData.map((d, i) => {
+          if ((fullData.length - 1) != i) {
+            if (d.EVENT_ID == fullData[i+1].EVENT_ID) {
+              d.COVER_CHANGE = d.COVER_PROB - fullData[i+1].COVER_PROB
+              d.PREV_COVER = fullData[i+1].COVER_PROB
+              d.OVER_CHANGE = d.OVER_PROB - fullData[i+1].OVER_PROB
+              d.PREV_OVER = fullData[i+1].OVER_PROB
+            } else {
+              d.COVER_CHANGE = 0
+              d.OVER_CHANGE = 0
+            }
+          } else {
+            d.COVER_CHANGE = 0
+            d.OVER_CHANGE = 0
+          }
+          return d
+        })
+        this.tableData = fullData.map(d => (d))
+        if (this.chosenBet == 0) {
+          this.tableData = this.tableData.filter(f => {
+            return (Math.abs(f.OVER_CHANGE) >= .2)
+          })
+        } else {
+          this.tableData = this.tableData.filter(f => {
+            return (Math.abs(f.COVER_CHANGE) >= .05)
+          })
+        }
+      },
+      CreateTotalChart(game, chartId, idIndex) {
         game = game.map(d => {
-          d.new_COVER_PROB = d.COVER_PROB * 100;
+          d.new_COVER_PROB = d.OVER_PROB * 100;
           return d;
         });
         game = game.sort((a,b) => {
           return d3.descending(a.SECLEFT, b.SECLEFT);
         });
-        // console.log(game);
-  
         let wp_arr = game.map(d => {
           return {x: d.SECLEFT * -1, y: (d.new_COVER_PROB - 50)};
         });
-        // if (wp_arr.filter(d => {
-        //   return d.x == 0;
-        // }).length == 0) {
-        //   wp_arr.push({x: 0, y: null});
-        // }
-        // console.log(wp_arr.filter(d => {
-        //   return d.x == 0;
-        // }).length);
         let tooltip_wp_arr = game.map(d => {
           if (d.new_COVER_PROB >= 50) {
             return d.new_COVER_PROB;
@@ -182,18 +263,10 @@
           return d.SCOREDIFF * -1;
         });
         let tooltip_play = game.map(d => {
-          return d.EVENT_NUMBER;
+          return "";
         });
-        // console.log(game[0].home_id);
-        // console.log(this.ref.map(d => d.displayName));
-        let chart_homeTeam = this.ref.filter(d => {
-          return d == game[0].TEAM_NICKNAME;
-        })[0]
-        // console.log(chart_homeTeam);
-        // console.log(game[0].away_id);
-        let chart_awayTeam = this.ref.filter(d => {
-          return d == game[0].OPP_NICKNAME;
-        })[0];
+        let chart_homeTeam = 'OVER'
+        let chart_awayTeam = 'UNDER'
         let chart_winTeam = game.map(d => {
           if (d.new_COVER_PROB >= 50) {
             return chart_homeTeam;
@@ -201,17 +274,8 @@
             return chart_awayTeam;
           }
         })
-        // console.log(chart_awayTeam);
         let chart_homeColor = '#FF0000' 
-        // + this.ref.filter(d => {
-        //   return d.id == game[0].home_id;
-        // })[0].displayColor;
-        // console.log(chart_homeColor);
         let chart_awayColor = '#6C7280' 
-        // + this.ref.filter(d => {
-        //   return d.id == game[0].away_id;
-        // })[0].displayColor;
-        // console.log(chart_awayColor);
         let sec = game.map(d => {
           return d.SECLEFT * -1;
         });
@@ -221,17 +285,11 @@
         // } else if (game[game.length-1].shortText == "End of 1st half") {
         //   currTime = 'Halftime'
         // } else {
-          currTime = game[game.length-1].PERIOD + 'H - ' + 
+          currTime = game[game.length-1].PERIOD + 'Q - ' + 
             game[game.length-1].CLOCK_TEXT;
         // }
         let currAwayScore = game[game.length-1].SCOREDIFF * -1;
         let currHomeScore = game[game.length-1].SCOREDIFF;
-        // let homeSeed = this.ref.filter(d => {
-        //   return d.id == game[0].home_id;
-        // })[0].seed;
-        // let awaySeed = this.ref.filter(d => {
-        //   return d.id == game[0].away_id;
-        // })[0].seed;
         let homeChartTitle = this.ref.filter(d => {
           return d == game[0].TEAM_NICKNAME
         })[0]
@@ -261,10 +319,6 @@
           .attr('class', 'team-title')
           .attr('id', 'home-team-title')
   
-        // homeTeamInfo.append('div')
-        //   .attr('class', 'legend-seed')
-        //   .text(homeSeed)
-  
         homeTeamInfo.append('div')
           .attr('class', 'legend-team')
           .text(homeChartTitle)
@@ -280,10 +334,6 @@
         var awayTeamInfo = legendtitle.append('div')
           .attr('class', 'team-title')
           .attr('id', 'away-team-title')
-  
-        // awayTeamInfo.append('div')
-        //   .attr('class', 'legend-seed')
-        //   .text(awaySeed)
   
         awayTeamInfo.append('div')
           .attr('class', 'legend-team')
@@ -327,17 +377,6 @@
         const ctx = document.getElementById(chartId);
         const threshold = 0;
   
-        // if(this.filtered_ids[idIndex].status == 'post') {
-        //   d3chartdiv
-        //     .style('background-color', '#f2f3f4');
-        // }
-        // if (this.chosenRound != 0) {
-        //   if (game[game.length-1].new_COVER_PROB < 50) {
-        //     d3chartdiv 
-        //       .style('border', '2px solid rgb(195,  30,  50)');
-        //   }
-        // }
-        
         var homeGradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 120);
         homeGradient.addColorStop(0, chart_homeColor);
         homeGradient.addColorStop(1, 'white');
@@ -348,8 +387,8 @@
   
         const totalDuration = 1500;
         const delayBetweenPoints = totalDuration / wp_arr.length;
-        const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
-        // console.log(previousY)
+        const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : 
+          ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
         const animation = {
           x: {
             type: 'number',
@@ -396,8 +435,390 @@
               callbacks: {
                 title: () => null,
                 label: function(context) {
-                  // console.log(context.dataIndex);
-                  // console.log(context);
+                  let label = [context.dataset.customWinTeam[context.dataIndex] + ' ' + context.dataset.customWP[context.dataIndex].toFixed(1) + '%'];
+                  // label.push([context.dataset.customHomeTeam + ' ' + context.dataset.customHomeScore[context.dataIndex] + ' - ' + context.dataset.customAwayTeam + ' ' + context.dataset.customAwayScore[context.dataIndex]]);
+                  label.push('(' + context.dataset.customClock[context.dataIndex] + ') ' +
+                    context.dataset.customPlay[context.dataIndex]);
+  
+                  return label;
+                },
+              },
+              bodyColor: 'rgba(0, 0, 0)',
+            },
+          },
+          scales: {
+            y: {
+              display: true,
+              position: 'right',
+              scaleLabel: {
+                display: true,
+                labelString: 'Value',
+              },
+              min: -50, 
+              max: 50,
+              ticks: {
+                stepSize: 50,
+                callback: function(label, index, labels) {
+                  switch(label) {
+                    case 50:
+                      return 100;
+                    case 0:
+                      return 50;
+                    case -50:
+                      return 100;
+                  }
+                },
+              },
+            },
+            x: {
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Value',
+              },
+              type: 'linear',
+              max: xAxisEnd,
+              min: -2880,
+              afterBuildTicks: axis => {
+                function switchResult(axisEnd) { 
+                  switch(axisEnd) {
+                    case 300:
+                      return [-1440, 0].map(v => ({ value: v }));
+                    case 600:
+                      return [-1440, 0, 300].map(v => ({ value: v }));
+                    case 900:
+                      return [-1440, 0, 300, 600].map(v => ({ value: v }));
+                    case 1200:
+                      return [-1440, 0, 300, 600, 900].map(v => ({ value: v }));
+                    case 1500:
+                      return [-1440, 0, 300, 600, 900, 1200].map(v => ({ value: v }));
+                    case 1800:
+                      return [-1440, 0, 300, 600, 900, 1200, 1500].map(v => ({ value: v }));
+                    case 2100:
+                      return [-1440, 0, 300, 600, 900, 1200, 1500, 1800].map(v => ({ value: v }));
+                    default: 
+                      return [-1440,].map(v => ({ value: v }));
+                  }
+                }
+                axis.ticks = switchResult(xAxisEnd);
+              },
+              ticks: {
+                stepSize: 300,
+                callback: function(label, index, labels) {
+                  switch(label) {
+                    case -1200:
+                      return 'Half';
+                    case 0: 
+                      return '            OT';
+                    case 300: 
+                      return '           2OT';
+                    case 600: 
+                      return '           3OT';
+                    case 900: 
+                      return '           4OT';
+                    case 1200: 
+                      return '           5OT';
+                    case 1500: 
+                      return '           6OT';
+                    case 1800: 
+                      return '           7OT';
+                    default:
+                      return '';
+                  }
+                },
+              },
+            },
+          },
+          elements: {
+            line: {
+              tension: 1, // adjust the tension to control the curvature of the line
+              cubicInterpolationMode: 'monotone'
+            },
+          },
+        };
+  
+        if (this.animation_bool) {
+          options.animation = animation;
+        }
+  
+        this.live_chartsArr[chartId] = {'chart': new Chart(ctx, {
+          type: 'line',
+          plugins: [{
+            afterLayout: chart => {
+              let ctx = chart.ctx;
+              ctx.save();
+              let yAxis = chart.scales.y;
+              let yThreshold = yAxis.getPixelForValue(threshold);
+              let gradient = ctx.createLinearGradient(0, yAxis.top, 0, yAxis.bottom);
+              gradient.addColorStop(0, chart_homeColor);
+              let offset = (yThreshold - yAxis.top) / (yAxis.bottom - yAxis.top);
+              gradient.addColorStop(offset, chart_homeColor);
+              gradient.addColorStop(offset, chart_awayColor);
+              gradient.addColorStop(1, chart_awayColor);
+              chart.data.datasets[0].borderColor = gradient;
+              ctx.restore();
+            }
+          }, {
+            id: 'verticalLiner',
+            afterInit: (chart, args, opts) => {
+              chart.verticalLiner = {}
+            },
+            afterEvent: (chart, args, options) => {
+                const {inChartArea} = args
+                chart.verticalLiner = {draw: inChartArea}
+            },
+            beforeTooltipDraw: (chart, args, options) => {
+                const {draw} = chart.verticalLiner
+                if (!draw) return
+  
+                const {ctx} = chart
+                const {top, bottom} = chart.chartArea
+                const {tooltip} = args
+                const x = tooltip?.caretX
+                if (!x) return
+  
+                ctx.save()
+  
+                ctx.beginPath()
+                ctx.moveTo(x, top)
+                ctx.lineTo(x, bottom)
+                ctx.stroke()
+  
+                ctx.restore()
+            }
+          }],
+          data: {
+            labels: sec,
+            datasets: [{
+              data: wp_arr,
+              fill: {
+                target: 'origin',
+                above: homeGradient,
+                below: awayGradient,
+              },
+              pointStyle: false,
+              borderWidth: 1,
+              customWP: tooltip_wp_arr,
+              customClock: tooltip_clock,
+              customHomeScore: tooltip_homeScore,
+              customAwayScore: tooltip_awayScore,
+              customPlay: tooltip_play,
+              customHomeTeam: chart_homeTeam,
+              customAwayTeam: chart_awayTeam,
+              customWinTeam: chart_winTeam,
+              spanGaps: true,
+            }],
+          },
+          options: options,
+        }), 'moved': false};
+        if (this.curr_game_ids[idIndex].status == 'post') {
+          this.live_chartsArr[chartId].moved = true;
+        }
+      },
+      CreateSpreadChart(game, chartId, idIndex) {
+        game = game.map(d => {
+          d.new_COVER_PROB = d.COVER_PROB * 100;
+          return d;
+        });
+        game = game.sort((a,b) => {
+          return d3.descending(a.SECLEFT, b.SECLEFT);
+        });
+        let wp_arr = game.map(d => {
+          return {x: d.SECLEFT * -1, y: (d.new_COVER_PROB - 50)};
+        });
+        let tooltip_wp_arr = game.map(d => {
+          if (d.new_COVER_PROB >= 50) {
+            return d.new_COVER_PROB;
+          } else {
+            return 100-d.new_COVER_PROB;
+          }
+        });
+        let tooltip_clock = game.map(d => {
+          return (d.PERIOD + 'Q ' + d.CLOCK_TEXT);
+        });
+        let tooltip_homeScore = game.map(d => {
+          return d.SCOREDIFF;
+        });
+        let tooltip_awayScore = game.map(d => {
+          return d.SCOREDIFF * -1;
+        });
+        let tooltip_play = game.map(d => {
+          return "";
+        });
+        let chart_homeTeam = this.ref.filter(d => {
+          return d == game[0].TEAM_NICKNAME;
+        })[0]
+        let chart_awayTeam = this.ref.filter(d => {
+          return d == game[0].OPP_NICKNAME;
+        })[0];
+        let chart_winTeam = game.map(d => {
+          if (d.new_COVER_PROB >= 50) {
+            return chart_homeTeam;
+          } else {
+            return chart_awayTeam;
+          }
+        })
+        let chart_homeColor = '#FF0000' 
+        let chart_awayColor = '#6C7280' 
+        let sec = game.map(d => {
+          return d.SECLEFT * -1;
+        });
+        let currTime = '';
+        // if (game[game.length-1].shortText == "End of Game" || this.filtered_ids[idIndex].status == 'post') {
+        //   currTime = 'Final'
+        // } else if (game[game.length-1].shortText == "End of 1st half") {
+        //   currTime = 'Halftime'
+        // } else {
+          currTime = game[game.length-1].PERIOD + 'Q - ' + 
+            game[game.length-1].CLOCK_TEXT;
+        // }
+        let currAwayScore = game[game.length-1].SCOREDIFF * -1;
+        let currHomeScore = game[game.length-1].SCOREDIFF;
+        let homeChartTitle = this.ref.filter(d => {
+          return d == game[0].TEAM_NICKNAME
+        })[0]
+        let awayChartTitle = this.ref.filter(d => {
+          return d == game[0].OPP_NICKNAME
+        })[0]
+        let xAxisEnd;
+        if (Math.min(...game.map(d => d.SECLEFT)) >= 0) {
+          xAxisEnd = 0;
+        } else {
+          xAxisEnd = (Math.max(...game.map(d => d.PERIOD)) - 4) * 300;
+        } 
+        
+        var d3chartdiv = d3.select('#cjs-charts')
+          .insert('div', ':first-child')
+            .attr('class', 'chart')
+            .attr('id', (chartId + '-cont'))
+            .append('div')
+            .attr('class', 'chart-title-cont')
+  
+        var legendtitle = d3chartdiv.append('div')
+          .attr('class', 'legend-title-cont').
+          append('div')
+          .attr('class', 'legend-title')
+  
+        var homeTeamInfo = legendtitle.append('div')
+          .attr('class', 'team-title')
+          .attr('id', 'home-team-title')
+  
+        homeTeamInfo.append('div')
+          .attr('class', 'legend-team')
+          .text(homeChartTitle)
+  
+        homeTeamInfo.append('div')
+          .attr('class', 'legend-score')
+          .text(currHomeScore)
+  
+        legendtitle.append('div')
+          .attr('class', 'legend-time')
+          .text(currTime)
+  
+        var awayTeamInfo = legendtitle.append('div')
+          .attr('class', 'team-title')
+          .attr('id', 'away-team-title')
+  
+        awayTeamInfo.append('div')
+          .attr('class', 'legend-team')
+          .text(awayChartTitle)
+  
+        awayTeamInfo.append('div')
+          .attr('class', 'legend-score')
+          .text(currAwayScore)
+        
+        var teaminfo = d3chartdiv.append('div')
+          .attr('class', 'legend-top-left')
+          .append('div')
+          .attr('id', 'team-info')
+  
+        teaminfo.append('div')
+          .attr('class', 'btn-sm')
+          .style('background-color', chart_homeColor)
+        teaminfo.append('p')
+          .attr('class', 'tm-abbrev')
+          .text(chart_homeTeam)
+  
+        d3chartdiv.append('div')
+          .attr('class', 'canvas-cont')
+          .append('canvas')
+          .attr('id', chartId)
+  
+        var teaminfo2 = d3chartdiv.append('div')
+          .attr('class', 'legend-bottom-left')
+          .append('div')
+          .attr('id', 'team-info')
+  
+        teaminfo2.append('div')
+          .attr('class', 'btn-sm')
+          .style('background-color', chart_awayColor)
+  
+        teaminfo2.append('p')
+          .attr('class', 'tm-abbrev')
+          .append('text')
+            .text(chart_awayTeam)
+  
+        const ctx = document.getElementById(chartId);
+        const threshold = 0;
+  
+        var homeGradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 120);
+        homeGradient.addColorStop(0, chart_homeColor);
+        homeGradient.addColorStop(1, 'white');
+  
+        var awayGradient = ctx.getContext('2d').createLinearGradient(0, 80, 0, 205);
+        awayGradient.addColorStop(1, chart_awayColor);
+        awayGradient.addColorStop(0, 'white');
+  
+        const totalDuration = 1500;
+        const delayBetweenPoints = totalDuration / wp_arr.length;
+        const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : 
+          ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+        const animation = {
+          x: {
+            type: 'number',
+            easing: 'linear',
+            duration: delayBetweenPoints,
+            from: NaN, // the point is initially skipped
+            delay(ctx) {
+              if (ctx.type !== 'data' || ctx.xStarted) {
+                return 0;
+              }
+              ctx.xStarted = true;
+              return ctx.index * delayBetweenPoints;
+            }
+          },
+          y: {
+            type: 'number',
+            easing: 'linear',
+            duration: delayBetweenPoints,
+            from: previousY,
+            delay(ctx) {
+              if (ctx.type !== 'data' || ctx.yStarted) {
+                return 0;
+              }
+              ctx.yStarted = true;
+              return ctx.index * delayBetweenPoints;
+            }
+          }
+        };
+        const options = {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: 'index',
+            intersect: false,
+          },
+          plugins: {
+            verticalLiner: {},
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              displayColors: false,
+              backgroundColor: '#EFEFEF',
+              callbacks: {
+                title: () => null,
+                label: function(context) {
                   let label = [context.dataset.customWinTeam[context.dataIndex] + ' ' + context.dataset.customWP[context.dataIndex].toFixed(1) + '%'];
                   label.push([context.dataset.customHomeTeam + ' ' + context.dataset.customHomeScore[context.dataIndex] + ' - ' + context.dataset.customAwayTeam + ' ' + context.dataset.customAwayScore[context.dataIndex]]);
                   label.push('(' + context.dataset.customClock[context.dataIndex] + ') ' +
@@ -441,26 +862,26 @@
               },
               type: 'linear',
               max: xAxisEnd,
-              min: -2400,
+              min: -2880,
               afterBuildTicks: axis => {
                 function switchResult(axisEnd) { 
                   switch(axisEnd) {
                     case 300:
-                      return [-1200, 0].map(v => ({ value: v }));
+                      return [-1440, 0].map(v => ({ value: v }));
                     case 600:
-                      return [-1200, 0, 300].map(v => ({ value: v }));
+                      return [-1440, 0, 300].map(v => ({ value: v }));
                     case 900:
-                      return [-1200, 0, 300, 600].map(v => ({ value: v }));
+                      return [-1440, 0, 300, 600].map(v => ({ value: v }));
                     case 1200:
-                      return [-1200, 0, 300, 600, 900].map(v => ({ value: v }));
+                      return [-1440, 0, 300, 600, 900].map(v => ({ value: v }));
                     case 1500:
-                      return [-1200, 0, 300, 600, 900, 1200].map(v => ({ value: v }));
+                      return [-1440, 0, 300, 600, 900, 1200].map(v => ({ value: v }));
                     case 1800:
-                      return [-1200, 0, 300, 600, 900, 1200, 1500].map(v => ({ value: v }));
+                      return [-1440, 0, 300, 600, 900, 1200, 1500].map(v => ({ value: v }));
                     case 2100:
-                      return [-1200, 0, 300, 600, 900, 1200, 1500, 1800].map(v => ({ value: v }));
+                      return [-1440, 0, 300, 600, 900, 1200, 1500, 1800].map(v => ({ value: v }));
                     default: 
-                      return [-1200,].map(v => ({ value: v }));
+                      return [-1440,].map(v => ({ value: v }));
                   }
                 }
                 axis.ticks = switchResult(xAxisEnd);
@@ -593,8 +1014,13 @@
       //     document.getElementById('page-id').style.zoom = '0.7';
       //   }
       // },
-      changeDate() {
+      changePage() {
         d3.select('#cjs-charts').selectAll('*').remove();
+        if (this.chosenData == 0) {
+          document.getElementById('cjs-charts').style.minHeight = "700px"
+        } else {
+          document.getElementById('cjs-charts').style.minHeight = "0px"
+        }
         this.loadPage();
       },
       // async updatePageTemp() {
@@ -655,7 +1081,7 @@
       createAllCharts(gamesData) {
         let game = []
         let game_ids = [...new Set(this.filtered_ids.map(d => d.EVENT_ID))]
-        console.log(game_ids)
+        // console.log(game_ids)
   
         for (let i = 0; i < game_ids.length; i++) {
           // if (this.filtered_ids[i].status == 'pre') {
@@ -667,7 +1093,11 @@
             game = gamesData.filter(f => f.EVENT_ID == game_ids[i])
             // console.log(game)
             if (game) {
-              this.createWPChart(game, "myChart" + game_ids[i], i);
+              if (this.chosenBet == 0) {
+                this.CreateTotalChart(game, "myChart" + game_ids[i], i);
+              } else {
+                this.CreateSpreadChart(game, "myChart" + game_ids[i], i);
+              }
             }
           // }
         }

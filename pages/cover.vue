@@ -26,6 +26,11 @@
                 <option v-for="date in dates" :value="date">{{ date }}</option>
               </select>
             </form>
+            <div class="flex items-center justify-center" v-if="chosenData == 1">
+              <label class="label-round p-2" id="label-round" for="round">Cutoff %: </label>
+              <input type="number" step="2.5" v-model="cutOff" @change="changePage()"/>
+            </div>
+            
             <div class="charts" id="cjs-charts">
               <!-- <div class="chart">
                 <div class="legend-title-cont" >
@@ -74,7 +79,7 @@
                 </div>
               </div> -->
             </div>
-            <div class="flex justify-center">
+            <div class="flex justify-center" v-if="chosenData == 1">
               <table class="min-w-[32%] mt-4 xs:mt-[1.075em] divide-y divide-gray-900">
                 <thead>
                     <tr>
@@ -139,6 +144,7 @@
         chosenDate: null,
         filtered_ids: [],
         tableData: [],
+        cutOff: 5,
       }
     },
     created() {
@@ -227,11 +233,15 @@
         this.tableData = fullData.map(d => (d))
         if (this.chosenBet == 0) {
           this.tableData = this.tableData.filter(f => {
-            return (Math.abs(f.OVER_CHANGE) >= .2)
+            return (Math.abs(f.OVER_CHANGE) >= (this.cutOff / 100))
+          }).sort((a, b) => {
+            return d3.descending(Math.abs(a.OVER_CHANGE), Math.abs(b.OVER_CHANGE))
           })
         } else {
           this.tableData = this.tableData.filter(f => {
-            return (Math.abs(f.COVER_CHANGE) >= .05)
+            return (Math.abs(f.COVER_CHANGE) >= (this.cutOff / 100))
+          }).sort((a, b) => {
+            return d3.descending(Math.abs(a.COVER_CHANGE), Math.abs(b.COVER_CHANGE))
           })
         }
       },

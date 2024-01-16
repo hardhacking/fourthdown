@@ -18,8 +18,9 @@
               <img src="@/assets/ea3.png" @click="navigateTo('/')" class="h-14 xs:h-20 cursor-pointer" alt="">
       </div>
         <div class="flex flex-col items-center gap-4">
-            <div class="text-4xl font-bold text-center text-espngray-900">Top-rated NFL Receivers</div>
-            <div class="text-espngray-600 font-normal text-sm">Updated through Week {{ weekUpdate }}</div>
+            <div class="text-4xl font-bold text-center text-espngray-900">The Best NFL Receivers</div>
+            <div class="text-espngray-600 font-normal text-sm" v-if="weekUpdate <= 18">Updated through Week {{ weekUpdate }}</div>
+            <div class="text-espngray-600 font-normal text-sm" v-else>Updated through {{ weekUpdate2 }}</div>
             <div class="p-2 lg:p-0 max-w-4xl text-center font-medium text-espngray-600">These ratings, updated weekly, use player-tracking data from NFL Next Gen Stats to evaluate every route a pass catcher runs and scores his performance in three phases of the
             game, from 0 to 99<sup class="cursor-pointer" @click="clickedFootnote()">1</sup>.</div>
         </div>
@@ -258,6 +259,7 @@ export default {
           minWrTgt: 22,
           minRbTgt: 15,
           weekUpdate: null,
+          weekUpdate2: null,
       }
   },
   async mounted() {
@@ -272,6 +274,7 @@ export default {
     const week0 = new Date("2023-09-05")
     const timeDifferenceInMilliseconds = lastMod.getTime() - week0.getTime()
     this.weekUpdate = Math.round(timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24) / 7)
+    this.weekUpdate2 = this.weekUpdate == 19 ? 'Wild Card Round' : (this.weekUpdate == 20 ? 'Divisional Round' : (this.weekUpdate == 21 ? 'Conference Championship' : 'Super Bowl'))
       await this.getSeason(this.json);
       
       this.buildPage();
@@ -806,7 +809,7 @@ export default {
                   player['gap' + value] = 0;
               }
               else {
-                  player['gap' + value] = (previous - player[value]) * (window.innerWidth * .77 - 77.5 - 34.93 - 34.93 - 52) / 16  - 52;
+                  player['gap' + value] = (previous - player[value]) * (window.innerWidth * .785 - 77.5 - 34.93 - 34.93 - 52) / 14  - 52;
                   previous = player[value];
               }
           })

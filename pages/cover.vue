@@ -94,6 +94,13 @@
                         <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>NEW COVER %</th>
                         <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 0">CHANGE IN OVER %</th>
                         <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>CHANGE IN COVER %</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 0">PREV TOTAL</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>PREV HOME SCORE</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 1">PREV AWAY SCORE</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 0">NEW TOTAL</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>NEW HOME SCORE</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 1">NEW AWAY SCORE</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')">PLAY</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
@@ -109,6 +116,13 @@
                         <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else>{{ (play.COVER_PROB * 100).toFixed(2) + '%' }}</td>
                         <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 0">{{ (play.OVER_CHANGE * 100).toFixed(2) + '%' }}</td>
                         <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else>{{ (play.COVER_CHANGE * 100).toFixed(2) + '%' }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 0">{{ (play.PREV_homeScore + play.PREV_awayScore) }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else>{{ play.PREV_homeScore }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 1">{{ play.PREV_awayScore }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 0">{{ (play.homeScore + play.awayScore) }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else>{{ play.homeScore }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 1">{{ play.awayScore }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 text-sm text-espnblack flex flex-col" ><div>{{ play.text1 }}</div><div>{{ play.text2 }}</div></td>
                     </tr>
                 </tbody>
               </table>
@@ -167,8 +181,18 @@
     },
     methods: {
       async loadPage() {
+        this.dates = this.getDates()
+        // console.log(this.dates)
+        if (!this.chosenDate) {
+          this.chosenDate = this.dates[this.dates.length - 1]
+        }
         // console.log(this.chosenDate)
-        this.data = await this.getS3Data('wp_table.json')
+        
+        this.data = await this.getS3Data(this.chosenDate + '/wp_table.json')
+
+        this.data = this.data.filter(f => {
+          return f.text
+        })
 
         this.data.map(d => {
           var dateString = d.SCHEDULE_ID.substring(0, 8)
@@ -177,7 +201,7 @@
           var day = dateString.substring(6, 8);
 
           // Create a formatted date string
-          var formattedDateString = `${month}/${day}/${year}`;
+          var formattedDateString = `${year}-${month}-${day}`;
           d.date = formattedDateString
           return d;
         })
@@ -185,12 +209,7 @@
         this.ref = [...new Set(this.data.map(d => d.OPP_NICKNAME).
                             concat(this.data.map(d => d.TEAM_NICKNAME)))]
         // console.log(this.ref)
-        this.dates = [...new Set(this.data.map(d => d.date))]
-        // console.log(this.dates)
-        if (!this.chosenDate) {
-          this.chosenDate = this.dates[0]
-        }
-        // console.log(this.chosenDate)
+       
         this.curr_game_ids = this.data.map(({EVENT_ID, date}) => ({EVENT_ID, date}))
         // console.log(this.curr_game_ids)
         this.filtered_ids = this.curr_game_ids.filter(f => f.date == this.chosenDate);
@@ -206,6 +225,7 @@
         // let game = this.data.filter(function(p) {return p.game_id == 401524079});
         // this.makeTestChart();
       },
+      
       displayTable(fullData) {
         fullData = fullData.filter(f => f.date == this.chosenDate)
         fullData = fullData.sort((a,b) => {
@@ -220,14 +240,23 @@
               d.PREV_COVER = fullData[i+1].COVER_PROB
               d.OVER_CHANGE = d.OVER_PROB - fullData[i+1].OVER_PROB
               d.PREV_OVER = fullData[i+1].OVER_PROB
+              d.PREV_homeScore = fullData[i+1].homeScore
+              d.PREV_awayScore = fullData[i+1].awayScore
             } else {
+              d.PREV_homeScore = 0
+              d.PREV_awayScore = 0
               d.COVER_CHANGE = 0
               d.OVER_CHANGE = 0
             }
           } else {
+            d.PREV_homeScore = 0
+            d.PREV_awayScore = 0
             d.COVER_CHANGE = 0
             d.OVER_CHANGE = 0
           }
+          d.text1 = this.splitStringIntoTwo(d.text)[0]
+          d.text2 = this.splitStringIntoTwo(d.text)[1]
+
           return d
         })
         this.tableData = fullData.map(d => (d))
@@ -267,14 +296,17 @@
           return (d.PERIOD + 'Q ' + d.CLOCK_TEXT);
         });
         let tooltip_homeScore = game.map(d => {
-          return d.SCOREDIFF;
+          return d.homeScore + d.awayScore;
         });
         let tooltip_awayScore = game.map(d => {
-          return d.SCOREDIFF * -1;
+          return d.awayScore;
         });
         let tooltip_play = game.map(d => {
-          return "";
+          return this.splitStringIntoTwo(d.text)[0]
         });
+        let tooltip_play2 = game.map(d => {
+          return this.splitStringIntoTwo(d.text)[1]
+        })
         let chart_homeTeam = 'OVER'
         let chart_awayTeam = 'UNDER'
         let chart_winTeam = game.map(d => {
@@ -290,16 +322,16 @@
           return d.SECLEFT * -1;
         });
         let currTime = '';
-        // if (game[game.length-1].shortText == "End of Game" || this.filtered_ids[idIndex].status == 'post') {
-        //   currTime = 'Final'
-        // } else if (game[game.length-1].shortText == "End of 1st half") {
-        //   currTime = 'Halftime'
-        // } else {
+        if (game[game.length-1].text == "End of Game" ) { //|| this.filtered_ids[idIndex].status == 'post'
+          currTime = 'Final'
+        } else if (game[game.length-1].text == "End of 1st half") {
+          currTime = 'Halftime'
+        } else {
           currTime = game[game.length-1].PERIOD + 'Q - ' + 
             game[game.length-1].CLOCK_TEXT;
-        // }
+        }
         let currAwayScore = game[game.length-1].SCOREDIFF * -1;
-        let currHomeScore = game[game.length-1].SCOREDIFF;
+        let currHomeScore = game[game.length-1].homeScore + game[game.length-1].awayScore;
         let homeChartTitle = this.ref.filter(d => {
           return d == game[0].TEAM_NICKNAME
         })[0]
@@ -330,15 +362,15 @@
           .attr('id', 'home-team-title')
   
         homeTeamInfo.append('div')
-          .attr('class', 'legend-team')
-          .text(homeChartTitle)
+          .attr('class', 'legend-team-total')
+          .text(homeChartTitle + ' @ ' + awayChartTitle)
   
-        homeTeamInfo.append('div')
-          .attr('class', 'legend-score')
-          .text(currHomeScore)
+        // homeTeamInfo.append('div')
+        //   .attr('class', 'legend-score')
+        //   .text(currHomeScore)
   
         legendtitle.append('div')
-          .attr('class', 'legend-time')
+          .attr('class', 'legend-time-total')
           .text(currTime)
   
         var awayTeamInfo = legendtitle.append('div')
@@ -346,12 +378,12 @@
           .attr('id', 'away-team-title')
   
         awayTeamInfo.append('div')
-          .attr('class', 'legend-team')
-          .text(awayChartTitle)
+          .attr('class', 'legend-team-spread')
+          .text('TOTAL')
   
         awayTeamInfo.append('div')
-          .attr('class', 'legend-score')
-          .text(currAwayScore)
+          .attr('class', 'legend-score-total')
+          .text(currHomeScore)
         
         var teaminfo = d3chartdiv.append('div')
           .attr('class', 'legend-top-left')
@@ -446,9 +478,10 @@
                 title: () => null,
                 label: function(context) {
                   let label = [context.dataset.customWinTeam[context.dataIndex] + ' ' + context.dataset.customWP[context.dataIndex].toFixed(1) + '%'];
-                  // label.push([context.dataset.customHomeTeam + ' ' + context.dataset.customHomeScore[context.dataIndex] + ' - ' + context.dataset.customAwayTeam + ' ' + context.dataset.customAwayScore[context.dataIndex]]);
+                  label.push('Total: ' + context.dataset.customHomeScore[context.dataIndex]);
                   label.push('(' + context.dataset.customClock[context.dataIndex] + ') ' +
-                    context.dataset.customPlay[context.dataIndex]);
+                    context.dataset.customPlay[context.dataIndex])
+                  label.push(context.dataset.customPlay2[context.dataIndex])
   
                   return label;
                 },
@@ -613,6 +646,7 @@
               customHomeScore: tooltip_homeScore,
               customAwayScore: tooltip_awayScore,
               customPlay: tooltip_play,
+              customPlay2: tooltip_play2,
               customHomeTeam: chart_homeTeam,
               customAwayTeam: chart_awayTeam,
               customWinTeam: chart_winTeam,
@@ -624,6 +658,29 @@
         if (this.curr_game_ids[idIndex].status == 'post') {
           this.live_chartsArr[chartId].moved = true;
         }
+      },
+      splitStringIntoTwo(str) {
+        // Step 1: Split the original string into an array of words
+        if (str) {
+          var wordsArray = str.split(/\s+/);
+
+          // Step 2: Determine the midpoint of the array
+          var midpoint = Math.ceil(wordsArray.length / 2);
+
+          // Step 3: Create two new arrays, one for each half of the original array
+          var firstHalfArray = wordsArray.slice(0, midpoint);
+          var secondHalfArray = wordsArray.slice(midpoint);
+
+          // Step 4: Join the words in each new array back into strings
+          var firstHalfString = firstHalfArray.join(' ');
+          var secondHalfString = secondHalfArray.join(' ');
+
+        } else {
+          var firstHalfString = NaN;
+          var secondHalfString = NaN;
+        }
+        
+        return [firstHalfString, secondHalfString];
       },
       CreateSpreadChart(game, chartId, idIndex) {
         game = game.map(d => {
@@ -647,25 +704,28 @@
           return (d.PERIOD + 'Q ' + d.CLOCK_TEXT);
         });
         let tooltip_homeScore = game.map(d => {
-          return d.SCOREDIFF;
+          return d.homeScore + ' (' + (d.SCOREDIFF > 0 ? '+' : '') + d.SCOREDIFF + ')'
         });
         let tooltip_awayScore = game.map(d => {
-          return d.SCOREDIFF * -1;
+          return d.awayScore
         });
         let tooltip_play = game.map(d => {
-          return "";
+          return this.splitStringIntoTwo(d.text)[0];
+        });
+        let tooltip_play2 = game.map(d => {
+          return this.splitStringIntoTwo(d.text)[1];
         });
         let chart_homeTeam = this.ref.filter(d => {
           return d == game[0].TEAM_NICKNAME;
         })[0]
         let chart_awayTeam = this.ref.filter(d => {
           return d == game[0].OPP_NICKNAME;
-        })[0];
+        })[0]
         let chart_winTeam = game.map(d => {
           if (d.new_COVER_PROB >= 50) {
-            return chart_homeTeam;
+            return chart_homeTeam
           } else {
-            return chart_awayTeam;
+            return chart_awayTeam
           }
         })
         let chart_homeColor = '#FF0000' 
@@ -674,16 +734,17 @@
           return d.SECLEFT * -1;
         });
         let currTime = '';
-        // if (game[game.length-1].shortText == "End of Game" || this.filtered_ids[idIndex].status == 'post') {
-        //   currTime = 'Final'
-        // } else if (game[game.length-1].shortText == "End of 1st half") {
-        //   currTime = 'Halftime'
-        // } else {
+        if (game[game.length-1].text == "End of Game" ) { //|| this.filtered_ids[idIndex].status == 'post'
+          currTime = 'Final'
+        } else if (game[game.length-1].text == "End of 1st half") {
+          currTime = 'Halftime'
+        } else {
           currTime = game[game.length-1].PERIOD + 'Q - ' + 
             game[game.length-1].CLOCK_TEXT;
-        // }
-        let currAwayScore = game[game.length-1].SCOREDIFF * -1;
-        let currHomeScore = game[game.length-1].SCOREDIFF;
+        }
+        let currAwayScore = game[game.length-1].awayScore;
+        let currHomeScore = game[game.length-1].homeScore + ' (' + 
+        (game[game.length-1].SCOREDIFF > 0 ? '+' : '') + game[game.length-1].SCOREDIFF + ')'
         let homeChartTitle = this.ref.filter(d => {
           return d == game[0].TEAM_NICKNAME
         })[0]
@@ -714,15 +775,15 @@
           .attr('id', 'home-team-title')
   
         homeTeamInfo.append('div')
-          .attr('class', 'legend-team')
+          .attr('class', 'legend-team-spread')
           .text(homeChartTitle)
   
         homeTeamInfo.append('div')
-          .attr('class', 'legend-score')
+          .attr('class', 'legend-score-spread')
           .text(currHomeScore)
   
         legendtitle.append('div')
-          .attr('class', 'legend-time')
+          .attr('class', 'legend-time-spread')
           .text(currTime)
   
         var awayTeamInfo = legendtitle.append('div')
@@ -730,11 +791,11 @@
           .attr('id', 'away-team-title')
   
         awayTeamInfo.append('div')
-          .attr('class', 'legend-team')
+          .attr('class', 'legend-team-spread')
           .text(awayChartTitle)
   
         awayTeamInfo.append('div')
-          .attr('class', 'legend-score')
+          .attr('class', 'legend-score-spread')
           .text(currAwayScore)
         
         var teaminfo = d3chartdiv.append('div')
@@ -747,7 +808,7 @@
           .style('background-color', chart_homeColor)
         teaminfo.append('p')
           .attr('class', 'tm-abbrev')
-          .text(chart_homeTeam)
+          .text(chart_homeTeam + ' COVER')
   
         d3chartdiv.append('div')
           .attr('class', 'canvas-cont')
@@ -766,7 +827,7 @@
         teaminfo2.append('p')
           .attr('class', 'tm-abbrev')
           .append('text')
-            .text(chart_awayTeam)
+            .text(chart_awayTeam + ' COVER')
   
         const ctx = document.getElementById(chartId);
         const threshold = 0;
@@ -832,7 +893,8 @@
                   let label = [context.dataset.customWinTeam[context.dataIndex] + ' ' + context.dataset.customWP[context.dataIndex].toFixed(1) + '%'];
                   label.push([context.dataset.customHomeTeam + ' ' + context.dataset.customHomeScore[context.dataIndex] + ' - ' + context.dataset.customAwayTeam + ' ' + context.dataset.customAwayScore[context.dataIndex]]);
                   label.push('(' + context.dataset.customClock[context.dataIndex] + ') ' +
-                    context.dataset.customPlay[context.dataIndex]);
+                    context.dataset.customPlay[context.dataIndex])
+                  label.push(context.dataset.customPlay2[context.dataIndex])
   
                   return label;
                 },
@@ -997,6 +1059,7 @@
               customHomeScore: tooltip_homeScore,
               customAwayScore: tooltip_awayScore,
               customPlay: tooltip_play,
+              customPlay2: tooltip_play2,
               customHomeTeam: chart_homeTeam,
               customAwayTeam: chart_awayTeam,
               customWinTeam: chart_winTeam,
@@ -1050,6 +1113,39 @@
       //   let updatedData = await this.getS3Data('test_diff_mens-college-basketball.json');
       //   this.updateCharts(newS3Data, updatedData);
       // },
+      getDates() {
+        function setDates(startDate, endDate) {
+          var dateArray = [];
+          var currentDate = new Date(startDate);
+
+          while (currentDate <= endDate) {
+              dateArray.push(new Date(currentDate));
+              currentDate.setDate(currentDate.getDate() + 1);
+          }
+
+          return dateArray;
+        }
+
+        // Specify the start date (January 4, 2024)
+        var startDate = new Date(2024, 0, 4);
+
+        // Get yesterday's date
+        var yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1)
+
+        // Generate an array of dates from startDate to yesterday
+        var dateArray = setDates(startDate, yesterday);
+
+        // Format the dates as strings (YYYY-MM-DD)
+        var formattedDates = dateArray.map(date => {
+          var year = date.getFullYear();
+          var month = (date.getMonth() + 1).toString().padStart(2, '0');
+          var day = date.getDate().toString().padStart(2, '0');
+          return `${year}-${month}-${day}`;
+        });
+
+        return formattedDates;
+      },
       async getS3Data(fileName, creating) {
         AWS.config.update({
             region: 'us-east-1',
@@ -2121,18 +2217,35 @@
     width: 15px; 
     font-size: 12px;
   }
-  .legend-team {
+  .legend-team-spread {
     font-size: 20px; 
     width: 160px; 
     text-align: left;
   }
-  .legend-score {
+  .legend-team-total {
+    font-size: 20px; 
+    width: 240px; 
+    text-align: center;
+  }
+  .legend-score-spread {
+    font-size: 18px; 
+    font-weight: bold;
+    width: 85px;
+    text-align: left;
+  }
+  .legend-score-total {
     font-size: 18px; 
     font-weight: bold;
     width: 50px;
     text-align: left;
   }
-  .legend-time {
+  .legend-time-total {
+    font-size: 15px; 
+    padding: 5px 45px 5px 45px;
+    width: 160px;
+    text-align: center;
+  }
+  .legend-time-spread {
     font-size: 15px; 
     padding: 5px 62.5px 5px 27.5px;
     width: 160px;
@@ -2179,14 +2292,20 @@
     .legend-seed {
       font-size: 12px;
     }
-    .legend-team {
+    .legend-team-spread {
       font-size: 17px;
       width: 135px;
     }
-    .legend-score {
+    .legend-team-total {
+      font-size: 17px;
+      width: 185px;
+    }
+    .legend-score-spread,
+    .legend-score-total {
       font-size: 15px;
     }
-    .legend-time {
+    .legend-time-total, 
+    .legend-time-spread {
       font-size: 12px;
     }
     .tm-abbrev {

@@ -85,9 +85,10 @@
                     <tr>
                         <th scope="col" class="hidden xs:table-cell py-1 pl-0.5 pr-0.5 xs:pr-1 text-left text-[10px] xs:text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('full_nm')">GAME</th>
                         <th scope="col" class="table-cell xs:hidden py-1 pl-0.5 pr-0.5 xs:pr-1 text-left text-[10px] xs:text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('first_last_nm')">GAME</th>
-                        <th scope="col" class="px-1 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('full_nm')">QUARTER</th>
                         <th scope="col" class="px-2 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('position')">CLOCK</th>
-                        <th scope="col" class="px-1 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('tm')">SEC LEFT</th>
+                        <!-- <th scope="col" class="px-1 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('tm')">SEC LEFT</th> -->
+                        <th scope="col" class="px-1 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('tm')" v-if="chosenBet == 0">GAME TOTAL</th>
+                        <th scope="col" class="px-1 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('tm')" v-else>GAME SPREAD</th>
                         <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 0">PREV OVER %</th>
                         <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>PREV COVER %</th>
                         <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 0">NEW OVER %</th>
@@ -95,33 +96,30 @@
                         <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 0">CHANGE IN OVER %</th>
                         <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>CHANGE IN COVER %</th>
                         <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 0">PREV TOTAL</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>PREV HOME SCORE</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 1">PREV AWAY SCORE</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>PREV SCORE DIFF</th>
                         <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 0">NEW TOTAL</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>NEW HOME SCORE</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 1">NEW AWAY SCORE</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>NEW SCORE DIFF</th>
                         <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')">PLAY</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
                     <tr v-for="play in tableData" class="odd:bg-espngray-100 even:bg-gray-50">
-                        <td class="hidden xs:table-cell whitespace-nowrap text-left py-3 pl-0.5 pr-0.5 xs:pr-1 text-xs xs:text-base font-medium text-espnblack">{{ play.OPP_NICKNAME + ' @ ' + play.TEAM_NICKNAME }} </td>
-                        <td class="table-cell xs:hidden whitespace-nowrap text-left py-3 pl-0.5 pr-0.5 xs:pr-1 text-[10px] xs:text-base font-medium text-espnblack">{{ play.OPP_NICKNAME + ' @ ' + play.TEAM_NICKNAME }}</td>
-                        <td class="whitespace-nowrap text-right py-3 pl-0.5 xs:pl-1 pr-0.5 text-[10px] xs:text-xs font-medium text-espnblack">{{ play.PERIOD }}</td>
-                        <td class="whitespace-nowrap text-right px-1 py-4 text-sm text-espngray-900 hidden sm:table-cell">{{ play.CLOCK_TEXT }}</td>
-                        <td class="whitespace-nowrap text-right px-2 py-4 text-xs text-espngray-900 sm:border-r-2 sm:border-dashed hidden sm:table-cell">{{ play.SECLEFT }}</td>
-                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 0">{{ (play.PREV_OVER * 100).toFixed(2) + '%' }}</td>
-                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else>{{ (play.PREV_COVER * 100).toFixed(2) + '%' }}</td>
-                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 0">{{ (play.OVER_PROB * 100).toFixed(2) + '%' }}</td>
-                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else>{{ (play.COVER_PROB * 100).toFixed(2) + '%' }}</td>
-                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 0">{{ (play.OVER_CHANGE * 100).toFixed(2) + '%' }}</td>
-                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else>{{ (play.COVER_CHANGE * 100).toFixed(2) + '%' }}</td>
+                        <td class="hidden xs:table-cell whitespace-nowrap text-left py-3 pl-0.5 pr-0.5 xs:pr-1 text-[10px] xs:text-base text-espnblack">{{ play.TEAM_NICKNAME + ' vs ' + play.OPP_NICKNAME }} </td>
+                        <td class="table-cell xs:hidden whitespace-nowrap text-left py-3 pl-0.5 pr-0.5 xs:pr-1 text-[8px] xs:text-base text-espnblack">{{ play.TEAM_NICKNAME + ' vs ' + play.OPP_NICKNAME }}</td>
+                        <td class="whitespace-nowrap text-right px-1 py-4 text-sm text-espngray-900 hidden sm:table-cell">{{ play.PERIOD + 'Q ' + play.CLOCK_TEXT }}</td>
+                        <!-- <td class="whitespace-nowrap text-right px-1 py-4 text-sm text-espngray-900 hidden sm:table-cell">{{ play.SECLEFT }}</td> -->
+                        <td class="whitespace-nowrap text-right px-2 py-4 text-xs text-espngray-900 sm:border-r-2 sm:border-dashed hidden sm:table-cell" v-if="chosenBet == 0">{{ play.GAME_TOTAL }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 text-xs text-espngray-900 sm:border-r-2 sm:border-dashed hidden sm:table-cell" v-else>{{ play.HOME_SPREAD }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 0">{{ (play.PREV_OVER * 100).toFixed(1) + '%' }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else>{{ (play.PREV_COVER * 100).toFixed(1) + '%' }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 0">{{ (play.OVER_PROB * 100).toFixed(1) + '%' }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else>{{ (play.COVER_PROB * 100).toFixed(1) + '%' }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 0">{{ (play.OVER_CHANGE * 100).toFixed(1) + '%' }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else>{{ (play.COVER_CHANGE * 100).toFixed(1) + '%' }}</td>
                         <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 0">{{ (play.PREV_homeScore + play.PREV_awayScore) }}</td>
-                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else>{{ play.PREV_homeScore }}</td>
-                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 1">{{ play.PREV_awayScore }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else>{{ play.PREV_awayScore - play.PREV_homeScore }}</td>
                         <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 0">{{ (play.homeScore + play.awayScore) }}</td>
-                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else>{{ play.homeScore }}</td>
-                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 1">{{ play.awayScore }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else>{{ play.awayScore - play.homeScore }}</td>
                         <td class="whitespace-nowrap text-right px-2 py-4 text-sm text-espnblack flex flex-col" ><div>{{ play.text1 }}</div><div>{{ play.text2 }}</div></td>
                     </tr>
                 </tbody>
@@ -296,7 +294,7 @@
           return (d.PERIOD + 'Q ' + d.CLOCK_TEXT);
         });
         let tooltip_homeScore = game.map(d => {
-          return d.homeScore + d.awayScore;
+          return d.homeScore + d.awayScore //+ ' (' + d.GAME_TOTAL + ')';
         });
         let tooltip_awayScore = game.map(d => {
           return d.awayScore;
@@ -307,8 +305,8 @@
         let tooltip_play2 = game.map(d => {
           return this.splitStringIntoTwo(d.text)[1]
         })
-        let chart_homeTeam = 'OVER'
-        let chart_awayTeam = 'UNDER'
+        let chart_homeTeam = 'OVER ' + game[game.length-1].GAME_TOTAL
+        let chart_awayTeam = 'UNDER ' + game[game.length-1].GAME_TOTAL
         let chart_winTeam = game.map(d => {
           if (d.new_COVER_PROB >= 50) {
             return chart_homeTeam;
@@ -316,8 +314,8 @@
             return chart_awayTeam;
           }
         })
-        let chart_homeColor = '#FF0000' 
-        let chart_awayColor = '#6C7280' 
+        let chart_homeColor = '#00a7e1' 
+        let chart_awayColor = '#c31e32' 
         let sec = game.map(d => {
           return d.SECLEFT * -1;
         });
@@ -331,7 +329,8 @@
             game[game.length-1].CLOCK_TEXT;
         }
         let currAwayScore = game[game.length-1].SCOREDIFF * -1;
-        let currHomeScore = game[game.length-1].homeScore + game[game.length-1].awayScore;
+        let currHomeScore = game[game.length-1].homeScore + game[game.length-1].awayScore
+        let gameTotal = game[game.length-1].GAME_TOTAL
         let homeChartTitle = this.ref.filter(d => {
           return d == game[0].TEAM_NICKNAME
         })[0]
@@ -363,7 +362,7 @@
   
         homeTeamInfo.append('div')
           .attr('class', 'legend-team-total')
-          .text(homeChartTitle + ' @ ' + awayChartTitle)
+          .text(homeChartTitle + ' vs. ' + awayChartTitle)
   
         // homeTeamInfo.append('div')
         //   .attr('class', 'legend-score')
@@ -384,6 +383,11 @@
         awayTeamInfo.append('div')
           .attr('class', 'legend-score-total')
           .text(currHomeScore)
+          .style('color', (currHomeScore > gameTotal ? chart_homeColor : (currHomeScore < gameTotal ? chart_awayColor : '#b1b1b1')))
+
+        // awayTeamInfo.append('div')
+        //   .attr('class', 'legend-score-total2')
+        //   .text('(' + gameTotal + ')')
         
         var teaminfo = d3chartdiv.append('div')
           .attr('class', 'legend-top-left')
@@ -477,7 +481,7 @@
               callbacks: {
                 title: () => null,
                 label: function(context) {
-                  let label = [context.dataset.customWinTeam[context.dataIndex] + ' ' + context.dataset.customWP[context.dataIndex].toFixed(1) + '%'];
+                  let label = [context.dataset.customWinTeam[context.dataIndex] + ': ' + context.dataset.customWP[context.dataIndex].toFixed(1) + '%'];
                   label.push('Total: ' + context.dataset.customHomeScore[context.dataIndex]);
                   label.push('(' + context.dataset.customClock[context.dataIndex] + ') ' +
                     context.dataset.customPlay[context.dataIndex])
@@ -704,7 +708,7 @@
           return (d.PERIOD + 'Q ' + d.CLOCK_TEXT);
         });
         let tooltip_homeScore = game.map(d => {
-          return d.homeScore + ' (' + (d.SCOREDIFF > 0 ? '+' : '') + d.SCOREDIFF + ')'
+          return d.homeScore + ' (' + (d.SCOREDIFF < 0 ? '+' : (d.SCOREDIFF > 0 ? '-': '')) + Math.abs(d.SCOREDIFF) + ')'
         });
         let tooltip_awayScore = game.map(d => {
           return d.awayScore
@@ -728,8 +732,8 @@
             return chart_awayTeam
           }
         })
-        let chart_homeColor = '#FF0000' 
-        let chart_awayColor = '#6C7280' 
+        let chart_homeColor = '#00a7e1' 
+        let chart_awayColor = '#c31e32'  
         let sec = game.map(d => {
           return d.SECLEFT * -1;
         });
@@ -743,8 +747,9 @@
             game[game.length-1].CLOCK_TEXT;
         }
         let currAwayScore = game[game.length-1].awayScore;
-        let currHomeScore = game[game.length-1].homeScore + ' (' + 
-        (game[game.length-1].SCOREDIFF > 0 ? '+' : '') + game[game.length-1].SCOREDIFF + ')'
+        let currHomeScore = game[game.length-1].homeScore
+        let finalSpread = game[game.length-1].SCOREDIFF
+        let gameSpread = game[game.length-1].HOME_SPREAD
         let homeChartTitle = this.ref.filter(d => {
           return d == game[0].TEAM_NICKNAME
         })[0]
@@ -773,14 +778,18 @@
         var homeTeamInfo = legendtitle.append('div')
           .attr('class', 'team-title')
           .attr('id', 'home-team-title')
-  
-        homeTeamInfo.append('div')
-          .attr('class', 'legend-team-spread')
-          .text(homeChartTitle)
-  
+
         homeTeamInfo.append('div')
           .attr('class', 'legend-score-spread')
           .text(currHomeScore)
+  
+        homeTeamInfo.append('div')
+          .attr('class', 'legend-team-spread')
+          .text(homeChartTitle + ' vs. ' + awayChartTitle)
+  
+        homeTeamInfo.append('div')
+          .attr('class', 'legend-score-spread')
+          .text(currAwayScore)
   
         legendtitle.append('div')
           .attr('class', 'legend-time-spread')
@@ -792,11 +801,21 @@
   
         awayTeamInfo.append('div')
           .attr('class', 'legend-team-spread')
-          .text(awayChartTitle)
+          .text('Score Diff:')
   
         awayTeamInfo.append('div')
           .attr('class', 'legend-score-spread')
-          .text(currAwayScore)
+          .text((finalSpread < 0 ? '+' : 
+          (finalSpread > 0 ? '-': '')) + 
+          Math.abs(finalSpread))
+          .style('color', (finalSpread * -1 < gameSpread ? chart_homeColor : 
+            (finalSpread * -1 > gameSpread ? chart_awayColor : '#b1b1b1')))
+
+        // awayTeamInfo.append('div')
+        //   .attr('class', 'legend-score-spread2')
+        //   .text('(' + (gameSpread > 0 ? '+' : 
+        //   (gameSpread < 0 ? '-': '')) + 
+        //   Math.abs(gameSpread) + ')')
         
         var teaminfo = d3chartdiv.append('div')
           .attr('class', 'legend-top-left')
@@ -808,7 +827,9 @@
           .style('background-color', chart_homeColor)
         teaminfo.append('p')
           .attr('class', 'tm-abbrev')
-          .text(chart_homeTeam + ' COVER')
+          .text(chart_homeTeam + ' ' + (gameSpread * -1 < 0 ? '+' : 
+          (gameSpread * -1 > 0 ? '-': '')) + 
+          Math.abs(gameSpread))
   
         d3chartdiv.append('div')
           .attr('class', 'canvas-cont')
@@ -827,7 +848,9 @@
         teaminfo2.append('p')
           .attr('class', 'tm-abbrev')
           .append('text')
-            .text(chart_awayTeam + ' COVER')
+            .text(chart_awayTeam + ' ' + (gameSpread < 0 ? '+' : 
+          (gameSpread > 0 ? '-': '')) + 
+          Math.abs(gameSpread))
   
         const ctx = document.getElementById(chartId);
         const threshold = 0;
@@ -2198,7 +2221,7 @@
   }
   .legend-title-cont {
     display: flex; 
-    justify-content: center;
+    justify-content: flex-start;
   }
   .legend-title {
     display: flex; 
@@ -2208,8 +2231,8 @@
   }
   .team-title {
     display: flex; 
-    width: 250px; 
-    gap: 5px; 
+    width: 350px; 
+    gap: 10px; 
     align-items: center; 
     justify-content: center;
   }
@@ -2219,36 +2242,47 @@
   }
   .legend-team-spread {
     font-size: 20px; 
-    width: 160px; 
+    /* width: 160px;  */
+    overflow: scroll;
     text-align: left;
   }
   .legend-team-total {
     font-size: 20px; 
-    width: 240px; 
+    /* width: 240px;  */
     text-align: center;
   }
   .legend-score-spread {
     font-size: 18px; 
     font-weight: bold;
-    width: 85px;
+    /* width: 50px; */
+    text-align: left;
+  }
+  .legend-score-spread2 {
+    font-size: 18px; 
+    /* font-weight: bold; */
     text-align: left;
   }
   .legend-score-total {
     font-size: 18px; 
     font-weight: bold;
-    width: 50px;
+    /* width: 50px; */
+    text-align: left;
+  }
+  .legend-score-total2 {
+    font-size: 18px; 
+    /* font-weight: bold; */
     text-align: left;
   }
   .legend-time-total {
     font-size: 15px; 
-    padding: 5px 45px 5px 45px;
-    width: 160px;
+    /* padding: 5px 45px 5px 45px; */
+    /* width: 160px; */
     text-align: center;
   }
   .legend-time-spread {
     font-size: 15px; 
-    padding: 5px 62.5px 5px 27.5px;
-    width: 160px;
+    /* padding: 5px 62.5px 5px 27.5px; */
+    /* width: 160px; */
   }
   .canvas-cont {
     padding-right: 20px;
@@ -2294,14 +2328,16 @@
     }
     .legend-team-spread {
       font-size: 17px;
-      width: 135px;
+      /* width: 135px; */
     }
     .legend-team-total {
       font-size: 17px;
-      width: 185px;
+      /* width: 185px; */
     }
     .legend-score-spread,
-    .legend-score-total {
+    .legend-score-spread2,
+    .legend-score-total, 
+    .legend-score-total2 {
       font-size: 15px;
     }
     .legend-time-total, 

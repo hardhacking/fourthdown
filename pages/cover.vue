@@ -2243,7 +2243,7 @@
   .legend-team-spread {
     font-size: 20px; 
     /* width: 160px;  */
-    overflow: scroll;
+    overflow: auto;
     text-align: left;
   }
   .legend-team-total {

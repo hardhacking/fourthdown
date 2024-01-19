@@ -143,7 +143,7 @@
     data() {
       return {
         data: [],
-        ref: [],
+        // ref: [],
         dates: [],
         // timer: null,
         live_chartsArr: [],
@@ -204,8 +204,8 @@
           return d;
         })
         // console.log(this.data)
-        this.ref = [...new Set(this.data.map(d => d.OPP_NICKNAME).
-                            concat(this.data.map(d => d.TEAM_NICKNAME)))]
+        // this.ref = [...new Set(this.data.map(d => d.OPP_ABBR).
+        //                     concat(this.data.map(d => d.TEAM_ABBR)))]
         // console.log(this.ref)
        
         this.curr_game_ids = this.data.map(({EVENT_ID, date}) => ({EVENT_ID, date}))
@@ -331,12 +331,12 @@
         let currAwayScore = game[game.length-1].SCOREDIFF * -1;
         let currHomeScore = game[game.length-1].homeScore + game[game.length-1].awayScore
         let gameTotal = game[game.length-1].GAME_TOTAL
-        let homeChartTitle = this.ref.filter(d => {
-          return d == game[0].TEAM_NICKNAME
-        })[0]
-        let awayChartTitle = this.ref.filter(d => {
-          return d == game[0].OPP_NICKNAME
-        })[0]
+        let homeChartTitle = game[game.length-1].TEAM_ABBR // this.ref.filter(d => {
+        //   return d == game[0].TEAM_NICKNAME
+        // })[0]
+        let awayChartTitle = game[game.length-1].OPP_ABBR // this.ref.filter(d => {
+        //   return d == game[0].OPP_NICKNAME
+        // })[0]
         let xAxisEnd;
         if (Math.min(...game.map(d => d.SECLEFT)) >= 0) {
           xAxisEnd = 0;
@@ -708,28 +708,47 @@
           return (d.PERIOD + 'Q ' + d.CLOCK_TEXT);
         });
         let tooltip_homeScore = game.map(d => {
-          return d.homeScore + ' (' + (d.SCOREDIFF < 0 ? '+' : (d.SCOREDIFF > 0 ? '-': '')) + Math.abs(d.SCOREDIFF) + ')'
+          return d.homeScore
         });
         let tooltip_awayScore = game.map(d => {
           return d.awayScore
         });
+        let tooltip_diff = game.map(d => {
+          return (d.SCOREDIFF < 0 ? '+' : 
+          (d.SCOREDIFF > 0 ? '-': '')) + 
+          Math.abs(d.SCOREDIFF)
+        })
         let tooltip_play = game.map(d => {
           return this.splitStringIntoTwo(d.text)[0];
         });
         let tooltip_play2 = game.map(d => {
           return this.splitStringIntoTwo(d.text)[1];
         });
-        let chart_homeTeam = this.ref.filter(d => {
-          return d == game[0].TEAM_NICKNAME;
-        })[0]
-        let chart_awayTeam = this.ref.filter(d => {
-          return d == game[0].OPP_NICKNAME;
-        })[0]
+        let chart_homeTeam = game[game.length-1].TEAM_ABBR //this.ref.filter(d => {
+        //   return d == game[0].TEAM_NICKNAME;
+        // })[0]
+        let chart_awayTeam = game[game.length-1].OPP_ABBR //this.ref.filter(d => {
+        //   return d == game[0].OPP_NICKNAME;
+        // })[0]
+        let currAwayScore = game[game.length-1].awayScore;
+        let currHomeScore = game[game.length-1].homeScore
+        let finalSpread = game[game.length-1].SCOREDIFF
+        let gameSpread = game[game.length-1].HOME_SPREAD
+        let homeChartTitle = game[game.length-1].TEAM_ABBR // this.ref.filter(d => {
+        //   return d == game[0].TEAM_NICKNAME
+        // })[0]
+        let awayChartTitle = game[game.length-1].OPP_ABBR // this.ref.filter(d => {
+        //   return d == game[0].OPP_NICKNAME
+        // })[0]
         let chart_winTeam = game.map(d => {
           if (d.new_COVER_PROB >= 50) {
-            return chart_homeTeam
+            return chart_homeTeam + ' (' + (gameSpread * -1 < 0 ? '+' : 
+              (gameSpread * -1 > 0 ? '-': '')) + 
+              Math.abs(gameSpread) + ')'
           } else {
-            return chart_awayTeam
+            return chart_awayTeam + ' (' + (gameSpread < 0 ? '+' : 
+              (gameSpread > 0 ? '-': '')) + 
+              Math.abs(gameSpread) + ')'
           }
         })
         let chart_homeColor = '#00a7e1' 
@@ -746,16 +765,7 @@
           currTime = game[game.length-1].PERIOD + 'Q - ' + 
             game[game.length-1].CLOCK_TEXT;
         }
-        let currAwayScore = game[game.length-1].awayScore;
-        let currHomeScore = game[game.length-1].homeScore
-        let finalSpread = game[game.length-1].SCOREDIFF
-        let gameSpread = game[game.length-1].HOME_SPREAD
-        let homeChartTitle = this.ref.filter(d => {
-          return d == game[0].TEAM_NICKNAME
-        })[0]
-        let awayChartTitle = this.ref.filter(d => {
-          return d == game[0].OPP_NICKNAME
-        })[0]
+        
         let xAxisEnd;
         if (Math.min(...game.map(d => d.SECLEFT)) >= 0) {
           xAxisEnd = 0;
@@ -915,6 +925,7 @@
                 label: function(context) {
                   let label = [context.dataset.customWinTeam[context.dataIndex] + ' ' + context.dataset.customWP[context.dataIndex].toFixed(1) + '%'];
                   label.push([context.dataset.customHomeTeam + ' ' + context.dataset.customHomeScore[context.dataIndex] + ' - ' + context.dataset.customAwayTeam + ' ' + context.dataset.customAwayScore[context.dataIndex]]);
+                  label.push('Score Diff: ' + context.dataset.customScoreDiff[context.dataIndex])
                   label.push('(' + context.dataset.customClock[context.dataIndex] + ') ' +
                     context.dataset.customPlay[context.dataIndex])
                   label.push(context.dataset.customPlay2[context.dataIndex])
@@ -1086,6 +1097,7 @@
               customHomeTeam: chart_homeTeam,
               customAwayTeam: chart_awayTeam,
               customWinTeam: chart_winTeam,
+              customScoreDiff: tooltip_diff,
               spanGaps: true,
             }],
           },

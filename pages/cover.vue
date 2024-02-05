@@ -163,9 +163,9 @@
                         <td class="whitespace-nowrap text-right px-1 py-4 text-sm text-espngray-900 hidden sm:table-cell" v-else-if="chosenBet == 0 & beat.over > beat.under">{{ beat.underTotal }}</td>
                         <td class="whitespace-nowrap text-right px-1 py-4 text-sm text-espngray-900 hidden sm:table-cell" v-else-if="chosenBet == 0">{{ beat.overTotal }}</td>
                         <td class="whitespace-nowrap text-right px-2 py-4 text-sm text-espnblack flex flex-col" v-if="chosenBet == 1 & beat.home > beat.away"><div>{{ beat.awayText1 }}</div><div>{{ beat.awayText2 }}</div></td>
-                        <td class="whitespace-nowrap text-right px-2 py-4 text-sm text-espnblack flex flex-col" v-if="chosenBet == 1"><div>{{ beat.homeText1 }}</div><div>{{ beat.homeText2 }}</div></td>
-                        <td class="whitespace-nowrap text-right px-2 py-4 text-sm text-espnblack flex flex-col" v-if="chosenBet == 0 & beat.over > beat.under"><div>{{ beat.underText1 }}</div><div>{{ beat.underText2 }}</div></td>
-                        <td class="whitespace-nowrap text-right px-2 py-4 text-sm text-espnblack flex flex-col" v-if="chosenBet == 0"><div>{{ beat.overText1 }}</div><div>{{ beat.overText2 }}</div></td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 text-sm text-espnblack flex flex-col" v-else-if="chosenBet == 1"><div>{{ beat.homeText1 }}</div><div>{{ beat.homeText2 }}</div></td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 text-sm text-espnblack flex flex-col" v-else-if="chosenBet == 0 & beat.over > beat.under"><div>{{ beat.underText1 }}</div><div>{{ beat.underText2 }}</div></td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 text-sm text-espnblack flex flex-col" v-else-if="chosenBet == 0"><div>{{ beat.overText1 }}</div><div>{{ beat.overText2 }}</div></td>
                     </tr>
                 </tbody>
               </table>

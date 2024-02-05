@@ -9,6 +9,7 @@
             <form class="form-round flex items-center justify-center" id="form-round">
               <label class="label-round p-2" id="label-round" for="round">Charts: </label>
               <select class="round-input" name="round" id="round-input" v-model="chosenData" @change="changePage()">
+                <option value=2>Bad Beats</option>
                 <option value=0>Probability Charts</option>
                 <option value=1>Plays Table</option>
               </select>
@@ -125,6 +126,50 @@
                 </tbody>
               </table>
             </div>
+            <div class="flex justify-center" v-if="chosenData == 2">
+              <table class="min-w-[32%] mt-4 xs:mt-[1.075em] divide-y divide-gray-900">
+                <thead>
+                    <tr>
+                        <th scope="col" class="hidden xs:table-cell py-1 pl-0.5 pr-0.5 xs:pr-1 text-left text-[10px] xs:text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('full_nm')">GAME</th>
+                        <th scope="col" class="table-cell xs:hidden py-1 pl-0.5 pr-0.5 xs:pr-1 text-left text-[10px] xs:text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('first_last_nm')">GAME</th>
+                        <!-- <th scope="col" class="px-1 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('tm')">SEC LEFT</th> -->
+                        <th scope="col" class="px-1 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('tm')">LOSING BET</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')">HIGHEST CHANCE TO HIT</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')">CLOCK</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 1">SCORE</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>TOTAL</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')">PLAY</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+                    <tr v-for="beat in beatsData" class="odd:bg-espngray-100 even:bg-gray-50">
+                        <td class="hidden xs:table-cell whitespace-nowrap text-left py-3 pl-0.5 pr-0.5 xs:pr-1 text-[10px] xs:text-base text-espnblack">{{ beat.homeTeam + ' vs ' + beat.awayTeam }} </td>
+                        <td class="table-cell xs:hidden whitespace-nowrap text-left py-3 pl-0.5 pr-0.5 xs:pr-1 text-[8px] xs:text-base text-espnblack">{{ beat.homeTeam + ' vs ' + beat.awayTeam }}</td>
+                        <!-- <td class="whitespace-nowrap text-right px-1 py-4 text-sm text-espngray-900 hidden sm:table-cell">{{ beat.SECLEFT }}</td> -->
+                        <td class="whitespace-nowrap text-right px-2 py-4 text-xs text-espngray-900 sm:border-r-2 sm:border-dashed hidden sm:table-cell" v-if="chosenBet == 0 & beat.over > beat.under">{{ beat.underBet }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 text-xs text-espngray-900 sm:border-r-2 sm:border-dashed hidden sm:table-cell" v-else-if="chosenBet == 0">{{ beat.overBet }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 text-xs text-espngray-900 sm:border-r-2 sm:border-dashed hidden sm:table-cell" v-else-if="chosenBet == 1 & beat.home > beat.away">{{ beat.awayBet }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 text-xs text-espngray-900 sm:border-r-2 sm:border-dashed hidden sm:table-cell" v-else-if="chosenBet == 1">{{ beat.homeBet }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-if="chosenBet == 0 & beat.over > beat.under">{{ (beat.under * 100).toFixed(1) + '%' }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else-if="chosenBet == 0">{{ (beat.over * 100).toFixed(1) + '%' }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else-if="chosenBet == 1 & beat.home > beat.away">{{ (beat.away * 100).toFixed(1) + '%' }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack" v-else-if="chosenBet == 1">{{ (beat.home * 100).toFixed(1) + '%' }}</td>
+                        <td class="whitespace-nowrap text-right px-1 py-4 text-sm text-espngray-900 hidden sm:table-cell" v-if="chosenBet == 1 & beat.home > beat.away">{{ beat.awayClock }}</td>
+                        <td class="whitespace-nowrap text-right px-1 py-4 text-sm text-espngray-900 hidden sm:table-cell" v-else-if="chosenBet == 1">{{ beat.homeClock }}</td>
+                        <td class="whitespace-nowrap text-right px-1 py-4 text-sm text-espngray-900 hidden sm:table-cell" v-else-if="chosenBet == 0 & beat.over > beat.under">{{ beat.underClock }}</td>
+                        <td class="whitespace-nowrap text-right px-1 py-4 text-sm text-espngray-900 hidden sm:table-cell" v-else-if="chosenBet == 0">{{ beat.overClock }}</td>
+                        <td class="whitespace-nowrap text-right px-1 py-4 text-sm text-espngray-900 hidden sm:table-cell" v-if="chosenBet == 1 & beat.home > beat.away">{{ beat.homeTeam + ' ' + beat.awayHScore + ' - ' + beat.awayTeam + ' ' + beat.awayAScore }}</td>
+                        <td class="whitespace-nowrap text-right px-1 py-4 text-sm text-espngray-900 hidden sm:table-cell" v-else-if="chosenBet == 1">{{ beat.homeTeam + ' ' + beat.homeHScore + ' - ' + beat.awayTeam + ' ' + beat.homeAScore }}</td>
+                        <td class="whitespace-nowrap text-right px-1 py-4 text-sm text-espngray-900 hidden sm:table-cell" v-else-if="chosenBet == 0 & beat.over > beat.under">{{ beat.underTotal }}</td>
+                        <td class="whitespace-nowrap text-right px-1 py-4 text-sm text-espngray-900 hidden sm:table-cell" v-else-if="chosenBet == 0">{{ beat.overTotal }}</td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 text-sm text-espnblack flex flex-col" v-if="chosenBet == 1 & beat.home > beat.away"><div>{{ beat.awayText1 }}</div><div>{{ beat.awayText2 }}</div></td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 text-sm text-espnblack flex flex-col" v-if="chosenBet == 1"><div>{{ beat.homeText1 }}</div><div>{{ beat.homeText2 }}</div></td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 text-sm text-espnblack flex flex-col" v-if="chosenBet == 0 & beat.over > beat.under"><div>{{ beat.underText1 }}</div><div>{{ beat.underText2 }}</div></td>
+                        <td class="whitespace-nowrap text-right px-2 py-4 text-sm text-espnblack flex flex-col" v-if="chosenBet == 0"><div>{{ beat.overText1 }}</div><div>{{ beat.overText2 }}</div></td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         <!-- <CBBFooter :espnLink="setEspnLink"/> -->
@@ -150,12 +195,13 @@
         curr_game_ids: [],
         // old_game_ids: [],
         chosenBet: 1,
-        chosenData: 0,
+        chosenData: 2,
         test_bool: [],
         animation_bool: true,
         chosenDate: null,
         filtered_ids: [],
         tableData: [],
+        beatsData: [],
         cutOff: 5,
       }
     },
@@ -179,6 +225,11 @@
     },
     methods: {
       async loadPage() {
+        if (this.chosenData == 0) {
+          document.getElementById('cjs-charts').style.minHeight = "700px"
+        } else {
+          document.getElementById('cjs-charts').style.minHeight = "0px"
+        }
         this.dates = this.getDates()
         // console.log(this.dates)
         if (!this.chosenDate) {
@@ -214,16 +265,164 @@
         // console.log(this.filtered_ids);
         // d3.select('#cjs-charts').selectAll('*').remove();
         this.animation_bool = true;
+        console.log(this.chosenData)
         if (this.chosenData == 0) {
           this.createAllCharts(this.data);
+          // this.displayTable(this.data);
+        } else if (this.chosenData == 1) {
           this.displayTable(this.data);
-        } else {
-          this.displayTable(this.data);
+        } else if (this.chosenData == 2) {
+          this.beatsTable(this.data);
         }
         // let game = this.data.filter(function(p) {return p.game_id == 401524079});
         // this.makeTestChart();
       },
-      
+      splitStringIntoTwo(str) {
+        // Step 1: Split the original string into an array of words
+        if (str) {
+          var wordsArray = str.split(/\s+/);
+
+          // Step 2: Determine the midpoint of the array
+          var midpoint = Math.ceil(wordsArray.length / 2);
+
+          // Step 3: Create two new arrays, one for each half of the original array
+          var firstHalfArray = wordsArray.slice(0, midpoint);
+          var secondHalfArray = wordsArray.slice(midpoint);
+
+          // Step 4: Join the words in each new array back into strings
+          var firstHalfString = firstHalfArray.join(' ');
+          var secondHalfString = secondHalfArray.join(' ');
+
+        } else {
+          var firstHalfString = NaN;
+          var secondHalfString = NaN;
+        }
+        
+        return [firstHalfString, secondHalfString];
+      },
+      beatsTable(fullData) {
+        
+        function splitStringIntoTwo(str) {
+          // Step 1: Split the original string into an array of words
+          if (str) {
+            var wordsArray = str.split(/\s+/);
+
+            // Step 2: Determine the midpoint of the array
+            var midpoint = Math.ceil(wordsArray.length / 2);
+
+            // Step 3: Create two new arrays, one for each half of the original array
+            var firstHalfArray = wordsArray.slice(0, midpoint);
+            var secondHalfArray = wordsArray.slice(midpoint);
+
+            // Step 4: Join the words in each new array back into strings
+            var firstHalfString = firstHalfArray.join(' ');
+            var secondHalfString = secondHalfArray.join(' ');
+
+          } else {
+            var firstHalfString = NaN;
+            var secondHalfString = NaN;
+          }
+          
+          return [firstHalfString, secondHalfString];
+        }
+
+        // let game = []
+        // let game_ids = [...new Set(this.filtered_ids.map(d => d.EVENT_ID))]
+        // console.log(game_ids)
+        // console.log(fullData);
+
+        var highestChances = fullData.reduce(function(acc, play) {
+          // Initialize if not exists
+          if (!acc[play.EVENT_ID]) {
+            acc[play.EVENT_ID] = 
+            { 
+              home: -1, away: -1 , homeClock: '', awayClock: '', 
+              over: -1, under: -1, overClock: '', underClock: '',
+              overTotal: 0, underTotal: 0, awayTeam: '', homeTeam: '', 
+              awayAScore: 0, homeAScore: 0, awayText2: '', homeText2: '',
+              awayHScore: 0, homeHScore: 0, awayText1: '', homeText1: '', 
+              overText1: '', overText2: '', underText1: '', underText2: '',
+              overBet: '', underBet: '', homeBet: '', awayBet: '',
+            }
+          }
+
+          // Update the highest chance for the home team
+          if (play.COVER_PROB > acc[play.EVENT_ID].home) {
+            acc[play.EVENT_ID].home = play.COVER_PROB
+            acc[play.EVENT_ID].homeClock = play.PERIOD + 'Q ' + play.CLOCK_TEXT
+            acc[play.EVENT_ID].homeTeam = play.TEAM_ABBR
+            acc[play.EVENT_ID].awayTeam = play.OPP_ABBR
+            acc[play.EVENT_ID].homeAScore = play.awayScore
+            acc[play.EVENT_ID].homeHScore = play.homeScore
+            // console.log(play.text)
+            acc[play.EVENT_ID].homeText1 = splitStringIntoTwo(play.text)[0] 
+            acc[play.EVENT_ID].homeText2 = splitStringIntoTwo(play.text)[1] 
+            acc[play.EVENT_ID].homeBet = play.TEAM_ABBR + ' ' + (play.HOME_SPREAD < 0 ? '-' : 
+              (play.HOME_SPREAD > 0 ? '+': '')) + 
+              Math.abs(play.HOME_SPREAD)
+            acc[play.EVENT_ID].awayBet = play.OPP_ABBR + ' ' + (play.HOME_SPREAD < 0 ? '+' : 
+              (play.HOME_SPREAD > 0 ? '-': '')) + 
+              Math.abs(play.HOME_SPREAD)
+            acc[play.EVENT_ID].overBet = 'o' + play.GAME_TOTAL
+            acc[play.EVENT_ID].underBet = 'u' + play.GAME_TOTAL
+          }
+
+          // Compute the away team's chances
+          var awayWinProb = 1 - play.COVER_PROB
+
+          // Update the highest chance for the away team
+          if (awayWinProb > acc[play.EVENT_ID].away) {
+            acc[play.EVENT_ID].away = awayWinProb
+            acc[play.EVENT_ID].awayClock = play.PERIOD + 'Q ' + play.CLOCK_TEXT
+            acc[play.EVENT_ID].awayAScore = play.awayScore
+            acc[play.EVENT_ID].awayHScore = play.homeScore
+            acc[play.EVENT_ID].awayText1 = splitStringIntoTwo(play.text)[0] 
+            acc[play.EVENT_ID].awayText2 = splitStringIntoTwo(play.text)[1] 
+          }
+
+          if (play.OVER_PROB > acc[play.EVENT_ID].over) {
+            acc[play.EVENT_ID].over = play.OVER_PROB
+            acc[play.EVENT_ID].overClock = play.PERIOD + 'Q ' + play.CLOCK_TEXT
+            acc[play.EVENT_ID].overTotal = play.awayScore + play.homeScore
+            acc[play.EVENT_ID].overText1 = splitStringIntoTwo(play.text)[0] 
+            acc[play.EVENT_ID].overText2 = splitStringIntoTwo(play.text)[1] 
+          }
+
+          var underProb = 1 - play.OVER_PROB
+
+          if (underProb > acc[play.EVENT_ID].under) {
+            acc[play.EVENT_ID].under = underProb
+            acc[play.EVENT_ID].underClock = play.PERIOD + 'Q ' + play.CLOCK_TEXT
+            acc[play.EVENT_ID].underTotal = play.awayScore + play.homeScore
+            acc[play.EVENT_ID].underText1 = splitStringIntoTwo(play.text)[0] 
+            acc[play.EVENT_ID].underText2 = splitStringIntoTwo(play.text)[1] 
+          }
+
+          return acc;
+        }, {});
+
+        // console.log(highestChances);
+
+        this.beatsData = highestChances;
+        // for (let i = 0; i < game_ids.length; i++) {
+        //   // if (this.filtered_ids[i].status == 'pre') {
+        //   //   game = gamesData[game_ids[i]];
+        //   //   if (game) {
+        //   //     this.createPreGameChart(game, "myChart" + game_ids[i]);
+        //   //   }
+        //   // } else {
+        //     game = fullData.filter(f => f.EVENT_ID == game_ids[i])
+        //     // console.log(game)
+        //     if (game) {
+        //       if (this.chosenBet == 0) {
+                
+        //       } else {
+                
+        //       }
+        //     }
+        //   // }
+        // }
+      },
       displayTable(fullData) {
         fullData = fullData.filter(f => f.date == this.chosenDate)
         fullData = fullData.sort((a,b) => {
@@ -663,29 +862,6 @@
           this.live_chartsArr[chartId].moved = true;
         }
       },
-      splitStringIntoTwo(str) {
-        // Step 1: Split the original string into an array of words
-        if (str) {
-          var wordsArray = str.split(/\s+/);
-
-          // Step 2: Determine the midpoint of the array
-          var midpoint = Math.ceil(wordsArray.length / 2);
-
-          // Step 3: Create two new arrays, one for each half of the original array
-          var firstHalfArray = wordsArray.slice(0, midpoint);
-          var secondHalfArray = wordsArray.slice(midpoint);
-
-          // Step 4: Join the words in each new array back into strings
-          var firstHalfString = firstHalfArray.join(' ');
-          var secondHalfString = secondHalfArray.join(' ');
-
-        } else {
-          var firstHalfString = NaN;
-          var secondHalfString = NaN;
-        }
-        
-        return [firstHalfString, secondHalfString];
-      },
       CreateSpreadChart(game, chartId, idIndex) {
         game = game.map(d => {
           d.new_COVER_PROB = d.COVER_PROB * 100;
@@ -714,9 +890,9 @@
           return d.awayScore
         });
         let tooltip_diff = game.map(d => {
-          return (d.SCOREDIFF < 0 ? '+' : 
+          return ((d.SCOREDIFF < 0 ? '+' : //game[game.length-1].TEAM_ABBR + ' ' + 
           (d.SCOREDIFF > 0 ? '-': '')) + 
-          Math.abs(d.SCOREDIFF)
+          Math.abs(d.SCOREDIFF))
         })
         let tooltip_play = game.map(d => {
           return this.splitStringIntoTwo(d.text)[0];
@@ -1124,11 +1300,6 @@
       // },
       changePage() {
         d3.select('#cjs-charts').selectAll('*').remove();
-        if (this.chosenData == 0) {
-          document.getElementById('cjs-charts').style.minHeight = "700px"
-        } else {
-          document.getElementById('cjs-charts').style.minHeight = "0px"
-        }
         this.loadPage();
       },
       // async updatePageTemp() {

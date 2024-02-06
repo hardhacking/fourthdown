@@ -32,75 +32,29 @@
               <input type="number" step="2.5" v-model="cutOff" @change="changePage()"/>
             </div>
             
-            <div class="charts" id="cjs-charts">
-              <!-- <div class="chart">
-                <div class="legend-title-cont" >
-                  <div class="legend-title" >
-                    <div class="team-title" >
-                      <div class="legend-seed">
-                        10
-                      </div>
-                      <div class="legend-team" >
-                        Texas A&M-CC
-                      </div>
-                      <div class="legend-score" >
-                        58
-                      </div>
-                    </div>
-                    <div class="legend-time" >
-                      1:28 2H
-                    </div>
-                    <div class="team-title" >
-                      <div class="legend-seed" >
-                        6
-                      </div>
-                      <div class="legend-team" >
-                        Texas Southern
-                      </div>
-                      <div class="legend-score" >
-                        42
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="legend-top-left">
-                  <div id="team-info">
-                    <div class="btn-sm" style="background: #003559;"></div>
-                    <p class="tm-abbrev">HOU</p>
-                  </div>
-                </div>
-                <div class="canvas-cont">
-                  <canvas id="myChart2"></canvas>
-                </div>
-                <div class="legend-bottom-left">
-                  <div id="team-info">
-                    <div class="btn-sm" style="background: #003559;"></div>
-                    <p class="tm-abbrev" >UNC</p>
-                  </div>
-                </div>
-              </div> -->
-            </div>
+            <div class="charts" id="cjs-charts"></div>
+            <div class="charts-hover" id="cjs-charts-hover"></div>
             <div class="flex justify-center" v-if="chosenData == 1">
               <table class="min-w-[32%] mt-4 xs:mt-[1.075em] divide-y divide-gray-900">
                 <thead>
                     <tr>
-                        <th scope="col" class="hidden xs:table-cell py-1 pl-0.5 pr-0.5 xs:pr-1 text-left text-[10px] xs:text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('full_nm')">GAME</th>
-                        <th scope="col" class="table-cell xs:hidden py-1 pl-0.5 pr-0.5 xs:pr-1 text-left text-[10px] xs:text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('first_last_nm')">GAME</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('position')">CLOCK</th>
+                        <th scope="col" class="hidden xs:table-cell py-1 pl-0.5 pr-0.5 xs:pr-1 text-left text-[10px] xs:text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('game', false)">GAME</th>
+                        <th scope="col" class="table-cell xs:hidden py-1 pl-0.5 pr-0.5 xs:pr-1 text-left text-[10px] xs:text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('game', false)">GAME</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('clock')">CLOCK</th>
                         <!-- <th scope="col" class="px-1 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('tm')">SEC LEFT</th> -->
-                        <th scope="col" class="px-1 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('tm')" v-if="chosenBet == 0">GAME TOTAL</th>
-                        <th scope="col" class="px-1 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('tm')" v-else>GAME SPREAD</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 0">PREV OVER %</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>PREV COVER %</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 0">NEW OVER %</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>NEW COVER %</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 0">CHANGE IN OVER %</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>CHANGE IN COVER %</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 0">PREV TOTAL</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>PREV SCORE DIFF</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 0">NEW TOTAL</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>NEW SCORE DIFF</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')">PLAY</th>
+                        <th scope="col" class="px-1 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('GAME_TOTAL', true)" v-if="chosenBet == 0">GAME TOTAL</th>
+                        <th scope="col" class="px-1 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('HOME_SPREAD', true)" v-else>GAME SPREAD</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('PREV_OVER', true)" v-if="chosenBet == 0">PREV OVER %</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('PREV_COVER', true)" v-else>PREV COVER %</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('OVER_PROB', true)" v-if="chosenBet == 0">NEW OVER %</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('COVER_PROB', true)" v-else>NEW COVER %</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('OVER_CHANGE', true)" v-if="chosenBet == 0">CHANGE IN OVER %</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('COVER_CHANGE', true)" v-else>CHANGE IN COVER %</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('prev_total', false)" v-if="chosenBet == 0">PREV TOTAL</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('prev_score_diff', false)" v-else>PREV SCORE DIFF</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('new_total', false)" v-if="chosenBet == 0">NEW TOTAL</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('new_score_diff', false)" v-else>NEW SCORE DIFF</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900">PLAY</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
@@ -130,19 +84,19 @@
               <table class="min-w-[32%] mt-4 xs:mt-[1.075em] divide-y divide-gray-900">
                 <thead>
                     <tr>
-                        <th scope="col" class="hidden xs:table-cell py-1 pl-0.5 pr-0.5 xs:pr-1 text-left text-[10px] xs:text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('full_nm')">GAME</th>
-                        <th scope="col" class="table-cell xs:hidden py-1 pl-0.5 pr-0.5 xs:pr-1 text-left text-[10px] xs:text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('first_last_nm')">GAME</th>
+                        <th scope="col" class="hidden xs:table-cell py-1 pl-0.5 pr-0.5 xs:pr-1 text-left text-[10px] xs:text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromBeats('game')">GAME</th>
+                        <th scope="col" class="table-cell xs:hidden py-1 pl-0.5 pr-0.5 xs:pr-1 text-left text-[10px] xs:text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromBeats('game')">GAME</th>
                         <!-- <th scope="col" class="px-1 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('tm')">SEC LEFT</th> -->
-                        <th scope="col" class="px-1 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromTable('tm')">LOSING BET</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')">HIGHEST CHANCE TO HIT</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')">CLOCK</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-if="chosenBet == 1">SCORE</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')" v-else>TOTAL</th>
-                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromTable('yds')">PLAY</th>
+                        <th scope="col" class="px-1 py-1 text-right text-xs font-semibold text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer hidden sm:table-cell" @click="sortFromBeats('bet')">LOSING BET</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromBeats('chance')">HIGHEST CHANCE TO HIT</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" @click="sortFromBeats('clock')">CLOCK</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900" v-if="chosenBet == 1">SCORE</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900" v-else>TOTAL</th>
+                        <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900">PLAY</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white">
-                    <tr v-for="beat in beatsData" class="odd:bg-espngray-100 even:bg-gray-50">
+                <tbody class="bg-white" id="beatsBody">
+                    <tr v-for="(beat, i) in beatsData" class="odd:bg-espngray-100 even:bg-gray-50 hover:bg-espncyan-50 cursor-pointer" @click="tableIn(beat.EVENT_ID, i)">
                         <td class="hidden xs:table-cell whitespace-nowrap text-left py-3 pl-0.5 pr-0.5 xs:pr-1 text-[10px] xs:text-base text-espnblack">{{ beat.homeTeam + ' vs ' + beat.awayTeam }} </td>
                         <td class="table-cell xs:hidden whitespace-nowrap text-left py-3 pl-0.5 pr-0.5 xs:pr-1 text-[8px] xs:text-base text-espnblack">{{ beat.homeTeam + ' vs ' + beat.awayTeam }}</td>
                         <!-- <td class="whitespace-nowrap text-right px-1 py-4 text-sm text-espngray-900 hidden sm:table-cell">{{ beat.SECLEFT }}</td> -->
@@ -203,6 +157,10 @@
         tableData: [],
         beatsData: [],
         cutOff: 5,
+        hoverI: 0,
+        hoverId: -1,
+        justSorted: '',
+        direction: -1,
       }
     },
     created() {
@@ -227,8 +185,13 @@
       async loadPage() {
         if (this.chosenData == 0) {
           document.getElementById('cjs-charts').style.minHeight = "700px"
+          document.getElementById('cjs-charts-hover').style.minHeight = "0px"
+        } else if (this.chosenData == 2) {
+          document.getElementById('cjs-charts').style.minHeight = "0px"
+          document.getElementById('cjs-charts-hover').style.minHeight = "250px"
         } else {
           document.getElementById('cjs-charts').style.minHeight = "0px"
+          document.getElementById('cjs-charts-hover').style.minHeight = "0px"
         }
         this.dates = this.getDates()
         // console.log(this.dates)
@@ -265,18 +228,84 @@
         // console.log(this.filtered_ids);
         // d3.select('#cjs-charts').selectAll('*').remove();
         this.animation_bool = true;
-        console.log(this.chosenData)
+        // console.log(this.chosenData)
         if (this.chosenData == 0) {
-          this.createAllCharts(this.data);
+          this.createAllCharts(this.data, false);
           // this.displayTable(this.data);
         } else if (this.chosenData == 1) {
           this.displayTable(this.data);
         } else if (this.chosenData == 2) {
+          this.createAllCharts(this.data, true);
           this.beatsTable(this.data);
         }
         // let game = this.data.filter(function(p) {return p.game_id == 401524079});
         // this.makeTestChart();
       },
+      tableIn(id, ind) {
+        // console.log(document.getElementById('beatsBody').children[ind].style)
+        if (this.hoverId != id) {
+          document.getElementById('myChart' + this.hoverId + '-cont').style.opacity = 0
+          document.getElementById('myChart' + this.hoverId + '-cont').style.zIndex = -1
+          document.getElementById('beatsBody').children[this.hoverI].style.backgroundColor = ''
+        }
+        document.getElementById('myChart' + id + '-cont').style.opacity = 100
+        document.getElementById('myChart' + id + '-cont').style.zIndex = 1
+        document.getElementById('beatsBody').children[ind].style.backgroundColor = 'rgb(0, 174, 239)'
+        this.hoverId = id
+        this.hoverI = ind
+        // document.getElementById('myChart' + id + '-cont').style.zIndex = 20
+        // console.log(id)
+      },
+      // sortFromBeats(sortVar) {
+      //   console.log(document.getElementById('beatsBody').children)
+      //   var innerText = document.getElementById('beatsBody').children[this.hoverI].innerText
+      //   document.getElementById('beatsBody').children[this.hoverI].style.backgroundColor = ''
+      //   if (this.justSorted == (sortVar + this.chosenBet + this.chosenData)) {
+      //     this.direction = this.direction * -1
+      //   }
+      //   if (sortVar == 'game') {
+
+      //   } else if (sortVar == 'bet') {
+      //     if (this.chosenBet == 0) {
+      //       this.beatsData.sort((a, b) => {
+      //         a.losingBet = a.over > a.under ? a.underBet : a.overBet
+      //         b.losingBet = b.over > b.under ? b.underBet : b.overBet
+      //         a.losingBet = a.losingBet.substring(1, 10)
+      //         b.losingBet = b.losingBet.substring(1, 10)
+      //         return this.direction == -1 ? d3.descending(a.losingBet, b.losingBet) : 
+      //           d3.ascending(a.losingBet, b.losingBet)
+      //       })
+      //     } else if (this.chosenBet == 1) {
+      //       this.beatsData.sort((a, b) => {
+      //         a.losingBet = a.home > a.away ? a.awayBet : a.homeBet
+      //         b.losingBet = b.home > b.away ? b.awayBet : b.homeBet
+      //         a.losingBet = parseFloat(a.losingBet.match(/[-+]?[0-9]*\.?[0-9]+$/)[0])
+      //         b.losingBet = parseFloat(b.losingBet.match(/[-+]?[0-9]*\.?[0-9]+$/)[0])
+      //         return this.direction == -1 ? d3.descending(a.losingBet, b.losingBet) : 
+      //           d3.ascending(a.losingBet, b.losingBet)
+      //       })
+      //     }
+      //   } else if (sortVar == 'chance') {
+      //     if (this.chosenBet == 0) {
+      //       this.beatsData.sort((a, b) => {
+      //         a.losingChance = a.over > a.under ? a.under : a.over
+      //         b.losingChance = b.over > b.under ? b.under : b.over
+      //         return this.direction == 1 ? d3.descending(a.losingChance, b.losingChance) : 
+      //           d3.ascending(a.losingChance, b.losingChance)
+      //       })  
+      //     } else if (this.chosenBet == 1) {
+      //       this.beatsData.sort((a, b) => {
+      //         a.losingChance = a.home > a.away ? a.away : a.home
+      //         b.losingChance = b.home > b.away ? b.away : b.home
+      //         return this.direction == 1 ? d3.descending(a.losingChance, b.losingChance) : 
+      //           d3.ascending(a.losingChance, b.losingChance)
+      //       })
+      //     }
+      //   } else if (sortVar == 'clock') {
+
+      //   }
+      //   this.justSorted = sortVar + this.chosenBet + this.chosenData
+      // },
       splitStringIntoTwo(str) {
         // Step 1: Split the original string into an array of words
         if (str) {
@@ -343,6 +372,7 @@
               awayHScore: 0, homeHScore: 0, awayText1: '', homeText1: '', 
               overText1: '', overText2: '', underText1: '', underText2: '',
               overBet: '', underBet: '', homeBet: '', awayBet: '',
+              lowerSp: -1, lowerTo: -1, EVENT_ID: -1,
             }
           }
 
@@ -365,6 +395,7 @@
               Math.abs(play.HOME_SPREAD)
             acc[play.EVENT_ID].overBet = 'o' + play.GAME_TOTAL
             acc[play.EVENT_ID].underBet = 'u' + play.GAME_TOTAL
+            acc[play.EVENT_ID].EVENT_ID = play.EVENT_ID
           }
 
           // Compute the away team's chances
@@ -379,6 +410,7 @@
             acc[play.EVENT_ID].awayText1 = splitStringIntoTwo(play.text)[0] 
             acc[play.EVENT_ID].awayText2 = splitStringIntoTwo(play.text)[1] 
           }
+          acc[play.EVENT_ID].lowerSp = Math.min(acc[play.EVENT_ID].away, acc[play.EVENT_ID].home)
 
           if (play.OVER_PROB > acc[play.EVENT_ID].over) {
             acc[play.EVENT_ID].over = play.OVER_PROB
@@ -397,31 +429,27 @@
             acc[play.EVENT_ID].underText1 = splitStringIntoTwo(play.text)[0] 
             acc[play.EVENT_ID].underText2 = splitStringIntoTwo(play.text)[1] 
           }
+          acc[play.EVENT_ID].lowerTo = Math.min(acc[play.EVENT_ID].under, acc[play.EVENT_ID].over)
 
           return acc;
         }, {});
 
-        // console.log(highestChances);
+        var highestChancesArr = Object.keys(highestChances).map(function(eventId) {
+          return highestChances[eventId];
+        });
 
-        this.beatsData = highestChances;
-        // for (let i = 0; i < game_ids.length; i++) {
-        //   // if (this.filtered_ids[i].status == 'pre') {
-        //   //   game = gamesData[game_ids[i]];
-        //   //   if (game) {
-        //   //     this.createPreGameChart(game, "myChart" + game_ids[i]);
-        //   //   }
-        //   // } else {
-        //     game = fullData.filter(f => f.EVENT_ID == game_ids[i])
-        //     // console.log(game)
-        //     if (game) {
-        //       if (this.chosenBet == 0) {
-                
-        //       } else {
-                
-        //       }
-        //     }
-        //   // }
-        // }
+        if (this.chosenBet == 1) {
+          this.beatsData = highestChancesArr.sort((a,b) => {
+            return d3.descending(a.lowerSp, b.lowerSp)
+          })
+        } else {
+          this.beatsData = highestChancesArr.sort((a,b) => {
+            return d3.descending(a.lowerTo, b.lowerTo)
+          })
+        }
+        this.hoverId = this.beatsData[0].EVENT_ID 
+        document.getElementById('myChart' + this.beatsData[0].EVENT_ID + '-cont').style.opacity = 100
+        document.getElementById('myChart' + this.beatsData[0].EVENT_ID + '-cont').style.zIndex = 1
       },
       displayTable(fullData) {
         fullData = fullData.filter(f => f.date == this.chosenDate)
@@ -471,7 +499,8 @@
           })
         }
       },
-      CreateTotalChart(game, chartId, idIndex) {
+      CreateTotalChart(game, chartId, idIndex, hover) {
+        // console.log(hover);
         game = game.map(d => {
           d.new_COVER_PROB = d.OVER_PROB * 100;
           return d;
@@ -543,50 +572,53 @@
           xAxisEnd = (Math.max(...game.map(d => d.PERIOD)) - 4) * 300;
         } 
         
-        var d3chartdiv = d3.select('#cjs-charts')
+        var d3chartdiv = d3.select(hover ? '#cjs-charts-hover' : '#cjs-charts')
           .insert('div', ':first-child')
-            .attr('class', 'chart')
+            .attr('class', hover ? 'chart-hover' : 'chart')
             .attr('id', (chartId + '-cont'))
             .append('div')
-            .attr('class', 'chart-title-cont')
+            .attr('class', hover ? 'chart-title-cont-hover' : 'chart-title-cont')
   
-        var legendtitle = d3chartdiv.append('div')
-          .attr('class', 'legend-title-cont').
-          append('div')
-          .attr('class', 'legend-title')
-  
-        var homeTeamInfo = legendtitle.append('div')
-          .attr('class', 'team-title')
-          .attr('id', 'home-team-title')
-  
-        homeTeamInfo.append('div')
-          .attr('class', 'legend-team-total')
-          .text(homeChartTitle + ' vs. ' + awayChartTitle)
-  
-        // homeTeamInfo.append('div')
-        //   .attr('class', 'legend-score')
-        //   .text(currHomeScore)
-  
-        legendtitle.append('div')
-          .attr('class', 'legend-time-total')
-          .text(currTime)
-  
-        var awayTeamInfo = legendtitle.append('div')
-          .attr('class', 'team-title')
-          .attr('id', 'away-team-title')
-  
-        awayTeamInfo.append('div')
-          .attr('class', 'legend-team-spread')
-          .text('TOTAL')
-  
-        awayTeamInfo.append('div')
-          .attr('class', 'legend-score-total')
-          .text(currHomeScore)
-          .style('color', (currHomeScore > gameTotal ? chart_homeColor : (currHomeScore < gameTotal ? chart_awayColor : '#b1b1b1')))
 
-        // awayTeamInfo.append('div')
-        //   .attr('class', 'legend-score-total2')
-        //   .text('(' + gameTotal + ')')
+        if (!hover) {
+          var legendtitle = d3chartdiv.append('div')
+            .attr('class', 'legend-title-cont').
+            append('div')
+            .attr('class', 'legend-title')
+    
+          var homeTeamInfo = legendtitle.append('div')
+            .attr('class', 'team-title')
+            .attr('id', 'home-team-title')
+    
+          homeTeamInfo.append('div')
+            .attr('class', 'legend-team-total')
+            .text(homeChartTitle + ' vs. ' + awayChartTitle)
+    
+          // homeTeamInfo.append('div')
+          //   .attr('class', 'legend-score')
+          //   .text(currHomeScore)
+    
+          legendtitle.append('div')
+            .attr('class', 'legend-time-total')
+            .text(currTime)
+    
+          var awayTeamInfo = legendtitle.append('div')
+            .attr('class', 'team-title')
+            .attr('id', 'away-team-title')
+    
+          awayTeamInfo.append('div')
+            .attr('class', 'legend-team-spread')
+            .text('TOTAL')
+    
+          awayTeamInfo.append('div')
+            .attr('class', 'legend-score-total')
+            .text(currHomeScore)
+            .style('color', (currHomeScore > gameTotal ? chart_homeColor : (currHomeScore < gameTotal ? chart_awayColor : '#b1b1b1')))
+
+          // awayTeamInfo.append('div')
+          //   .attr('class', 'legend-score-total2')
+          //   .text('(' + gameTotal + ')')
+        }
         
         var teaminfo = d3chartdiv.append('div')
           .attr('class', 'legend-top-left')
@@ -594,14 +626,14 @@
           .attr('id', 'team-info')
   
         teaminfo.append('div')
-          .attr('class', 'btn-sm')
+          .attr('class', hover ? 'btn-sm-hover' : 'btn-sm')
           .style('background-color', chart_homeColor)
         teaminfo.append('p')
-          .attr('class', 'tm-abbrev')
+          .attr('class', hover ? 'tm-abbrev-hover' : 'tm-abbrev')
           .text(chart_homeTeam)
   
         d3chartdiv.append('div')
-          .attr('class', 'canvas-cont')
+          .attr('class', hover ? 'canvas-cont-hover' : 'canvas-cont')
           .append('canvas')
           .attr('id', chartId)
   
@@ -611,11 +643,11 @@
           .attr('id', 'team-info')
   
         teaminfo2.append('div')
-          .attr('class', 'btn-sm')
+          .attr('class', hover ? 'btn-sm-hover' : 'btn-sm')
           .style('background-color', chart_awayColor)
   
         teaminfo2.append('p')
-          .attr('class', 'tm-abbrev')
+          .attr('class', hover ? 'tm-abbrev-hover' : 'tm-abbrev')
           .append('text')
             .text(chart_awayTeam)
   
@@ -862,7 +894,7 @@
           this.live_chartsArr[chartId].moved = true;
         }
       },
-      CreateSpreadChart(game, chartId, idIndex) {
+      CreateSpreadChart(game, chartId, idIndex, hover) {
         game = game.map(d => {
           d.new_COVER_PROB = d.COVER_PROB * 100;
           return d;
@@ -949,59 +981,61 @@
           xAxisEnd = (Math.max(...game.map(d => d.PERIOD)) - 4) * 300;
         } 
         
-        var d3chartdiv = d3.select('#cjs-charts')
+        var d3chartdiv = d3.select(hover ? '#cjs-charts-hover' : '#cjs-charts')
           .insert('div', ':first-child')
-            .attr('class', 'chart')
+            .attr('class', hover ? 'chart-hover' : 'chart')
             .attr('id', (chartId + '-cont'))
             .append('div')
-            .attr('class', 'chart-title-cont')
-  
-        var legendtitle = d3chartdiv.append('div')
-          .attr('class', 'legend-title-cont').
-          append('div')
-          .attr('class', 'legend-title')
-  
-        var homeTeamInfo = legendtitle.append('div')
-          .attr('class', 'team-title')
-          .attr('id', 'home-team-title')
+            .attr('class', hover ? 'chart-title-cont-hover' : 'chart-title-cont')
 
-        homeTeamInfo.append('div')
-          .attr('class', 'legend-score-spread')
-          .text(currHomeScore)
-  
-        homeTeamInfo.append('div')
-          .attr('class', 'legend-team-spread')
-          .text(homeChartTitle + ' vs. ' + awayChartTitle)
-  
-        homeTeamInfo.append('div')
-          .attr('class', 'legend-score-spread')
-          .text(currAwayScore)
-  
-        legendtitle.append('div')
-          .attr('class', 'legend-time-spread')
-          .text(currTime)
-  
-        var awayTeamInfo = legendtitle.append('div')
-          .attr('class', 'team-title')
-          .attr('id', 'away-team-title')
-  
-        awayTeamInfo.append('div')
-          .attr('class', 'legend-team-spread')
-          .text('Score Diff:')
-  
-        awayTeamInfo.append('div')
-          .attr('class', 'legend-score-spread')
-          .text((finalSpread < 0 ? '+' : 
-          (finalSpread > 0 ? '-': '')) + 
-          Math.abs(finalSpread))
-          .style('color', (finalSpread * -1 < gameSpread ? chart_homeColor : 
-            (finalSpread * -1 > gameSpread ? chart_awayColor : '#b1b1b1')))
+        if (!hover) {
+          var legendtitle = d3chartdiv.append('div')
+            .attr('class', 'legend-title-cont').
+            append('div')
+            .attr('class', 'legend-title')
 
-        // awayTeamInfo.append('div')
-        //   .attr('class', 'legend-score-spread2')
-        //   .text('(' + (gameSpread > 0 ? '+' : 
-        //   (gameSpread < 0 ? '-': '')) + 
-        //   Math.abs(gameSpread) + ')')
+          var homeTeamInfo = legendtitle.append('div')
+            .attr('class', 'team-title')
+            .attr('id', 'home-team-title')
+
+          homeTeamInfo.append('div')
+            .attr('class', 'legend-score-spread')
+            .text(currHomeScore)
+    
+          homeTeamInfo.append('div')
+            .attr('class', 'legend-team-spread')
+            .text(homeChartTitle + ' vs. ' + awayChartTitle)
+    
+          homeTeamInfo.append('div')
+            .attr('class', 'legend-score-spread')
+            .text(currAwayScore)
+    
+          legendtitle.append('div')
+            .attr('class', 'legend-time-spread')
+            .text(currTime)
+    
+          var awayTeamInfo = legendtitle.append('div')
+            .attr('class', 'team-title')
+            .attr('id', 'away-team-title')
+    
+          awayTeamInfo.append('div')
+            .attr('class', 'legend-team-spread')
+            .text('Score Diff:')
+    
+          awayTeamInfo.append('div')
+            .attr('class', 'legend-score-spread')
+            .text((finalSpread < 0 ? '+' : 
+            (finalSpread > 0 ? '-': '')) + 
+            Math.abs(finalSpread))
+            .style('color', (finalSpread * -1 < gameSpread ? chart_homeColor : 
+              (finalSpread * -1 > gameSpread ? chart_awayColor : '#b1b1b1')))
+
+          // awayTeamInfo.append('div')
+          //   .attr('class', 'legend-score-spread2')
+          //   .text('(' + (gameSpread > 0 ? '+' : 
+          //   (gameSpread < 0 ? '-': '')) + 
+          //   Math.abs(gameSpread) + ')')
+        }
         
         var teaminfo = d3chartdiv.append('div')
           .attr('class', 'legend-top-left')
@@ -1009,16 +1043,16 @@
           .attr('id', 'team-info')
   
         teaminfo.append('div')
-          .attr('class', 'btn-sm')
+          .attr('class', hover ? 'btn-sm-hover' : 'btn-sm')
           .style('background-color', chart_homeColor)
         teaminfo.append('p')
-          .attr('class', 'tm-abbrev')
+          .attr('class', hover ? 'tm-abbrev-hover' : 'tm-abbrev')
           .text(chart_homeTeam + ' ' + (gameSpread * -1 < 0 ? '+' : 
           (gameSpread * -1 > 0 ? '-': '')) + 
           Math.abs(gameSpread))
   
         d3chartdiv.append('div')
-          .attr('class', 'canvas-cont')
+          .attr('class', hover ? 'canvas-cont-hover' : 'canvas-cont')
           .append('canvas')
           .attr('id', chartId)
   
@@ -1028,11 +1062,11 @@
           .attr('id', 'team-info')
   
         teaminfo2.append('div')
-          .attr('class', 'btn-sm')
+          .attr('class', hover ? 'btn-sm-hover' : 'btn-sm')
           .style('background-color', chart_awayColor)
   
         teaminfo2.append('p')
-          .attr('class', 'tm-abbrev')
+          .attr('class', hover ? 'tm-abbrev-hover' : 'tm-abbrev')
           .append('text')
             .text(chart_awayTeam + ' ' + (gameSpread < 0 ? '+' : 
           (gameSpread > 0 ? '-': '')) + 
@@ -1300,6 +1334,16 @@
       // },
       changePage() {
         d3.select('#cjs-charts').selectAll('*').remove();
+        d3.select('#cjs-charts-hover').selectAll('*').remove();
+        if (this.chosenData == 2) {
+          this.beatsData = []
+        } else if (this.chosenData == 1) {
+          this.tableData = []
+        }
+        if (document.getElementById('beatsBody')) {
+          document.getElementById('beatsBody').children[this.hoverI].style.backgroundColor = ''
+        }
+        this.direction = -1
         this.loadPage();
       },
       // async updatePageTemp() {
@@ -1390,7 +1434,7 @@
         let data = await getS3Files();
         return data;
       },
-      createAllCharts(gamesData) {
+      createAllCharts(gamesData, hover) {
         let game = []
         let game_ids = [...new Set(this.filtered_ids.map(d => d.EVENT_ID))]
         // console.log(game_ids)
@@ -1406,9 +1450,9 @@
             // console.log(game)
             if (game) {
               if (this.chosenBet == 0) {
-                this.CreateTotalChart(game, "myChart" + game_ids[i], i);
+                this.CreateTotalChart(game, "myChart" + game_ids[i], i, hover);
               } else {
-                this.CreateSpreadChart(game, "myChart" + game_ids[i], i);
+                this.CreateSpreadChart(game, "myChart" + game_ids[i], i, hover);
               }
             }
           // }
@@ -2385,6 +2429,10 @@
     width: 20px;
     height: 11px;
   }
+  .btn-sm-hover {
+    width: 20px;
+    height: 11px;
+  }
   .charts {
     display: flex;
     flex-direction: row;
@@ -2392,14 +2440,34 @@
     justify-content: space-around;
     min-height: 700px;
   }
+  .charts-hover {
+    position: relative;
+    width: 450px;
+    margin: auto;
+    min-height: 250px;
+  }
   .chart {
     margin: 10px;
     padding: 1.5px 15px 1.5px 15px;
     height: 350px;
     width: 450px;
   }
+  .chart-hover {
+    position: absolute;
+    margin: 10px;
+    padding: 1.5px 15px 1.5px 15px;
+    height: 250px;
+    width: 450px;
+    opacity: 0;
+    z-index: -1;
+  }
   .chart-title-cont {
     width: 430px;
+    padding: 5px 0px 10px 10px;
+  }
+  .chart-title-cont-hover {
+    width: 430px;
+    /* background-color: lightgray; */
     padding: 5px 0px 10px 10px;
   }
   .legend-title-cont {
@@ -2472,6 +2540,11 @@
     height: 225px;
     width: 425px;
   }
+  .canvas-cont-hover {
+    padding-right: 10px;
+    height: 225px;
+    width: 425px;
+  }
   .legend-top-left {
     margin-bottom: -3.5px;
   }
@@ -2481,6 +2554,11 @@
     margin-top: -3.5px;
   }
   .tm-abbrev {
+    padding-left: 2px;
+    line-height: 9px;
+    font-size: 15px;
+  }
+  .tm-abbrev-hover {
     padding-left: 2px;
     line-height: 9px;
     font-size: 15px;
@@ -2528,6 +2606,9 @@
       font-size: 12px;
     }
     .tm-abbrev {
+      font-size: 12px;
+    }
+    .tm-abbrev-hover {
       font-size: 12px;
     }
     .chart-title-cont {

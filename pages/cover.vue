@@ -6,29 +6,39 @@
           
           <div class="games-page">
             <!-- <div class="s16-title">April 1<sup>st</sup></div> -->
-            <form class="form-round flex items-center justify-center" id="form-round">
-              <label class="label-round p-2" id="label-round" for="round">Charts: </label>
-              <select class="round-input" name="round" id="round-input" v-model="chosenData" @change="changePage()">
+            <form class="form-round flex items-center justify-center">
+              <label class="label-round p-2" for="round">Charts: </label>
+              <select class="round-input" name="round" v-model="chosenData" @change="changePage()">
                 <option value=2>Bad Beats</option>
                 <option value=0>Probability Charts</option>
                 <option value=1>Plays Table</option>
               </select>
             </form>
-            <form class="form-round flex items-center justify-center" id="form-round">
-              <label class="label-round p-2" id="label-round" for="round">Bet: </label>
-              <select class="round-input" name="round" id="round-input" v-model="chosenBet" @change="changePage()">
+            <form class="form-round flex items-center justify-center">
+              <label class="label-round p-2" for="round">Bet: </label>
+              <select class="round-input" name="round" v-model="chosenBet" @change="changePage()">
                 <option value=0>Total</option>
                 <option value=1>Spread</option>
               </select>
             </form>
-            <form class="form-round flex items-center justify-center" id="form-round">
-              <label class="label-round p-2" id="label-round" for="round">Date: </label>
-              <select class="round-input" name="round" id="round-input" v-model="chosenDate" @change="changePage()">
+            <form class="form-round flex items-center justify-center">
+              <!-- <label class="label-round p-2" for="round">Start: </label>
+              <input type="date" v-model="chosenStartDate" @change="startDateChange()"/> -->
+              <label class="label-round p-2" for="round">Date: </label>
+              <input type="date" id="end-date" v-model="chosenEndDate" @change="changePage()"/>
+              <!-- <select class="round-input" name="round" v-model="chosenDate" @change="changePage()">
                 <option v-for="date in dates" :value="date">{{ date }}</option>
-              </select>
+              </select> -->
             </form>
+            <!-- <form class="form-round flex items-center justify-center">
+              <label class="label-round p-2" for="round">Team: </label>
+              <select class="round-input" name="round" v-model="chosenTeam" @change="changePage()">
+                <option value=0>All Teams</option>
+                <option v-for="team in teams" :value="team">{{ team }}</option>
+              </select>
+            </form> -->
             <div class="flex items-center justify-center" v-if="chosenData == 1">
-              <label class="label-round p-2" id="label-round" for="round">Cutoff %: </label>
+              <label class="label-round p-2" for="round">Cutoff %: </label>
               <input type="number" step="2.5" v-model="cutOff" @change="changePage()"/>
             </div>
             
@@ -142,25 +152,30 @@
     data() {
       return {
         data: [],
-        // ref: [],
         dates: [],
+        teams: ['76ers', 'Bucks', 'Bulls', 'Cavaliers', 'Celtics', 'Clippers', 'Grizzlies', 'Hawks', 'Heat', 'Hornets', 'Jazz', 
+                'Kings', 'Knicks', 'Lakers', 'Magic', 'Mavericks', 'Nets', 'Nuggets', 'Pacers', 'Pelicans', 'Pistons',  
+                'Raptors', 'Rockets', 'Spurs', 'Suns', 'Thunder', 'Timberwolves', 'Trail Blazers', 'Warriors', 'Wizards'],
         // timer: null,
         live_chartsArr: [],
         curr_game_ids: [],
         // old_game_ids: [],
         chosenBet: 1,
-        chosenData: 2,
+        chosenData: 0,
         test_bool: [],
         animation_bool: true,
-        chosenDate: null,
+        chosenStartDate: null,
+        chosenEndDate: null,
+        dateArray: [],
         filtered_ids: [],
         tableData: [],
         beatsData: [],
-        cutOff: 5,
+        cutOff: 10,
         hoverI: 0,
         hoverId: -1,
         justSorted: '',
         direction: -1,
+        chosenTeam: 0,
       }
     },
     created() {
@@ -195,15 +210,34 @@
         }
         this.dates = this.getDates()
         // console.log(this.dates)
-        if (!this.chosenDate) {
-          this.chosenDate = this.dates[this.dates.length - 1]
+        if (!this.chosenStartDate) {
+          this.chosenStartDate = '2024-02-15' //this.dates[this.dates.length - 1]
+          this.chosenEndDate = '2024-02-15' //this.dates[this.dates.length - 1]
         }
-        // console.log(this.chosenDate)
+
+        this.dateArray = this.getDatesInRange()
         
-        this.data = await this.getS3Data(this.chosenDate + '/wp_table.json')
+        this.data = []
+        for (let i = 0; i < this.dateArray.length; i++) {
+          if (this.data.length == 0) {
+            this.data = await this.getS3Data(this.dateArray[i] + '/wp_table.json')
+          } else {
+            var one_day = await this.getS3Data(this.dateArray[i] + '/wp_table.json')
+            this.data.push(...one_day)
+          }
+        }
+        if (this.chosenTeam != 0) {
+          this.data = this.data.filter(f => {
+            return (f.TEAM_NICKNAME == this.chosenTeam.toUpperCase() | f.OPP_NICKNAME == this.chosenTeam.toUpperCase())
+          })
+        }
 
         this.data = this.data.filter(f => {
           return f.text
+        }).filter(f => {
+          return !f.text.includes('enters the game')
+        }).filter(f => {
+          return !f.text.includes('timeout')
         })
 
         this.data.map(d => {
@@ -224,7 +258,7 @@
        
         this.curr_game_ids = this.data.map(({EVENT_ID, date}) => ({EVENT_ID, date}))
         // console.log(this.curr_game_ids)
-        this.filtered_ids = this.curr_game_ids.filter(f => f.date == this.chosenDate);
+        this.filtered_ids = this.curr_game_ids.filter(f => this.dateArray.includes(f.date));
         // console.log(this.filtered_ids);
         // d3.select('#cjs-charts').selectAll('*').remove();
         this.animation_bool = true;
@@ -241,6 +275,19 @@
         // let game = this.data.filter(function(p) {return p.game_id == 401524079});
         // this.makeTestChart();
       },
+      getDatesInRange() {
+          var dateArray = []
+          var currentDate = new Date(this.chosenStartDate)
+          var endDateObj = new Date(this.chosenEndDate)
+
+          // Iterate over each date in between and including the start and end dates
+          while (currentDate <= endDateObj) {
+              dateArray.push(new Date(currentDate))
+              currentDate.setDate(currentDate.getDate() + 1)
+          }
+
+          return dateArray.map(date => date.toISOString().slice(0,10))
+      },
       tableIn(id, ind) {
         // console.log(document.getElementById('beatsBody').children[ind].style)
         if (this.hoverId != id) {
@@ -256,56 +303,56 @@
         // document.getElementById('myChart' + id + '-cont').style.zIndex = 20
         // console.log(id)
       },
-      // sortFromBeats(sortVar) {
-      //   console.log(document.getElementById('beatsBody').children)
-      //   var innerText = document.getElementById('beatsBody').children[this.hoverI].innerText
-      //   document.getElementById('beatsBody').children[this.hoverI].style.backgroundColor = ''
-      //   if (this.justSorted == (sortVar + this.chosenBet + this.chosenData)) {
-      //     this.direction = this.direction * -1
-      //   }
-      //   if (sortVar == 'game') {
+      sortFromBeats(sortVar) {
+        console.log(document.getElementById('beatsBody').children)
+        var innerText = document.getElementById('beatsBody').children[this.hoverI].innerText
+        document.getElementById('beatsBody').children[this.hoverI].style.backgroundColor = ''
+        if (this.justSorted == (sortVar + this.chosenBet + this.chosenData)) {
+          this.direction = this.direction * -1
+        }
+        if (sortVar == 'game') {
 
-      //   } else if (sortVar == 'bet') {
-      //     if (this.chosenBet == 0) {
-      //       this.beatsData.sort((a, b) => {
-      //         a.losingBet = a.over > a.under ? a.underBet : a.overBet
-      //         b.losingBet = b.over > b.under ? b.underBet : b.overBet
-      //         a.losingBet = a.losingBet.substring(1, 10)
-      //         b.losingBet = b.losingBet.substring(1, 10)
-      //         return this.direction == -1 ? d3.descending(a.losingBet, b.losingBet) : 
-      //           d3.ascending(a.losingBet, b.losingBet)
-      //       })
-      //     } else if (this.chosenBet == 1) {
-      //       this.beatsData.sort((a, b) => {
-      //         a.losingBet = a.home > a.away ? a.awayBet : a.homeBet
-      //         b.losingBet = b.home > b.away ? b.awayBet : b.homeBet
-      //         a.losingBet = parseFloat(a.losingBet.match(/[-+]?[0-9]*\.?[0-9]+$/)[0])
-      //         b.losingBet = parseFloat(b.losingBet.match(/[-+]?[0-9]*\.?[0-9]+$/)[0])
-      //         return this.direction == -1 ? d3.descending(a.losingBet, b.losingBet) : 
-      //           d3.ascending(a.losingBet, b.losingBet)
-      //       })
-      //     }
-      //   } else if (sortVar == 'chance') {
-      //     if (this.chosenBet == 0) {
-      //       this.beatsData.sort((a, b) => {
-      //         a.losingChance = a.over > a.under ? a.under : a.over
-      //         b.losingChance = b.over > b.under ? b.under : b.over
-      //         return this.direction == 1 ? d3.descending(a.losingChance, b.losingChance) : 
-      //           d3.ascending(a.losingChance, b.losingChance)
-      //       })  
-      //     } else if (this.chosenBet == 1) {
-      //       this.beatsData.sort((a, b) => {
-      //         a.losingChance = a.home > a.away ? a.away : a.home
-      //         b.losingChance = b.home > b.away ? b.away : b.home
-      //         return this.direction == 1 ? d3.descending(a.losingChance, b.losingChance) : 
-      //           d3.ascending(a.losingChance, b.losingChance)
-      //       })
-      //     }
-      //   } else if (sortVar == 'clock') {
+        } else if (sortVar == 'bet') {
+          if (this.chosenBet == 0) {
+            this.beatsData.sort((a, b) => {
+              a.losingBet = a.over > a.under ? a.underBet : a.overBet
+              b.losingBet = b.over > b.under ? b.underBet : b.overBet
+              a.losingBet = a.losingBet.substring(1, 10)
+              b.losingBet = b.losingBet.substring(1, 10)
+              return this.direction == -1 ? d3.descending(a.losingBet, b.losingBet) : 
+                d3.ascending(a.losingBet, b.losingBet)
+            })
+          } else if (this.chosenBet == 1) {
+            this.beatsData.sort((a, b) => {
+              a.losingBet = a.home > a.away ? a.awayBet : a.homeBet
+              b.losingBet = b.home > b.away ? b.awayBet : b.homeBet
+              a.losingBet = parseFloat(a.losingBet.match(/[-+]?[0-9]*\.?[0-9]+$/)[0])
+              b.losingBet = parseFloat(b.losingBet.match(/[-+]?[0-9]*\.?[0-9]+$/)[0])
+              return this.direction == -1 ? d3.descending(a.losingBet, b.losingBet) : 
+                d3.ascending(a.losingBet, b.losingBet)
+            })
+          }
+        } else if (sortVar == 'chance') {
+          if (this.chosenBet == 0) {
+            this.beatsData.sort((a, b) => {
+              a.losingChance = a.over > a.under ? a.under : a.over
+              b.losingChance = b.over > b.under ? b.under : b.over
+              return this.direction == 1 ? d3.descending(a.losingChance, b.losingChance) : 
+                d3.ascending(a.losingChance, b.losingChance)
+            })  
+          } else if (this.chosenBet == 1) {
+            this.beatsData.sort((a, b) => {
+              a.losingChance = a.home > a.away ? a.away : a.home
+              b.losingChance = b.home > b.away ? b.away : b.home
+              return this.direction == 1 ? d3.descending(a.losingChance, b.losingChance) : 
+                d3.ascending(a.losingChance, b.losingChance)
+            })
+          }
+        } else if (sortVar == 'clock') {
 
-      //   }
-      //   this.justSorted = sortVar + this.chosenBet + this.chosenData
-      // },
+        }
+        this.justSorted = sortVar + this.chosenBet + this.chosenData
+      },
       splitStringIntoTwo(str) {
         // Step 1: Split the original string into an array of words
         if (str) {
@@ -452,7 +499,7 @@
         document.getElementById('myChart' + this.beatsData[0].EVENT_ID + '-cont').style.zIndex = 1
       },
       displayTable(fullData) {
-        fullData = fullData.filter(f => f.date == this.chosenDate)
+        fullData = fullData.filter(f => this.dateArray.includes(f.date))
         fullData = fullData.sort((a,b) => {
           return d3.ascending(a.SECLEFT, b.SECLEFT)
         }).sort((a, b) => {
@@ -1332,7 +1379,11 @@
       //     document.getElementById('page-id').style.zoom = '0.7';
       //   }
       // },
+      startDateChange() {
+        document.getElementById('end-date').showPicker()
+      },
       changePage() {
+        this.chosenStartDate = this.chosenEndDate
         d3.select('#cjs-charts').selectAll('*').remove();
         d3.select('#cjs-charts-hover').selectAll('*').remove();
         if (this.chosenData == 2) {
@@ -1341,8 +1392,11 @@
           this.tableData = []
         }
         if (document.getElementById('beatsBody')) {
-          document.getElementById('beatsBody').children[this.hoverI].style.backgroundColor = ''
+          if (document.getElementById('beatsBody').children[this.hoverI]) {
+            document.getElementById('beatsBody').children[this.hoverI].style.backgroundColor = ''
+          }
         }
+        console.log('here')
         this.direction = -1
         this.loadPage();
       },
@@ -1438,7 +1492,6 @@
         let game = []
         let game_ids = [...new Set(this.filtered_ids.map(d => d.EVENT_ID))]
         // console.log(game_ids)
-  
         for (let i = 0; i < game_ids.length; i++) {
           // if (this.filtered_ids[i].status == 'pre') {
           //   game = gamesData[game_ids[i]];

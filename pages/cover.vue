@@ -501,10 +501,13 @@
       displayTable(fullData) {
         fullData = fullData.filter(f => this.dateArray.includes(f.date))
         fullData = fullData.sort((a,b) => {
+          return d3.descending(a.EVENT_NUMBER, b.EVENT_NUMBER)
+        }).sort((a, b) => {
           return d3.ascending(a.SECLEFT, b.SECLEFT)
         }).sort((a, b) => {
           return d3.descending(a.EVENT_ID, b.EVENT_ID)
         })
+        console.log(fullData)
         fullData = fullData.map((d, i) => {
           if ((fullData.length - 1) != i) {
             if (d.EVENT_ID == fullData[i+1].EVENT_ID) {
@@ -532,6 +535,7 @@
           return d
         })
         this.tableData = fullData.map(d => (d))
+        console.log(fullData)
         if (this.chosenBet == 0) {
           this.tableData = this.tableData.filter(f => {
             return (Math.abs(f.OVER_CHANGE) >= (this.cutOff / 100))
@@ -1396,7 +1400,6 @@
             document.getElementById('beatsBody').children[this.hoverI].style.backgroundColor = ''
           }
         }
-        console.log('here')
         this.direction = -1
         this.loadPage();
       },

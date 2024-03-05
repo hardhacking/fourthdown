@@ -1,120 +1,148 @@
-<!-- <template>
-  <div class="relative min-h-screen bg-gray-100 ">
-    <div class="flex items-center justify-start w-full p-5 bg-slate-500">
-      <img src="../assets/logo.png" class="h-20" alt="">
-    </div>
-    <div class="flex justify-center text-center">
-      <div class="text-xl py-2">
-        <h2 class="">espnanalytics.com has moved.</h2>
-        <h2 class="">We'll redirect you shortly.</h2>
-        <h2 class="">Please save the new website</h2>
-        <h2 class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><a class="" href="http://internal.espnanalytics.com">internal.espnanalytics.com</a></h2>
-        <h2 class="">to your bookmarks. Thank you!</h2>
-        <h2 class="">- ESPN Analytics</h2>
+<template>
+  <div class="bg-white">
+    <header class="absolute inset-x-0 top-0 z-50">
+      <nav class="flex items-center justify-between p-6 lg:px-8">
+        <div class="flex lg:flex-1">
+          <a href="#" class="-m-1.5 p-1.5">
+            <span class="sr-only">ESPN Analytics</span>
+            <img class="h-8 w-auto" src="../assets/logo.png" alt="" />
+          </a>
+        </div>
+        
+        <div class="flex lg:hidden">
+          <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = true">
+            <span class="sr-only">Open main menu</span>
+            <Bars3Icon class="h-10 w-10" aria-hidden="true" />
+          </button>
+        </div>
+        <div class="hidden lg:flex lg:gap-x-12">
+          <!-- <Popover class="relative">
+            <PopoverButton class="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+              <span>NFL</span>            
+            </PopoverButton>
+            <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
+              <PopoverPanel class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
+                <div class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
+                  <div class="p-4">
+                    <div v-for="item in nfl" :key="item.name" class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                      <div class="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <component :is="item.icon" class="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                      </div>
+                      <div>
+                        <a :href="item.href" class="font-semibold text-gray-900">
+                          {{ item.name }}
+                          <span class="absolute inset-0" ></span>
+                        </a>
+                        <p class="mt-1 text-gray-600">{{ item.description }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
+                    <a v-for="item in callsToAction" :key="item.name" :href="item.href" class="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100">
+                      <component :is="item.icon" class="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+                      {{ item.name }}
+                    </a>
+                  </div>
+                </div>
+              </PopoverPanel>
+            </transition>
+          </Popover> -->
+          <a v-for="item in navigation" :key="item.name" :href="item.href" class="text-lg font-semibold leading-6 text-gray-900">{{ item.name }}</a>
+        </div>
+        <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+          <a href="#" class="text-sm font-semibold leading-6 text-gray-900"> <span aria-hidden="true"></span></a> <!-- &rarr; -->
+        </div>
+      </nav>
+      <Dialog as="div" class="lg:hidden" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
+        <div class="fixed inset-0 z-50" ></div>
+        <DialogPanel class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div class="flex items-center justify-between">
+            <a href="#" class="-m-1.5 p-1.5">
+              <span class="sr-only">ESPN Analytics</span>
+              <img class="h-8 w-auto" src="../assets/logo.png" alt="" />
+            </a>
+            <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = false">
+              <span class="sr-only">Close menu</span>
+              <XMarkIcon class="h-10 w-10" aria-hidden="true" />
+            </button>
+          </div>
+          <div class="mt-6 flow-root">
+            <div class="-my-6 divide-y divide-gray-500/10">
+              <div class="space-y-2 py-6">
+                <a v-for="item in navigation" :key="item.name" :href="item.href" class="-mx-3 block rounded-lg px-3 py-2 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-50">{{ item.name }}</a>
+              </div>
+              <!-- <div class="py-6">
+                <a href="#" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log in</a>
+              </div> -->
+            </div>
+          </div>
+        </DialogPanel>
+      </Dialog>
+    </header>
+    <div class="relative isolate pt-14">
+      <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+        <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#FF80B5] to-[#9089FC] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)" />
+      </div>
+      <div class="py-24 sm:py-32 lg:pb-40">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+          <div class="mx-auto max-w-2xl text-center">
+            <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">ESPN Analytics</h1>
+            <p class="mt-6 text-lg leading-8 text-gray-600">Models and data visualization from ESPN Analytics! Look at 4th down decisions, compare receiver tracking metrics and more.</p>
+            <!-- <div class="mt-10 flex items-center justify-center gap-x-6">
+              <a href="#" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get started</a>
+              <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Learn more <span aria-hidden="true">→</span></a>
+            </div> -->
+          </div>
+          <div class="mt-16 flow-root sm:mt-24">
+            <div class="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+              <img src="../assets/rtm_screenshot.png" alt="App screenshot" width="2432" height="1442" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
+        <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#FF80B5] to-[#9089FC] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)" ></div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-onMounted(async () => {
-  redirect(5000);
-})
-
-const sleeper = (ms) => {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-const redirect = async (ms) => {
-  await sleeper(ms);
-  var newUrl = "http://internal.espnanalytics.com";
-  window.location.replace(newUrl);
-}
-</script> -->
-
-<template>
-  <div class="relative min-h-screen bg-gray-100 ">
-    <div class="flex items-center justify-center w-full p-5">
-      <img src="../assets/logo.png" @click="navigateTo('/')" class="h-20 cursor-pointer" alt="">
-    </div>
-    <ul role="list" class="flex flex-wrap justify-center gap-10 p-10 pt-5">
-      <!-- <li class="flex flex-col max-w-md text-center bg-white rounded-lg shadow w-[400px] hover:shadow-lg">
-        <div class="flex flex-col flex-1 p-8">
-          <img class="flex-shrink-0 w-32 h-32 mx-auto rounded-full" src="https://otvrrtktmxfupzauisqb.supabase.co/storage/v1/object/public/espn/logos/nfl.png" alt="" />
-          <h3 class="mt-6 text-sm font-medium text-gray-900">All Games</h3>
-          <dl class="flex flex-col justify-between flex-grow mt-1">
-            <dt class="sr-only">Title</dt>
-            <dd class="text-sm text-gray-500">See everything at once</dd>
-            <dt class="sr-only">Role</dt>
-          </dl>
-        </div>
-        <div class="p-4">
-          <button type="button" @click="navigateTo('/game')"
-            class="inline-flex items-center gap-x-2 rounded-md bg-espnred px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
-            See all 4th Downs
-            <ChartBarIcon class="-mr-0.5 h-5 w-5" aria-hidden="true" />
-          </button>
-        </div>
-      </li> -->
-      <li v-for="(game, index) in games" :key="index" class="flex flex-col max-w-md text-center bg-white rounded-lg shadow w-[300px] hover:shadow-lg">
-        <div class="flex flex-col flex-1 p-6">
-          <div class="flex items-center w-full justify-center">
-            <img class="h-16 object-fit" :src="game[0].firstTeamLogo" alt="" />
-            <div class="px-2">at</div>
-            <img class="h-16 object-fit" :src="game[0].secondTeamLogo" alt="" />
-          </div>
-          <h3 class="mt-4 text-md font-medium text-gray-900">{{ game[0].Game }}</h3>
-          <dl class="flex flex-col justify-between flex-grow mt-1">
-            <dt class="sr-only">Title</dt>
-            <dd class="text-sm text-gray-500">{{ getDate(game[0].SCHEDULE_ID) }}</dd>
-            <!-- <dd class="mt-3">
-              <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-green-700 rounded-full bg-green-50 ring-1 ring-inset ring-green-600/20">{{ person.role }}</span>
-            </dd> -->
-          </dl>
-        </div>
-        <div class="pb-6 pt-1">
-          <NuxtLink type="button" :to="'/game/' + index"
-            class="inline-flex items-center gap-x-2 rounded-md bg-espnred px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
-            See 4th Downs
-            <ChartBarIcon class="-mr-0.5 h-5 w-5" aria-hidden="true" />
-          </NuxtLink>
-        </div>
-      </li>
-    </ul>
-  </div>
-</template>
-
-<script setup>
-import { ChartBarIcon } from '@heroicons/vue/24/outline'
-import { useGameStore } from '../stores/GameStore'
-
-const store = useGameStore()
-const games = ref([])
-const scores = ref(null)
-onMounted(async () => {
-  games.value = await store.games
-  scores.value = await store.scores
-})
-
-// Computerd
-const getDate = (str) => {
-  // Extract the date part (first 8 characters)
-  const datePart = str.substring(0, 8);
-  // Convert it to a Date object
-  const date = new Date(Date.UTC(
-    datePart.substring(0, 4),
-    datePart.substring(4, 6) - 1, // Subtract 1 from month to adjust for 0-based indexing
-    datePart.substring(6, 8),
-    12, // Noon (12:00:00) in UTC
-    0,  // Minutes
-    0   // Seconds
-  ));
-  // Format it as a nice date string
-  const niceDateString = date.toDateString();
-  return niceDateString;
-}
-
-// const setGame = (game) => {
-//   store.setGame(game)
-//   navigateTo('/game?id=1')
-// }
+import { ref } from 'vue'
+import { Dialog, DialogPanel } from '@headlessui/vue'
+import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
+import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/vue/20/solid'
+import {
+  ArrowPathIcon,
+  ChartPieIcon,
+  CursorArrowRaysIcon,
+  FingerPrintIcon,
+  SquaresPlusIcon,
+} from '@heroicons/vue/24/outline'
+const navigation = [
+  { name: '4th Downs', href: '/decision' },
+  { name: 'RTMs', href: '/rtm' },
+  { name: 'W18 Draft Picks', href: '/draft' },
+]
+const nfl = [
+  { name: '4th Downs', description: 'See 4th down decision breakdowns', href: '/decision', icon: ChartPieIcon },
+  { name: 'Receiver Tracking Metrics', description: 'Evaluate pass catchers a number of ways', href: '/rtm', icon: CursorArrowRaysIcon },
+  { name: 'Live Draft Pick Chances', description: "Live chances at a top 5 pick during Week 18", href: '/draft', icon: FingerPrintIcon },
+]
+const mcbb = [
+  { name: '4th Downs', description: 'See 4th down decision breakdowns', href: '/decision', icon: ChartPieIcon },
+  { name: 'Receiver Tracking Metrics', description: 'Evaluate pass catchers a number of ways', href: '/rtm', icon: CursorArrowRaysIcon },
+  { name: 'Live Draft Pick Chances', description: "Live chances at a top 5 pick during Week 18", href: '/draft', icon: FingerPrintIcon },
+]
+const wcbb = [
+  { name: '4th Downs', description: 'See 4th down decision breakdowns', href: '/decision', icon: ChartPieIcon },
+  { name: 'Receiver Tracking Metrics', description: 'Evaluate pass catchers a number of ways', href: '/rtm', icon: CursorArrowRaysIcon },
+  { name: 'Live Draft Pick Chances', description: "Live chances at a top 5 pick during Week 18", href: '/draft', icon: FingerPrintIcon },
+]
+// const callsToAction = [
+//   { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
+//   { name: 'Contact sales', href: '#', icon: PhoneIcon },
+// ]
+const mobileMenuOpen = ref(false)
 </script>

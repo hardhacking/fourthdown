@@ -1,7 +1,7 @@
 <template>
     <Head>
       <Title>Draft Pick Projections</Title>
-  </Head>
+    </Head>
     <div class="relative min-h-screen bg-gray-100 ">
       <div class="flex items-center justify-center w-full p-5">
         <img src="../assets/logo.png" @click="navigateTo('/')" class="h-20 cursor-pointer" alt="">

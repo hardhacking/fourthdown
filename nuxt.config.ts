@@ -21,7 +21,12 @@ export default defineNuxtConfig({
   },
   ssr: false,
   devtools: { enabled: true },
-  modules: ['nuxt-headlessui', ['@pinia/nuxt', {autoImports: ['defnieStore', 'acceptHMRUpdate']}]],
+  modules: [
+    ['nuxt-gtag', {id: 'G-8V326S8NTJ'}],
+    'nuxt-headlessui', 
+    ['@pinia/nuxt', {autoImports: ['defnieStore', 'acceptHMRUpdate']}]
+  ],
+  devServerHandlers: [],
   css: ['@/assets/main.css'],
   postcss: {
     plugins: {
@@ -31,7 +36,6 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: 'ESPN Analytics',
       script: [
         {
           src: 'https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1329.0/aws-sdk.min.js',

@@ -121,9 +121,9 @@ import {
   SquaresPlusIcon,
 } from '@heroicons/vue/24/outline'
 const navigation = [
-  { name: '4th Downs', href: '/decision' },
-  { name: 'RTMs', href: '/rtm' },
-  { name: 'W18 Draft Picks', href: '/draft' },
+  { name: '4th Downs', href: 'decision' },
+  { name: 'RTMs', href: 'rtm' },
+  { name: 'W18 Draft Picks', href: 'draft' },
 ]
 const nfl = [
   { name: '4th Downs', description: 'See 4th down decision breakdowns', href: '/decision', icon: ChartPieIcon },

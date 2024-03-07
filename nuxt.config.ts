@@ -106,12 +106,12 @@ export default defineNuxtConfig({
         {
           hid: 'og:image', 
           property: 'og:image', 
-          content: 'assets/logo.png'
+          content: 'https://espnanalytics.com/logo.png'
         }, 
         {
           hid: 'og:image:secure_url', 
           property: 'og:image:secure_url', 
-          content: 'assets/logo.png'
+          content: 'https://espnanalytics.com/logo.png'
         }, 
         {
           hid: 'og:image:alt', 

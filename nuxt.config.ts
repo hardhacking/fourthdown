@@ -22,9 +22,9 @@ export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: true },
   modules: [
-    ['nuxt-gtag', {id: 'G-8V326S8NTJ'}],
+    ['nuxt-gtag', {id: 'G-W0Q1L3P863'}],
     'nuxt-headlessui', 
-    ['@pinia/nuxt', {autoImports: ['defnieStore', 'acceptHMRUpdate']}]
+    ['@pinia/nuxt', {autoImports: ['defineStore', 'acceptHMRUpdate']}]
   ],
   devServerHandlers: [],
   css: ['@/assets/main.css'],
@@ -42,6 +42,84 @@ export default defineNuxtConfig({
           // Other attributes like async, defer, etc., if needed
         },
       ],
+      meta: [
+        {
+          hid: 'description', 
+          name: 'description', 
+          content: 'Models and data visualization from ESPN Analytics! 4th down decisions, receiver tracking metrics and more.'
+        }, 
+        {
+          hid: 'twitter:card', 
+          name: 'twitter:card', 
+          content: 'summary_large_image'
+        }, 
+        {
+          hid: 'twitter:site', 
+          name: 'twitter:site', 
+          content: '@nuxt_js'
+        },
+        {
+          hid: 'twitter:url', 
+          name: 'twitter:url',
+          content: 'https://espnanalytics.com/'
+        }, 
+        {
+          hid: 'twitter:title',
+          name: 'twitter:title', 
+          content: 'ESPN Analytics'
+        }, 
+        {
+          hid: 'twitter:description',
+          name: 'twitter:description', 
+          content: 'Models and data visualization from ESPN Analytics! 4th down decisions, receiver tracking metrics and more.'
+        }, 
+        {
+          hid: 'twitter:image', 
+          name: 'twitter:image', 
+          content: 'assets/logo.png'
+        }, 
+        {
+          hid: 'og:site_name', 
+          property: 'og:site_name', 
+          content: 'ESPN Analytics'
+        }, 
+        {
+          hid: 'og:type', 
+          property: 'og:type', 
+          content: 'website'
+        }, 
+        {
+          hid: 'og:url', 
+          property: 'og:url', 
+          content: 'https://espnanalytics.com/'
+        }, 
+        {
+          hid: 'og:title',
+          property: 'og:title', 
+          content: 'ESPN Analytics'
+        }, 
+        {
+          hid: 'og:description', 
+          property: 'og:description', 
+          content: 'Models and data visualization from ESPN Analytics! 4th down decisions, receiver tracking metrics and more.'
+        }, 
+        {
+          hid: 'og:image', 
+          property: 'og:image', 
+          content: 'assets/logo.png'
+        }, 
+        {
+          hid: 'og:image:secure_url', 
+          property: 'og:image:secure_url', 
+          content: 'assets/logo.png'
+        }, 
+        {
+          hid: 'og:image:alt', 
+          property: 'og:image:alt', 
+          content: 'ESPN Analytics'
+        }
+      ],
+      link: [{ rel: 'icon', type: 'image/x-icon', href: 'favicon.ico'}],
     }
   },
   imports: {

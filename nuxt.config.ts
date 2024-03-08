@@ -76,7 +76,7 @@ export default defineNuxtConfig({
         {
           hid: 'twitter:image', 
           name: 'twitter:image', 
-          content: 'https://espnanalytics.com/logo.png'
+          content: 'https://fbbqubovxsvtzwtjdeyz.supabase.co/storage/v1/object/public/opra_public/logo.png'
         }, 
         {
           hid: 'og:site_name', 
@@ -106,7 +106,7 @@ export default defineNuxtConfig({
         {
           hid: 'og:image', 
           property: 'og:image', 
-          content: 'https://espnanalytics.com/logo.png'
+          content: 'https://fbbqubovxsvtzwtjdeyz.supabase.co/storage/v1/object/public/opra_public/logo.png'
         }, 
         // {
         //   hid: 'og:image:secure_url', 

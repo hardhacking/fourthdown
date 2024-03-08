@@ -108,6 +108,16 @@ export default defineNuxtConfig({
           property: 'og:image', 
           content: 'https://ea-images-hosting.s3.amazonaws.com/logo.png'
         }, 
+        {
+          hid: 'og:width', 
+          property: 'og:width', 
+          content: '1200'
+        }, 
+        {
+          hid: 'og:height', 
+          property: 'og:height', 
+          content: '630'
+        }, 
         // {
         //   hid: 'og:image:secure_url', 
         //   property: 'og:image:secure_url', 

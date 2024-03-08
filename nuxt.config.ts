@@ -76,7 +76,7 @@ export default defineNuxtConfig({
         {
           hid: 'twitter:image', 
           name: 'twitter:image', 
-          content: 'assets/logo.png'
+          content: 'https://espnanalytics.com/logo.png'
         }, 
         {
           hid: 'og:site_name', 

@@ -91,7 +91,7 @@ export default defineNuxtConfig({
         {
           hid: 'og:url', 
           property: 'og:url', 
-          content: 'https://espnanalytics.com/'
+          content: 'https://espnanalytics.com'
         }, 
         {
           hid: 'og:title',
@@ -108,11 +108,11 @@ export default defineNuxtConfig({
           property: 'og:image', 
           content: 'https://espnanalytics.com/logo.png'
         }, 
-        {
-          hid: 'og:image:secure_url', 
-          property: 'og:image:secure_url', 
-          content: 'https://espnanalytics.com/logo.png'
-        }, 
+        // {
+        //   hid: 'og:image:secure_url', 
+        //   property: 'og:image:secure_url', 
+        //   content: 'https://espnanalytics.com/logo.png'
+        // }, 
         {
           hid: 'og:image:alt', 
           property: 'og:image:alt', 

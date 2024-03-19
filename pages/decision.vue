@@ -2,11 +2,12 @@
   <Head>
       <Title>4th Downs Decision Analysis</Title>
   </Head>
-    <div class="relative min-h-screen bg-gray-100 ">
-      <div class="flex items-center justify-center w-full p-5">
+      <Header></Header>
+    <div class="relative min-h-screen bg-espngray-100 ">
+      <!-- <div class="flex items-center justify-center w-full p-5">
         <img src="../assets/logo.png" @click="navigateTo('/')" class="h-20 cursor-pointer" alt="">
-      </div>
-      <ul role="list" class="flex flex-wrap justify-center gap-10 p-10 pt-5">
+      </div> -->
+      <ul role="list" class="flex flex-wrap justify-center gap-10 p-10 pt-32">
         <!-- <li class="flex flex-col max-w-md text-center bg-white rounded-lg shadow w-[400px] hover:shadow-lg">
           <div class="flex flex-col flex-1 p-8">
             <img class="flex-shrink-0 w-32 h-32 mx-auto rounded-full" src="https://otvrrtktmxfupzauisqb.supabase.co/storage/v1/object/public/espn/logos/nfl.png" alt="" />

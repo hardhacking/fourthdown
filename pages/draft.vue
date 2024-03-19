@@ -2,12 +2,10 @@
     <Head>
       <Title>Draft Pick Projections</Title>
     </Head>
-    <div class="relative min-h-screen bg-gray-100 ">
-      <div class="flex items-center justify-center w-full p-5">
-        <img src="../assets/logo.png" @click="navigateTo('/')" class="h-20 cursor-pointer" alt="">
-      </div>
+    <div class="relative min-h-screen bg-espngray-100 ">
+        <Header></Header>
 
-      <div class="page-cont">
+      <div class="page-cont pt-32">
         <table class="odds-table" :key="keyIn">
             <tr class="labels">
               <th class="th-odds first-col">Team</th>
@@ -1396,7 +1394,7 @@ export default {
 
 .odds-table {
     border-collapse: collapse;
-    margin: 20px auto;
+    margin: 0px auto 20px auto;
 }
 .th-odds {
     width: 75px;

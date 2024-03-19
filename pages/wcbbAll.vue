@@ -187,7 +187,7 @@
         // console.log(data.sort(function(a,b) {
         //   return data_order[data.indexOf(a)] < data[data_order.indexOf(b)];
         // }));
-            console.log(heatData)
+            // console.log(heatData)
         heatData = heatData.map(d => {
           d.TEAM_NAME = this.ref.filter(f => {
             return f.id == d.id;

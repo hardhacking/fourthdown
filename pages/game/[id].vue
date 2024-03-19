@@ -309,17 +309,17 @@ const flipToolBack = (play) => {
 }
 const setFlip = (play, e) => {
   if (window.innerWidth < 1024) {
-    console.log(e.layerX)
-    console.log(e.layerY)
+    // console.log(e.layerX)
+    // console.log(e.layerY)
     if (e.srcElement.outerText) {
       if (e.layerX < 336 || e.layerY > 96) {
-        console.log(play.flipClass)
+        // console.log(play.flipClass)
         if (play.flipClass) play.flipClass = ''
         else {
           play.flipClass = 'flip-card-hover'
           play.toolClass = 'hidden'
         }
-        console.log(play.flipClass)
+        // console.log(play.flipClass)
       }
     }
   }
@@ -391,7 +391,7 @@ const expCard = async (front, i) => {
       alert('Sharing permissions off')
     }
   } else if (navigator.clipboard.write) {
-    console.log(navigator.clipboard.write)
+    // console.log(navigator.clipboard.write)
     domtoimage.toBlob(el.value[i])
       .then(function (blob) {
         navigator.clipboard.write([new ClipboardItem({'image/png': blob})]).then(() => {

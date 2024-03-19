@@ -377,9 +377,9 @@
           this.live_chartsArr[chartId].chart.options.scales.x.max = xAxisEnd;
   
   
-          console.log('test')
+          // console.log('test')
           this.live_chartsArr[chartId].chart.update();
-          console.log('update')
+          // console.log('update')
           
   
           // console.log('chartData endLength: ', this.live_chartsArr[chartId].data.datasets[0].data.length);

@@ -1,4 +1,7 @@
 <template>
+  <Head>
+        <Title>MCBB Games</Title>
+    </Head>
     <div id="cbb-app">
       <div class="page-div">
         <!-- <Header></Header> -->

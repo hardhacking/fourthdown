@@ -1,4 +1,7 @@
 <template>
+  <Head>
+        <Title>WCBB Games</Title>
+    </Head>
     <div id="cbb-app">
       <div class="page-div">
         <CBBHeader :gamesRef="gamesRef" :titleRef="titleRef" :allRef="allRef" :buttonLink="buttonLink" :menuClass1="menuClass1" :menuClass2="menuClass2" :menuClass3="menuClass3"/>

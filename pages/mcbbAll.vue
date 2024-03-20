@@ -3,9 +3,10 @@
         <Title>MCBB Table</Title>
     </Head>
     <div id="cbb-app">
+      <Header></Header>
       <CBBHeader :gamesRef="gamesRef" :titleRef="titleRef" :allRef="allRef" :buttonLink="buttonLink" :menuClass1="menuClass1" :menuClass2="menuClass2" :menuClass3="menuClass3"/>
       
-      <div class="page-div" id="page-id">
+      <div class="page-div pt-4" id="page-id">
         
         <div class="proj">
           
@@ -51,37 +52,37 @@
         this.setZoomLevel();
       },
       setZoomLevel() {
-        if (window.innerWidth > 1000) {
+        if (window.innerWidth > 1130) {
           document.getElementById('page-id').style.zoom = '1.0';
           if(document.getElementById('image-id')) {
             d3.selectAll('#image-id').attr('width', '60px');
           }
-        } else if (window.innerWidth > 900) {
+        } else if (window.innerWidth > 1020) {
           document.getElementById('page-id').style.zoom = '0.9';
           if(document.getElementById('image-id')) {
             d3.selectAll('#image-id').attr('width', '60px');
           }
-        } else if (window.innerWidth > 800) {
+        } else if (window.innerWidth > 899) {
           document.getElementById('page-id').style.zoom = '0.8'
           if(document.getElementById('image-id')) {
             d3.selectAll('#image-id').attr('width', '60px');
           }
-        } else if (window.innerWidth > 700) {
+        } else if (window.innerWidth > 788) {
           document.getElementById('page-id').style.zoom = '0.7'
           if(document.getElementById('image-id')) {
             d3.selectAll('#image-id').attr('width', '60px');
           }
-        } else if (window.innerWidth > 600) {
+        } else if (window.innerWidth > 675) {
           document.getElementById('page-id').style.zoom = '0.6'
           if(document.getElementById('image-id')) {
             d3.selectAll('#image-id').attr('width', '60px');
           }
-        } else if (window.innerWidth > 500) {
+        } else if (window.innerWidth > 570) {
           document.getElementById('page-id').style.zoom = '0.5'
           if(document.getElementById('image-id')) {
             d3.selectAll('#image-id').attr('width', '60px');
           }
-        } else if (window.innerWidth > 400) {
+        } else if (window.innerWidth > 450) {
           document.getElementById('page-id').style.zoom = '0.4'
           if(document.getElementById('image-id')) {
             d3.selectAll('#image-id').attr('width', '60px');

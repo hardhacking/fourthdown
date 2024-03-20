@@ -4,12 +4,13 @@
     </Head>
     <div id="cbb-app">
       <div class="page-div">
+        <Header></Header>
         <CBBHeader :gamesRef="gamesRef" :titleRef="titleRef" :allRef="allRef" :buttonLink="buttonLink" :menuClass1="menuClass1" :menuClass2="menuClass2" :menuClass3="menuClass3"/>
         <div class="home" id="page-id">
           
           <div class="games-page">
             <!-- <div class="s16-title">March 31<sup>st</sup></div> -->
-            <div class="flex">
+            <div class="flex pt-4">
                 <form class="form-round m-auto" id="form-round">
                 <label class="label-round pr-2" id="label-round" for="round">Round:</label>
                 <select class="round-input" name="round" id="round-input" v-model="chosenRound" @change="changeRound()">
@@ -692,7 +693,9 @@
         let sec = game.map(d => {
           return d.clock * -1;
         });
-        let currTime = '4/2 - ' + this.curr_game_ids.filter(d => {
+        let currTime = this.curr_game_ids.filter(d => {
+          return d.game_id == chartId.substring(7, chartId.length);
+        })[0].date + ' - ' + this.curr_game_ids.filter(d => {
           return d.game_id == chartId.substring(7, chartId.length);
         })[0].game_time;
         let currAwayScore = Math.round(100 - Math.round(game[0].new_homeWin)) + '%';

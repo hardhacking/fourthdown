@@ -2,10 +2,10 @@
     <Head>
       <Title>Draft Pick Projections</Title>
     </Head>
-    <div class="relative min-h-screen bg-espngray-100 ">
+    <div class="relative min-h-screen bg-espngray-100">
         <Header></Header>
 
-      <div class="page-cont pt-32">
+      <div class="page-cont pt-24">
         <table class="odds-table" :key="keyIn">
             <tr class="labels">
               <th class="th-odds first-col">Team</th>

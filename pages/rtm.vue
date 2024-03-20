@@ -2,9 +2,9 @@
     <Head>
         <Title>Receiver Tracking Metrics</Title>
     </Head>
-    <div class="bg-gray-100">
+    <div class="bg-espngray-100">
         <Header></Header>
-        <div class="pt-32">
+        <div class="pt-24">
             <div class="flex flex-col items-center gap-4">
                 <div class="text-4xl font-bold text-center text-espngray-900">The Best NFL Receivers</div>
                 <div class="text-espngray-600 font-normal text-sm" v-if="weekUpdate <= 18">Updated through Week {{ weekUpdate }}</div>

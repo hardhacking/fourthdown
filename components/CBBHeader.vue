@@ -4,14 +4,14 @@
       <div class="full-header">
       <div class="header">
 
-        <div class="custom-nav">
-          <router-link to="/">
-            <img class="ea" src="../assets/ea3.png" />
-          </router-link>
-          <router-link :to="buttonLink">
+        <div class="custom-nav bg-espngray-100">
+          <a to="/">
+            <img class="h-8 w-auto" src="" />
+          </a>
+          <a :href="buttonLink" class="mr-16 lg:mr-0 z-50">
             <div id="myBtn-id" class="cat-button text-center">
             </div>
-          </router-link>
+          </a>
         </div>
 
       </div>
@@ -23,15 +23,15 @@
               <h1 class="text-3xl font-semibold text-center" id="title-id"></h1>
             </div>
         <div class="full-menu">
-          <router-link :to="gamesRef" >
+          <a :href="gamesRef" >
             <button id="games-btn" type="button" :class="menuClass1">Live Games</button>
-          </router-link>
+          </a>
           <!-- <router-link :to="titleRef" >
             <button id="futures-btn" type="button" :class="menuClass2">Title Chances</button>
           </router-link> -->
-          <router-link :to="allRef">
+          <a :href="allRef">
             <button id="proj-btn" type="button" :class="menuClass3">All Projections</button>
-          </router-link>
+          </a>
         </div>
       </div>
     </div>
@@ -61,7 +61,8 @@ export default {
   },
   methods: {
     update() {
-      if (window.innerWidth <= 250) {
+      // console.log(window.innerWidth)
+      if (window.innerWidth <= 252) {
         const currRoute = this.$route.name;
 
         if (currRoute.substring(0, 1) == 'w') {
@@ -122,8 +123,7 @@ export default {
 
 <style>
 .custom-nav {
-  background-color: #272829;
-  height: 75px;
+  height: 90px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -155,12 +155,12 @@ export default {
 
 @media only screen and (max-width: 400px) and (min-width: 306px) {
   .cat-button {
-    width: 100px;
+    width: 120px;
   }
 }
 @media only screen and (max-width: 305px) {
   .cat-button {
-    width: 50px;
+    width: 90px;
   }
 }
 .full-menu {
@@ -237,13 +237,19 @@ export default {
   }
   .cat-button {
     font-size: 12px;
+    width: 120px;
+  }
+}
+
+@media only screen and (max-width: 250px) {
+  .cat-button {
     width: 100px;
   }
 }
 
 @media only screen and (max-width: 250px) {
   .cat-button {
-    width: 80px;
+    width: 100px;
   }
 }
 

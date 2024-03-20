@@ -4,12 +4,12 @@
     </Head>
     <div id="cbb-app">
       <div class="page-div">
-        <!-- <Header></Header> -->
+        <Header></Header>
         <CBBHeader :gamesRef="gamesRef" :titleRef="titleRef" :allRef="allRef" :buttonLink="buttonLink" :menuClass1="menuClass1" :menuClass2="menuClass2" :menuClass3="menuClass3"/>
         <div class="home" id="page-id">
           <div class="games-page">
             <!-- <div class="s16-title">April 1<sup>st</sup></div> -->
-            <div class="flex">
+            <div class="flex pt-4">
               <form class="form-round m-auto" id="form-round">
                 <label class="label-round pr-2" id="label-round" for="round">Round:</label>
                 <select class="round-input" name="round" id="round-input" v-model="chosenRound" @change="changeRound()">

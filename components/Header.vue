@@ -4,7 +4,7 @@
         <div class="flex lg:flex-1">
           <a href="/" class="-m-1.5 p-1.5">
             <span class="sr-only">ESPN Analytics</span>
-            <img class="h-8 w-auto" src="../assets/logo.png" alt="" />
+            <img class="h-10 w-auto" src="../assets/logo.png" alt="" />
           </a>
         </div>
         
@@ -16,7 +16,7 @@
         </div>
         <div class="hidden lg:flex lg:gap-x-12 lg:items-center">
           <Popover class="relative">
-            <PopoverButton class="inline-flex items-center gap-x-1 text-lg font-semibold leading-6 text-gray-900">
+            <PopoverButton class="inline-flex items-center gap-x-1 text-lg font-semibold leading-6 text-gray-900 focus-visible:outline-none">
               <span>Women's College Basketball</span>            
             </PopoverButton>
             <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
@@ -47,7 +47,7 @@
             </transition>
           </Popover>
           <Popover class="relative">
-            <PopoverButton class="inline-flex items-center gap-x-1 text-lg font-semibold leading-6 text-gray-900">
+            <PopoverButton class="inline-flex items-center gap-x-1 text-lg font-semibold leading-6 text-gray-900 focus-visible:outline-none">
               <span>Men's College Basketball</span>            
             </PopoverButton>
             <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
@@ -78,7 +78,7 @@
             </transition>
           </Popover>
           <Popover class="relative">
-            <PopoverButton class="inline-flex items-center gap-x-1 text-lg font-semibold leading-6 text-gray-900">
+            <PopoverButton class="inline-flex items-center gap-x-1 text-lg font-semibold leading-6 text-gray-900 focus-visible:outline-none">
               <span>NFL</span>            
             </PopoverButton>
             <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">

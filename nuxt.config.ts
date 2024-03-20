@@ -63,11 +63,11 @@ export default defineNuxtConfig({
           name: 'twitter:url',
           content: 'https://espnanalytics.com/'
         }, 
-        // {
-        //   hid: 'twitter:title',
-        //   name: 'twitter:title', 
-        //   content: 'ESPN Analytics'
-        // }, 
+        {
+          hid: 'twitter:title',
+          name: 'twitter:title', 
+          content: 'ESPN Analytics'
+        }, 
         {
           hid: 'twitter:description',
           name: 'twitter:description', 
@@ -78,11 +78,11 @@ export default defineNuxtConfig({
           name: 'twitter:image', 
           content: 'https://ea-images-hosting.s3.amazonaws.com/black_475.png'
         }, 
-        // {
-        //   hid: 'og:site_name', 
-        //   property: 'og:site_name', 
-        //   content: 'ESPN Analytics'
-        // }, 
+        {
+          hid: 'og:site_name', 
+          property: 'og:site_name', 
+          content: 'ESPN Analytics'
+        }, 
         {
           hid: 'og:type', 
           property: 'og:type', 
@@ -93,11 +93,11 @@ export default defineNuxtConfig({
           property: 'og:url', 
           content: 'https://espnanalytics.com'
         }, 
-        // {
-        //   hid: 'og:title',
-        //   property: 'og:title', 
-        //   content: 'ESPN Analytics'
-        // }, 
+        {
+          hid: 'og:title',
+          property: 'og:title', 
+          content: 'ESPN Analytics'
+        }, 
         {
           hid: 'og:description', 
           property: 'og:description', 

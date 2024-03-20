@@ -188,9 +188,7 @@
     </div>
   </template>
 
-
-
-<script lang="ts">
+<script>
 import Chart from 'chart.js/auto'
 import * as d3 from 'd3'
 import axios from 'axios'
@@ -939,28 +937,6 @@ export default {
   },
 }
 
-</script>
-
-<script setup lang="ts">
-    useHead({
-        meta: [
-            {
-            hid: 'twitter:title',
-            name: 'twitter:title', 
-            content: 'ESPN Analytics: Receiver Tracking Metrics'
-            }, 
-            {
-            hid: 'og:site_name', 
-            property: 'og:site_name', 
-            content: 'ESPN Analytics: Receiver Tracking Metrics'
-            }, 
-            {
-            hid: 'og:title',
-            property: 'og:title', 
-            content: 'ESPN Analytics: Receiver Tracking Metrics'
-            }, 
-        ],
-    })
 </script>
 
 <style scoped>

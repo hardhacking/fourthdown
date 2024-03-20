@@ -216,11 +216,11 @@
     // name: 'WCBBGames',
     // title: 'ESPN Analytics: Women\'s Games',
     data() {
+      this.live_chartsArr = [];
       return {
         data: [],
         ref: [],
         // timer: null,
-        live_chartsArr: [],
         curr_game_ids: [],
         // old_game_ids: [],
         test_bool: [],
@@ -237,9 +237,9 @@
   
       
       this.loadPage();
-      // this.timer = setInterval(() => {
-      //   this.updatePageTemp()
-      // }, 20000)
+      this.timer = setInterval(() => {
+        this.updatePageTemp()
+      }, 5000)
     },
     methods: {
       async loadPage() {
@@ -364,29 +364,29 @@
             }
           }
       },
-      updateCharts(gamesData, newPlaysData) {
-        let game = [];
-        let game_ids = this.curr_game_ids.map(d => d.game_id);
-        let old_game_ids = this.old_game_ids.map(d => d.game_id);
+      // updateCharts(gamesData, newPlaysData) {
+      //   let game = [];
+      //   let game_ids = this.curr_game_ids.map(d => d.game_id);
+      //   let old_game_ids = this.old_game_ids.map(d => d.game_id);
   
-        for (let i = 0; i < game_ids.length; i++) {
-          if (this.curr_game_ids[i].status == 'pre') {
-            // game = gamesData[game_ids[i]];
-            // this.createPreGameChart(game, "myChart" + game_ids[i]);
-          } else if (this.curr_game_ids[i].status == 'in') {
-            game = gamesData[game_ids[i]];
-            if (game) {
-              this.updateChart(game, "myChart" + game_ids[i], newPlaysData[game_ids[i]]);
-            }
-          } else {
-            game = gamesData[game_ids[i]];
-            if (game) {
-              this.createWPChart(game, "myChart" + game_ids[i]);
-            }
-          }
-        }
+      //   for (let i = 0; i < game_ids.length; i++) {
+      //     if (this.curr_game_ids[i].status == 'pre') {
+      //       // game = gamesData[game_ids[i]];
+      //       // this.createPreGameChart(game, "myChart" + game_ids[i]);
+      //     } else if (this.curr_game_ids[i].status == 'in') {
+      //       game = gamesData[game_ids[i]];
+      //       if (game) {
+      //         this.updateChart(game, "myChart" + game_ids[i], newPlaysData[game_ids[i]]);
+      //       }
+      //     } else {
+      //       game = gamesData[game_ids[i]];
+      //       if (game) {
+      //         this.createWPChart(game, "myChart" + game_ids[i]);
+      //       }
+      //     }
+      //   }
   
-      },
+      // },
       removeChart(game_id_to_remove) {
         d3.selectAll('#myChart' + game_id_to_remove + '-cont').remove();
       },
@@ -607,7 +607,6 @@
           this.live_chartsArr[chartId].chart.data.datasets[0].customPlay = tooltip_play;
           this.live_chartsArr[chartId].chart.data.datasets[0].customWinTeam = chart_winTeam;
           this.live_chartsArr[chartId].chart.options.scales.x.max = xAxisEnd;
-  
   
           this.live_chartsArr[chartId].chart.update();
           // console.log('updating final')

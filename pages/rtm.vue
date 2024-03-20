@@ -4,7 +4,7 @@
     </Head>
     <div class="bg-espngray-100">
         <Header></Header>
-        <div class="pt-24">
+        <div class="pt-28">
             <div class="flex flex-col items-center gap-4">
                 <div class="text-4xl font-bold text-center text-espngray-900">The Best NFL Receivers</div>
                 <div class="text-espngray-600 font-normal text-sm" v-if="weekUpdate <= 18">Updated through Week {{ weekUpdate }}</div>
@@ -188,19 +188,12 @@
     </div>
   </template>
 
-<script>
+
+
+<script lang="ts">
 import Chart from 'chart.js/auto'
 import * as d3 from 'd3'
 import axios from 'axios'
-
-// useSeoMeta({
-    // title: 'Receiver Tracking Metrics',
-    // ogTitle: 'Receiver Tracking Metrics',
-    // description: 'This is my amazing site, let me tell you all about it.',
-    // ogDescription: 'This is my amazing site, let me tell you all about it.',
-    // ogImage: 'https://example.com/image.png',
-    // twitterCard: 'summary_large_image',
-// })
 
 export default {
   data() {
@@ -946,6 +939,28 @@ export default {
   },
 }
 
+</script>
+
+<script setup lang="ts">
+    useHead({
+        meta: [
+            {
+            hid: 'twitter:title',
+            name: 'twitter:title', 
+            content: 'ESPN Analytics: Receiver Tracking Metrics'
+            }, 
+            {
+            hid: 'og:site_name', 
+            property: 'og:site_name', 
+            content: 'ESPN Analytics: Receiver Tracking Metrics'
+            }, 
+            {
+            hid: 'og:title',
+            property: 'og:title', 
+            content: 'ESPN Analytics: Receiver Tracking Metrics'
+            }, 
+        ],
+    })
 </script>
 
 <style scoped>

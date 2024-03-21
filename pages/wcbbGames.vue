@@ -283,6 +283,7 @@
       async updatePageTemp() {
         let newS3Data = await this.getS3Data('womens-college-basketball.json');
         this.curr_game_ids = await this.getS3Data('games_womens-college-basketball.json');
+        this.filtered_ids = this.curr_game_ids.filter(f => f.roundNumber == this.chosenRound);
         // let updatedData = await this.getS3Data('test_diff_womens-college-basketball.json');
         // d3.select('#cjs-charts').selectAll('*').remove();
         // console.log('here');
@@ -357,9 +358,9 @@
       },
       updateChartsTemp(allGamesData) {
         let game = [];
-          let game_ids = this.curr_game_ids.map(d => d.game_id);
+          let game_ids = this.filtered_ids.map(d => d.game_id);
           for (let i = 0; i < game_ids.length; i++) {
-            if (this.curr_game_ids[i].status == 'pre') {
+            if (this.filtered_ids[i].status == 'pre') {
               // game = gamesData[game_ids[i]];
               // this.createPreGameChart(game, "myChart" + game_ids[i]);
             } else {
@@ -403,7 +404,7 @@
         // console.log('update');
         let chartLength = this.live_chartsArr[chartId].chart.data.datasets[0].data.length;
         
-        if (game.length != chartLength && this.curr_game_ids[index].status != 'post') {
+        if (game.length != chartLength && this.filtered_ids[index].status != 'post') {
           game = game.map(d => {
             d.new_homeWin = d.homeWin * 100;
             return d;
@@ -518,7 +519,7 @@
           
   
           // console.log('chartData endLength: ', this.live_chartsArr[chartId].data.datasets[0].data.length);
-        } else if (game.length != chartLength && this.curr_game_ids[index].status == 'post') {
+        } else if (game.length != chartLength && this.filtered_ids[index].status == 'post') {
           game = game.map(d => {
             d.new_homeWin = d.homeWin * 100;
             return d;
@@ -624,7 +625,7 @@
           // }).each(function() {
           //   d3.select('#cjs-charts').node().appendChild(this);
           // })
-        } else if (this.curr_game_ids[index].status == 'post') {
+        } else if (this.filtered_ids[index].status == 'post') {
           if (!this.live_chartsArr[chartId].moved) {
             var d3Chart = d3.select('#' + chartId + '-cont')
             var legendTitle = d3Chart.select('.legend-title-cont')
@@ -698,9 +699,9 @@
         let sec = game.map(d => {
           return d.clock * -1;
         });
-        let currTime = this.curr_game_ids.filter(d => {
+        let currTime = this.filtered_ids.filter(d => {
           return d.game_id == chartId.substring(7, chartId.length);
-        })[0].date + ' - ' + this.curr_game_ids.filter(d => {
+        })[0].date + ' - ' + this.filtered_ids.filter(d => {
           return d.game_id == chartId.substring(7, chartId.length);
         })[0].game_time;
         let currAwayScore = Math.round(100 - Math.round(game[0].new_homeWin)) + '%';
@@ -1408,7 +1409,7 @@
           },
           options: options,
         }), 'moved': false};
-        if (this.curr_game_ids[idIndex].status == 'post') {
+        if (this.filtered_ids[idIndex].status == 'post') {
           this.live_chartsArr[chartId].moved = true;
         }
       },

@@ -6,6 +6,7 @@
         <Meta property="og:url" content="https://www.espnanalytics.com/rtm" />
         <Meta name="twitter:url" content="https://www.espnanalytics.com/rtm" />
         <Meta name="twitter:title" content="Receiver Tracking Metrics by ESPN Analytics"/>
+        <Meta name="twitter:site" content="Receiver Tracking Metrics by ESPN Analytics"/>
         <Meta name="title" content="Receiver Tracking Metrics by ESPN Analytics"/>
     </Head>
     <div class="bg-espngray-100">

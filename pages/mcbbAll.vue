@@ -6,6 +6,7 @@
       <Meta property="og:url" content="https://www.espnanalytics.com/mcbbAll" />
       <Meta name="twitter:url" content="https://www.espnanalytics.com/mcbbAll" />
       <Meta name="twitter:title" content="Live Men's March Madness Projections - ESPN Analytics"/>
+      <Meta name="twitter:site" content="Live Men's March Madness Projections - ESPN Analytics"/>
       <Meta name="title" content="Live Men's March Madness Projections - ESPN Analytics"/>
     </Head>
     <div id="cbb-app">

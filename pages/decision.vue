@@ -1,6 +1,12 @@
 <template>
   <Head>
-      <Title>4th Downs Decision Analysis</Title>
+    <Title>4th Down Decision Analysis - ESPN Analytics</Title>
+    <Meta property="og:title" content="4th Down Decision Analysis - ESPN Analytics"/>
+    <Meta property="og:site_name" content="4th Down Decision Analysis - ESPN Analytics" />
+    <Meta property="og:url" content="https://www.espnanalytics.com/decision" />
+    <Meta name="twitter:url" content="https://www.espnanalytics.com/decision" />
+    <Meta name="twitter:title" content="4th Down Decision Analysis - ESPN Analytics"/>
+    <Meta name="title" content="4th Down Decision Analysis - ESPN Analytics"/>
   </Head>
       <Header></Header>
     <div class="relative min-h-screen bg-espngray-100 ">

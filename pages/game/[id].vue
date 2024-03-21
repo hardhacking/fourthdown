@@ -6,7 +6,6 @@
       <Meta property="og:url" content="https://www.espnanalytics.com/decision" />
       <Meta name="twitter:url" content="https://www.espnanalytics.com/decision" />
       <Meta name="twitter:title" content="4th Down Decision Analysis - ESPN Analytics"/>
-      <Meta name="twitter:site" content="4th Down Decision Analysis - ESPN Analytics"/>
       <Meta name="title" content="4th Down Decision Analysis - ESPN Analytics"/>
   </Head>
   <div class="min-h-screen bg-espngray-100 pt-12">

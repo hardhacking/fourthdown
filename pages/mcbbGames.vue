@@ -6,7 +6,6 @@
     <Meta property="og:url" content="https://www.espnanalytics.com/mcbbGames" />
     <Meta name="twitter:url" content="https://www.espnanalytics.com/mcbbGames" />
     <Meta name="twitter:title" content="Live Men's March Madness Win Probabilities - ESPN Analytics"/>
-    <Meta name="twitter:site" content="Live Men's March Madness Win Probabilities - ESPN Analytics"/>
     <Meta name="title" content="Live Men's March Madness Win Probabilities - ESPN Analytics"/>
   </Head>
     <div id="cbb-app">

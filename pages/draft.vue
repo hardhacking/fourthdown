@@ -6,7 +6,6 @@
         <Meta property="og:url" content="https://www.espnanalytics.com/draft" />
         <Meta name="twitter:url" content="https://www.espnanalytics.com/draft" />
         <Meta name="twitter:title" content="Draft Pick Projections - ESPN Analytics"/>
-        <Meta name="twitter:site" content="Draft Pick Projections - ESPN Analytics"/>
         <Meta name="title" content="Draft Pick Projections - ESPN Analytics"/>
     </Head>
     <div class="relative min-h-screen bg-espngray-100">

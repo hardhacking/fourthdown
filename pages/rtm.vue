@@ -188,6 +188,21 @@
     </div>
   </template>
 
+  <script setup>
+  useSeoMeta({
+    title: 'Receiver Tracking Metrics',
+    description: 'Models and data visualization from ESPN Analytics! March Madness, receiver tracking metrics and more.',
+    ogTitle: 'Receiver Tracking Metrics - ESPN Analytics',
+    ogDescription: 'Models and data visualization from ESPN Analytics! March Madness, receiver tracking metrics and more.',
+    ogImage: 'https://ea-images-hosting.s3.amazonaws.com/black_475.png',
+    ogImageUrl: 'https://ea-images-hosting.s3.amazonaws.com/black_475.png',
+    twitterTitle: 'Receiver Tracking Metrics - ESPN Analytics',
+    twitterDescription: 'Models and data visualization from ESPN Analytics! March Madness, receiver tracking metrics and more.',
+    twitterImage: 'https://ea-images-hosting.s3.amazonaws.com/black_475.png',
+    twitterCard: 'summary'
+})
+</script>
+
 <script>
 import Chart from 'chart.js/auto'
 import * as d3 from 'd3'

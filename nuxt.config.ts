@@ -54,6 +54,11 @@ export default defineNuxtConfig({
           content: 'summary'
         }, 
         {
+          hid: 'twitter:site', 
+          name: 'twitter:site', 
+          content: '@nuxt_js'
+        },
+        {
           hid: 'twitter:url', 
           name: 'twitter:url',
           content: 'https://espnanalytics.com/'

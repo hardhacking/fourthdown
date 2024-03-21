@@ -231,7 +231,7 @@
         // old_game_ids: [],
         test_bool: [],
         animation_bool: true,
-        chosenRound: 0,
+        chosenRound: 1,
         filtered_ids: [],
       }
     },

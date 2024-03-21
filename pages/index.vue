@@ -1,13 +1,6 @@
 <template>
   <Head>
     <Title>ESPN Analytics</Title>
-    <Meta property="og:title" content="ESPN Analytics"/>
-    <Meta property="og:site_name" content="ESPN Analytics" />
-    <Meta property="og:url" content="https://www.espnanalytics.com" />
-    <Meta name="twitter:url" content="https://www.espnanalytics.com" />
-    <Meta name="twitter:title" content="ESPN Analytics"/>
-    <Meta name="title" content="ESPN Analytics"/>
-    
   </Head>
   <div class="bg-white">
     <Header></Header>

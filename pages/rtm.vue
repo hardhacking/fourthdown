@@ -1,12 +1,6 @@
 <template>
     <Head>
-        <Title>Receiver Tracking Metrics by ESPN Analytics</Title>
-        <Meta property="og:title" content="Receiver Tracking Metrics by ESPN Analytics"/>
-        <Meta property="og:site_name" content="Receiver Tracking Metrics by ESPN Analytics" />
-        <Meta property="og:url" content="https://www.espnanalytics.com/rtm" />
-        <Meta name="twitter:url" content="https://www.espnanalytics.com/rtm" />
-        <Meta name="twitter:title" content="Receiver Tracking Metrics by ESPN Analytics"/>
-        <Meta name="title" content="Receiver Tracking Metrics by ESPN Analytics"/>
+        <Title>Receiver Tracking Metrics</Title>
     </Head>
     <div class="bg-espngray-100">
         <Header></Header>
@@ -193,6 +187,21 @@
         </div>
     </div>
   </template>
+
+  <script setup>
+  useSeoMeta({
+    title: 'Receiver Tracking Metrics',
+    description: 'Models and data visualization from ESPN Analytics! March Madness, receiver tracking metrics and more.',
+    ogTitle: 'Receiver Tracking Metrics - ESPN Analytics',
+    ogDescription: 'Models and data visualization from ESPN Analytics! March Madness, receiver tracking metrics and more.',
+    ogImage: 'https://ea-images-hosting.s3.amazonaws.com/black_475.png',
+    ogImageUrl: 'https://ea-images-hosting.s3.amazonaws.com/black_475.png',
+    twitterTitle: 'Receiver Tracking Metrics - ESPN Analytics',
+    twitterDescription: 'Models and data visualization from ESPN Analytics! March Madness, receiver tracking metrics and more.',
+    twitterImage: 'https://ea-images-hosting.s3.amazonaws.com/black_475.png',
+    twitterCard: 'summary'
+})
+</script>
 
 <script>
 import Chart from 'chart.js/auto'

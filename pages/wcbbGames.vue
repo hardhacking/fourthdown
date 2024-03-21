@@ -1,7 +1,13 @@
 <template>
   <Head>
-        <Title>WCBB Games</Title>
-    </Head>
+    <Title>Live Women's March Madness Win Probabilities - ESPN Analytics</Title>
+    <Meta property="og:title" content="Live Women's March Madness Win Probabilities - ESPN Analytics"/>
+    <Meta property="og:site_name" content="Live Women's March Madness Win Probabilities - ESPN Analytics" />
+    <Meta property="og:url" content="https://www.espnanalytics.com/wcbbGames" />
+    <Meta name="twitter:url" content="https://www.espnanalytics.com/wcbbGames" />
+    <Meta name="twitter:title" content="Live Women's March Madness Win Probabilities - ESPN Analytics"/>
+    <Meta name="title" content="Live Women's March Madness Win Probabilities - ESPN Analytics"/>
+  </Head>
     <div id="cbb-app">
       <div class="page-div">
         <Header></Header>

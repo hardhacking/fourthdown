@@ -1,6 +1,12 @@
 <template>
     <Head>
-      <Title>Draft Pick Projections</Title>
+        <Title>Draft Pick Projections - ESPN Analytics</Title>
+        <Meta property="og:title" content="Draft Pick Projections - ESPN Analytics"/>
+        <Meta property="og:site_name" content="Draft Pick Projections - ESPN Analytics" />
+        <Meta property="og:url" content="https://www.espnanalytics.com/draft" />
+        <Meta name="twitter:url" content="https://www.espnanalytics.com/draft" />
+        <Meta name="twitter:title" content="Draft Pick Projections - ESPN Analytics"/>
+        <Meta name="title" content="Draft Pick Projections - ESPN Analytics"/>
     </Head>
     <div class="relative min-h-screen bg-espngray-100">
         <Header></Header>

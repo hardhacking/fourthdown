@@ -1,7 +1,13 @@
 <template>
   <Head>
-        <Title>MCBB Games</Title>
-    </Head>
+    <Title>Live Men's March Madness Win Probabilities - ESPN Analytics</Title>
+    <Meta property="og:title" content="Live Men's March Madness Win Probabilities - ESPN Analytics"/>
+    <Meta property="og:site_name" content="Live Men's March Madness Win Probabilities - ESPN Analytics" />
+    <Meta property="og:url" content="https://www.espnanalytics.com/mcbbGames" />
+    <Meta name="twitter:url" content="https://www.espnanalytics.com/mcbbGames" />
+    <Meta name="twitter:title" content="Live Men's March Madness Win Probabilities - ESPN Analytics"/>
+    <Meta name="title" content="Live Men's March Madness Win Probabilities - ESPN Analytics"/>
+  </Head>
     <div id="cbb-app">
       <div class="page-div">
         <Header></Header>

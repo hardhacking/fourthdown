@@ -1,6 +1,12 @@
 <template>
     <Head>
-        <Title>WCBB Table</Title>
+      <Title>Live Women's March Madness Projections - ESPN Analytics</Title>
+      <Meta property="og:title" content="Live Women's March Madness Projections - ESPN Analytics"/>
+      <Meta property="og:site_name" content="Live Women's March Madness Projections - ESPN Analytics" />
+      <Meta property="og:url" content="https://www.espnanalytics.com/wcbbAll" />
+      <Meta name="twitter:url" content="https://www.espnanalytics.com/wcbbAll" />
+      <Meta name="twitter:title" content="Live Women's March Madness Projections - ESPN Analytics"/>
+      <Meta name="title" content="Live Women's March Madness Projections - ESPN Analytics"/>
     </Head>
     <div id="cbb-app">
       <Header></Header>

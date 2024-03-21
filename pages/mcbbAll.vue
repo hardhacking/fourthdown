@@ -1,6 +1,12 @@
 <template>
     <Head>
-        <Title>MCBB Table</Title>
+      <Title>Live Men's March Madness Projections - ESPN Analytics</Title>
+      <Meta property="og:title" content="Live Men's March Madness Projections - ESPN Analytics"/>
+      <Meta property="og:site_name" content="Live Men's March Madness Projections - ESPN Analytics" />
+      <Meta property="og:url" content="https://www.espnanalytics.com/mcbbAll" />
+      <Meta name="twitter:url" content="https://www.espnanalytics.com/mcbbAll" />
+      <Meta name="twitter:title" content="Live Men's March Madness Projections - ESPN Analytics"/>
+      <Meta name="title" content="Live Men's March Madness Projections - ESPN Analytics"/>
     </Head>
     <div id="cbb-app">
       <Header></Header>

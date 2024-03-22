@@ -17,7 +17,7 @@
       </div>
     </div>
     </div>
-    <div class="menu-component">
+    <div class="menu-component bg-white">
       <div class="title-menu">
         <div class="title-title">
               <h1 class="text-3xl font-semibold text-center" id="title-id"></h1>

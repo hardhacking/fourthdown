@@ -1627,6 +1627,7 @@
     margin: 0px;
   }
   .games-page {
+    background-color: white;
     padding: 5px;
   }
   .btn-sm {

@@ -503,6 +503,9 @@
   .header {
     margin-bottom: 0px;
   }
+  .page-div {
+    background-color: white;
+  }
   .proj-page {
     padding: 5px;
   }

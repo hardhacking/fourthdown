@@ -232,7 +232,7 @@
         // old_game_ids: [],
         test_bool: [],
         animation_bool: true,
-        chosenRound: 0,
+        chosenRound: 1,
         filtered_ids: [],
       }
     },
@@ -495,13 +495,13 @@
           awayTeaminfo.select('.legend-score')
             .text(currAwayScore)
   
-          // if (game[game.length-1].new_homeWin < 50) {
-          //   d3.select('#' + chartId + '-cont').select('.chart-title-cont')
-          //     .style('border', '2px solid rgb(195,  30,  50)');
-          // } else {
-          //   d3.select('#' + chartId + '-cont').select('.chart-title-cont')
-          //     .style('border', 0);
-          // }
+          if (game[game.length-1].new_homeWin < 50) {
+            d3.select('#' + chartId + '-cont').select('.chart-title-cont')
+              .style('border', '2px solid rgb(195,  30,  50)');
+          } else {
+            d3.select('#' + chartId + '-cont').select('.chart-title-cont')
+              .style('border', 0);
+          }
   
           this.live_chartsArr[chartId].chart.data.datasets[0].data = wp_arr;
           this.live_chartsArr[chartId].chart.data.labels = sec;
@@ -598,13 +598,13 @@
           d3Chart.select('.chart-title-cont')
             .style('background-color', '#f2f3f4');
             
-          // if (game[game.length-1].new_homeWin < 50) {
-          //   d3.select('#' + chartId + '-cont').select('.chart-title-cont')
-          //     .style('border', '2px solid rgb(195,  30,  50)');
-          // } else {
-          //   d3.select('#' + chartId + '-cont').select('.chart-title-cont')
-          //     .style('border', 0);
-          // }
+          if (game[game.length-1].new_homeWin < 50) {
+            d3.select('#' + chartId + '-cont').select('.chart-title-cont')
+              .style('border', '2px solid rgb(195,  30,  50)');
+          } else {
+            d3.select('#' + chartId + '-cont').select('.chart-title-cont')
+              .style('border', 0);
+          }
           this.live_chartsArr[chartId].chart.data.datasets[0].data = wp_arr;
           this.live_chartsArr[chartId].chart.data.labels = sec;
   

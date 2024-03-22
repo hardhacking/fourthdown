@@ -227,7 +227,8 @@ export default {
     padding: 0px;
   }
   .full-menu {
-    margin: 5px 0px 10px 0px;
+    padding: 5px 0px 10px 0px;
+    margin: 0px;
   }
   .ea {
     width: 100px;

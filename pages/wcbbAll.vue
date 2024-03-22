@@ -519,7 +519,8 @@
     margin-bottom: 0px;
   }
   .page-div {
-    background-color: white;
+    background-color: black;
+    min-height: 800px;
   }
   .proj-page {
     padding: 5px;

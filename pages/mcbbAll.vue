@@ -505,6 +505,7 @@
   }
   .page-div {
     background-color: white;
+    min-height: 800px;
   }
   .proj-page {
     padding: 5px;

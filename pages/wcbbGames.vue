@@ -707,6 +707,11 @@
         })[0].game_time;
         let currAwayScore = Math.round(100 - Math.round(game[0].new_homeWin)) + '%';
         let currHomeScore = Math.round(game[0].new_homeWin) + '%';
+        
+        if (currAwayScore == '0%') {
+          currAwayScore = '1%'
+          currHomeScore = '99%'
+        }
         let homeSeed = this.ref.filter(d => {
           return d.id == game[0].home_id;
         })[0].seed;

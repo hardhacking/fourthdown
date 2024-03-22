@@ -519,7 +519,7 @@
     margin-bottom: 0px;
   }
   .page-div {
-    background-color: black;
+    background-color: white;
     min-height: 800px;
   }
   .proj-page {

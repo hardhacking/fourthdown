@@ -246,7 +246,7 @@
       this.loadPage();
       this.timer = setInterval(() => {
         this.updatePageTemp()
-      }, 5000)
+      }, 2000)
     },
     methods: {
       async loadPage() {
@@ -424,7 +424,7 @@
             }
           });
           let tooltip_clock = game.map(d => {
-            return (d.period + 'Q ' + d.displayClock);
+            return d.period < 5 ? (d.period + 'Q ' + d.displayClock) : ((d.period - 4 + 'OT ' + d.displayClock));
           });
           let tooltip_homeScore = game.map(d => {
             return d.homeScore;
@@ -502,7 +502,133 @@
             d3.select('#' + chartId + '-cont').select('.chart-title-cont')
               .style('border', 0);
           }
-  
+
+          const options = {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+              mode: 'index',
+              intersect: false,
+            },
+            plugins: {
+              verticalLiner: {},
+              legend: {
+                display: false,
+              },
+              tooltip: {
+                displayColors: false,
+                backgroundColor: '#EFEFEF',
+                callbacks: {
+                  title: () => null,
+                  label: function(context) {
+                    // console.log(context.dataIndex);
+                    // console.log(context);
+                    let label = [context.dataset.customWinTeam[context.dataIndex] + ' ' + context.dataset.customWP[context.dataIndex].toFixed(1) + '%'];
+                    label.push([context.dataset.customHomeTeam + ' ' + context.dataset.customHomeScore[context.dataIndex] + ' - ' + context.dataset.customAwayTeam + ' ' + context.dataset.customAwayScore[context.dataIndex]]);
+                    label.push('(' + context.dataset.customClock[context.dataIndex] + ') ' +
+                      context.dataset.customPlay[context.dataIndex]);
+    
+                    return label;
+                  },
+                },
+                bodyColor: 'rgba(0, 0, 0)',
+              },
+            },
+            scales: {
+              y: {
+                display: true,
+                position: 'right',
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Value',
+                },
+                min: -50, 
+                max: 50,
+                ticks: {
+                  stepSize: 50,
+                  callback: function(label, index, labels) {
+                    switch(label) {
+                      case 50:
+                        return 100;
+                      case 0:
+                        return 50;
+                      case -50:
+                        return 100;
+                    }
+                  },
+                },
+              },
+              x: {
+                display: true,
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Value',
+                },
+                type: 'linear',
+                max: xAxisEnd,
+                min: -2400,
+                afterBuildTicks: axis => {
+                  function switchResult(axisEnd) { 
+                    switch(axisEnd) {
+                      case 300:
+                        return [-1800, -1200, -600, 0].map(v => ({ value: v }));
+                      case 600:
+                        return [-1800, -1200, -600, 0, 300].map(v => ({ value: v }));
+                      case 900:
+                        return [-1800, -1200, -600, 0, 300, 600].map(v => ({ value: v }));
+                      case 1200:
+                        return [-1800, -1200, -600, 0, 300, 600, 900].map(v => ({ value: v }));
+                      case 1500:
+                        return [-1800, -1200, -600, 0, 300, 600, 900, 1200].map(v => ({ value: v }));
+                      case 1800:
+                        return [-1800, -1200, -600, 0, 300, 600, 900, 1200, 1500].map(v => ({ value: v }));
+                      case 2100:
+                        return [-1800, -1200, -600, 0, 300, 600, 900, 1200, 1500, 1800].map(v => ({ value: v }));
+                      default: 
+                        return [-1800, -1200, -600].map(v => ({ value: v }));
+                      }
+                    }
+                    axis.ticks = switchResult(xAxisEnd);
+                  },
+                  ticks: {
+                    stepSize: 300,
+                    callback: function(label, index, labels) {
+                      switch(label) {
+                        case -1800: 
+                          return '1Q';
+                        case -1200:
+                          return 'Half';
+                        case -600:
+                          return '3Q';
+                        case 0: 
+                          return '            OT';
+                        case 300: 
+                          return '           2OT';
+                        case 600: 
+                          return '           3OT';
+                        case 900: 
+                          return '           4OT';
+                        case 1200: 
+                          return '           5OT';
+                        case 1500: 
+                          return '           6OT';
+                        case 1800: 
+                          return '           7OT';
+                        default:
+                          return '';
+                    }
+                  },
+                },
+              },
+            },
+            elements: {
+              line: {
+                tension: 1, // adjust the tension to control the curvature of the line
+                cubicInterpolationMode: 'monotone'
+              },
+            },
+          };
+          
           this.live_chartsArr[chartId].chart.data.datasets[0].data = wp_arr;
           this.live_chartsArr[chartId].chart.data.labels = sec;
   
@@ -513,7 +639,7 @@
           this.live_chartsArr[chartId].chart.data.datasets[0].customPlay = tooltip_play;
           this.live_chartsArr[chartId].chart.data.datasets[0].customWinTeam = chart_winTeam;
           // this.live_chartsArr[chartId].options.animation = animation;
-          this.live_chartsArr[chartId].chart.options.scales.x.max = xAxisEnd;
+          this.live_chartsArr[chartId].chart.options = options;
   
           this.live_chartsArr[chartId].chart.update();
           // console.log('update')
@@ -539,7 +665,7 @@
             }
           });
           let tooltip_clock = game.map(d => {
-            return (d.period + 'Q ' + d.displayClock);
+            return d.period < 5 ? (d.period + 'Q ' + d.displayClock) : ((d.period - 4 + 'OT ' + d.displayClock));
           });
           let tooltip_homeScore = game.map(d => {
             return d.homeScore;
@@ -605,6 +731,133 @@
             d3.select('#' + chartId + '-cont').select('.chart-title-cont')
               .style('border', 0);
           }
+
+          const options = {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+              mode: 'index',
+              intersect: false,
+            },
+            plugins: {
+              verticalLiner: {},
+              legend: {
+                display: false,
+              },
+              tooltip: {
+                displayColors: false,
+                backgroundColor: '#EFEFEF',
+                callbacks: {
+                  title: () => null,
+                  label: function(context) {
+                    // console.log(context.dataIndex);
+                    // console.log(context);
+                    let label = [context.dataset.customWinTeam[context.dataIndex] + ' ' + context.dataset.customWP[context.dataIndex].toFixed(1) + '%'];
+                    label.push([context.dataset.customHomeTeam + ' ' + context.dataset.customHomeScore[context.dataIndex] + ' - ' + context.dataset.customAwayTeam + ' ' + context.dataset.customAwayScore[context.dataIndex]]);
+                    label.push('(' + context.dataset.customClock[context.dataIndex] + ') ' +
+                      context.dataset.customPlay[context.dataIndex]);
+    
+                    return label;
+                  },
+                },
+                bodyColor: 'rgba(0, 0, 0)',
+              },
+            },
+            scales: {
+              y: {
+                display: true,
+                position: 'right',
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Value',
+                },
+                min: -50, 
+                max: 50,
+                ticks: {
+                  stepSize: 50,
+                  callback: function(label, index, labels) {
+                    switch(label) {
+                      case 50:
+                        return 100;
+                      case 0:
+                        return 50;
+                      case -50:
+                        return 100;
+                    }
+                  },
+                },
+              },
+              x: {
+                display: true,
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Value',
+                },
+                type: 'linear',
+                max: xAxisEnd,
+                min: -2400,
+                afterBuildTicks: axis => {
+                  function switchResult(axisEnd) { 
+                    switch(axisEnd) {
+                      case 300:
+                        return [-1800, -1200, -600, 0].map(v => ({ value: v }));
+                      case 600:
+                        return [-1800, -1200, -600, 0, 300].map(v => ({ value: v }));
+                      case 900:
+                        return [-1800, -1200, -600, 0, 300, 600].map(v => ({ value: v }));
+                      case 1200:
+                        return [-1800, -1200, -600, 0, 300, 600, 900].map(v => ({ value: v }));
+                      case 1500:
+                        return [-1800, -1200, -600, 0, 300, 600, 900, 1200].map(v => ({ value: v }));
+                      case 1800:
+                        return [-1800, -1200, -600, 0, 300, 600, 900, 1200, 1500].map(v => ({ value: v }));
+                      case 2100:
+                        return [-1800, -1200, -600, 0, 300, 600, 900, 1200, 1500, 1800].map(v => ({ value: v }));
+                      default: 
+                        return [-1800, -1200, -600].map(v => ({ value: v }));
+                      }
+                    }
+                    axis.ticks = switchResult(xAxisEnd);
+                  },
+                  ticks: {
+                    stepSize: 300,
+                    callback: function(label, index, labels) {
+                      switch(label) {
+                        case -1800: 
+                          return '1Q';
+                        case -1200:
+                          return 'Half';
+                        case -600:
+                          return '3Q';
+                        case 0: 
+                          return '            OT';
+                        case 300: 
+                          return '           2OT';
+                        case 600: 
+                          return '           3OT';
+                        case 900: 
+                          return '           4OT';
+                        case 1200: 
+                          return '           5OT';
+                        case 1500: 
+                          return '           6OT';
+                        case 1800: 
+                          return '           7OT';
+                        default:
+                          return '';
+                    }
+                  },
+                },
+              },
+            },
+            elements: {
+              line: {
+                tension: 1, // adjust the tension to control the curvature of the line
+                cubicInterpolationMode: 'monotone'
+              },
+            },
+          };
+
           this.live_chartsArr[chartId].chart.data.datasets[0].data = wp_arr;
           this.live_chartsArr[chartId].chart.data.labels = sec;
   
@@ -614,7 +867,7 @@
           this.live_chartsArr[chartId].chart.data.datasets[0].customAwayScore = tooltip_awayScore;
           this.live_chartsArr[chartId].chart.data.datasets[0].customPlay = tooltip_play;
           this.live_chartsArr[chartId].chart.data.datasets[0].customWinTeam = chart_winTeam;
-          this.live_chartsArr[chartId].chart.options.scales.x.max = xAxisEnd;
+          this.live_chartsArr[chartId].chart.options = options;
   
           this.live_chartsArr[chartId].chart.update();
           // console.log('updating final')
@@ -1006,7 +1259,7 @@
           }
         });
         let tooltip_clock = game.map(d => {
-          return (d.period + 'Q ' + d.displayClock);
+          return d.period < 5 ? (d.period + 'Q ' + d.displayClock) : ((d.period - 4 + 'OT ' + d.displayClock));
         });
         let tooltip_homeScore = game.map(d => {
           return d.homeScore;
@@ -1445,7 +1698,7 @@
           return d.new_homeWin;
         });
         let tooltip_clock = game.map(d => {
-          return (d.period + 'Q ' + d.displayClock);
+          return d.period < 5 ? (d.period + 'Q ' + d.displayClock) : ((d.period - 4 + 'OT ' + d.displayClock));
         });
         let tooltip_homeScore = game.map(d => {
           return d.homeScore;

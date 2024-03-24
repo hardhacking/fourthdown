@@ -232,7 +232,7 @@
         // old_game_ids: [],
         test_bool: [],
         animation_bool: true,
-        chosenRound: 1,
+        chosenRound: 2,
         filtered_ids: [],
       }
     },

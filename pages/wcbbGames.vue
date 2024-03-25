@@ -244,7 +244,7 @@
   
       
       this.loadPage();
-      if (this.chosenRound == 1) {
+      if (this.chosenRound == 2) {
         this.timer = setInterval(() => {
           this.updatePageTemp()
         }, 5000)

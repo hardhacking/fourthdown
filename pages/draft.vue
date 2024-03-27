@@ -386,7 +386,8 @@ export default {
                         min: 0,
                         max: 100,
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            stepSize: 20
                         }
                     }
                 }
@@ -447,7 +448,8 @@ export default {
                         min: 0,
                         max: 100,
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            stepSize: 20
                         }
                     }
                 }
@@ -508,7 +510,8 @@ export default {
                         min: 0,
                         max: 100,
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            stepSize: 20
                         }
                     }
                 }
@@ -569,7 +572,8 @@ export default {
                         min: 0,
                         max: 100,
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            stepSize: 20
                         }
                     }
                 }
@@ -759,7 +763,7 @@ export default {
                         min: 2,
                         max: 10,
                         ticks: {
-                            stepSize: 1,
+                            stepSize: 2,
                             beginAtZero: false
                         }
                     }
@@ -1424,7 +1428,7 @@ export default {
 .chart-cont {
     margin: 10px;
     padding: 1.5px 15px 1.5px 15px;
-    height: 300px;
+    height: 350px;
     width: 600px;
 }
 @media only screen and (max-width: 699px) {

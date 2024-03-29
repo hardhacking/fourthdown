@@ -244,11 +244,11 @@
   
       
       this.loadPage();
-      // if (this.chosenRound == 2) {
-      //   this.timer = setInterval(() => {
-      //     this.updatePageTemp()
-      //   }, 5000)
-      // }
+      if (this.chosenRound == 3) {
+        this.timer = setInterval(() => {
+          this.updatePageTemp()
+        }, 5000)
+      }
     },
     methods: {
       async loadPage() {

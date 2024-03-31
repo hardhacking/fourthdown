@@ -232,7 +232,7 @@
         // old_game_ids: [],
         test_bool: [],
         animation_bool: true,
-        chosenRound: 3,
+        chosenRound: 4,
         filtered_ids: [],
       }
     },
@@ -244,7 +244,7 @@
   
       
       this.loadPage();
-      if (this.chosenRound == 3) {
+      if (this.chosenRound == 4) {
         this.timer = setInterval(() => {
           this.updatePageTemp()
         }, 5000)

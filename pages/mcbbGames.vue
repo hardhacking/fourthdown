@@ -102,7 +102,7 @@
         // old_game_ids: [],
         test_bool: [],
         animation_bool: true,
-        chosenRound: 3,
+        chosenRound: 5,
         filtered_ids: [],
       }
     },
@@ -113,7 +113,7 @@
       // window.addEventListener('resize', this.setZoomLevel)
   
       this.loadPage();
-      // if (this.chosenRound == 3) {
+      // if (this.chosenRound == 5) {
       //   this.timer = setInterval(() => {
       //     this.updatePageTemp()
       //   }, 5000)

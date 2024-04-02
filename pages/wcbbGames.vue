@@ -232,7 +232,7 @@
         // old_game_ids: [],
         test_bool: [],
         animation_bool: true,
-        chosenRound: 4,
+        chosenRound: 5,
         filtered_ids: [],
       }
     },
@@ -244,11 +244,11 @@
   
       
       this.loadPage();
-      if (this.chosenRound == 4) {
-        this.timer = setInterval(() => {
-          this.updatePageTemp()
-        }, 5000)
-      }
+      // if (this.chosenRound == 5) {
+      //   this.timer = setInterval(() => {
+      //     this.updatePageTemp()
+      //   }, 5000)
+      // }
     },
     methods: {
       async loadPage() {

@@ -26,6 +26,11 @@ export default {
   theme: {
     extend: {
       colors: {
+        'Sports-Gray-80': '#2B2C2D',
+        'Sports-Gray-40': '#9D9E9F',
+        'Data-Blue-Dark': '#012337',
+        'Data-Blue-Light': '#0098CD',
+        'Data-Blue-Light-bg': 'rgba(0, 152, 205, 0.10)',
         'espnred-50': 'rgba(195, 30, 50, 0.1)',
         'espnred-600': 'rgba(195,30,50, 0.9)',
         'espnred': 'rgb(195,30,50)',
@@ -46,6 +51,8 @@ export default {
       screens: {
         'xxs': '385px',
         'xs': '480px',
+        'md': '786px',
+        'md+': '814px'
         // => @media (min-width: 385px) { ... }
       }
     },

@@ -22,7 +22,7 @@ export default defineNuxtConfig({
   // ssr: false,
   devtools: { enabled: true },
   modules: [
-    ['nuxt-gtag', {id: 'G-W0Q1L3P863'}],
+    // ['nuxt-gtag', {id: 'G-W0Q1L3P863'}],
     'nuxt-headlessui', 
     ['@pinia/nuxt', {autoImports: ['defineStore', 'acceptHMRUpdate']}]
   ],
@@ -34,6 +34,10 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  components: [
+    { path: '~/components/draft/', extensions: ['vue'] },
+    { path: '~/components/', extensions: ['vue'] }
+  ],
   app: {
     head: {
       script: [

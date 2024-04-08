@@ -145,6 +145,7 @@ export default defineNuxtConfig({
     '/wnba': { redirect: '/' },
     '/soccer': { redirect: '/' },
     '/nfl-sim': { redirect: '/draft-sim' },
+    '/draft': { redirect: '/draft-sim'},
     '/nfl-draft': { redirect: '/draft-predictor' },
     '/mcbb': { redirect: '/mcbb-games' },
     '/wcbb': { redirect: '/wcbb-games' },

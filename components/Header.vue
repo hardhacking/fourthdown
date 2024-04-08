@@ -17,38 +17,7 @@
         <div class="hidden lg:flex lg:gap-x-12 lg:items-center">
           <Popover class="relative">
             <PopoverButton class="inline-flex items-center gap-x-1 text-lg font-semibold leading-6 text-gray-900 focus-visible:outline-none">
-              <span>Women's College Basketball</span>            
-            </PopoverButton>
-            <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
-              <PopoverPanel class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
-                <div class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
-                  <div class="p-4">
-                    <div v-for="item in wcbb" :key="item.name" class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
-                      <div class="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                        <component :is="item.icon" class="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
-                      </div>
-                      <div>
-                        <a :href="item.href" class="font-semibold text-gray-900">
-                          {{ item.name }}
-                          <span class="absolute inset-0" ></span>
-                        </a>
-                        <p class="mt-1 text-gray-600">{{ item.description }}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                    <a v-for="item in callsToAction" :key="item.name" :href="item.href" class="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100">
-                      <component :is="item.icon" class="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-                      {{ item.name }}
-                    </a>
-                  </div>
-                </div>
-              </PopoverPanel>
-            </transition>
-          </Popover>
-          <Popover class="relative">
-            <PopoverButton class="inline-flex items-center gap-x-1 text-lg font-semibold leading-6 text-gray-900 focus-visible:outline-none">
-              <span>Men's College Basketball</span>            
+              <span>NFL Draft</span>            
             </PopoverButton>
             <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
               <PopoverPanel class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
@@ -79,7 +48,38 @@
           </Popover>
           <Popover class="relative">
             <PopoverButton class="inline-flex items-center gap-x-1 text-lg font-semibold leading-6 text-gray-900 focus-visible:outline-none">
-              <span>NFL</span>            
+              <span>March Maddness</span>            
+            </PopoverButton>
+            <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
+              <PopoverPanel class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
+                <div class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
+                  <div class="p-4">
+                    <div v-for="item in wcbb" :key="item.name" class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                      <div class="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <component :is="item.icon" class="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                      </div>
+                      <div>
+                        <a :href="item.href" class="font-semibold text-gray-900">
+                          {{ item.name }}
+                          <span class="absolute inset-0" ></span>
+                        </a>
+                        <p class="mt-1 text-gray-600">{{ item.description }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
+                    <a v-for="item in callsToAction" :key="item.name" :href="item.href" class="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100">
+                      <component :is="item.icon" class="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+                      {{ item.name }}
+                    </a>
+                  </div>
+                </div>
+              </PopoverPanel>
+            </transition>
+          </Popover>
+          <Popover class="relative">
+            <PopoverButton class="inline-flex items-center gap-x-1 text-lg font-semibold leading-6 text-gray-900 focus-visible:outline-none">
+              <span>Other NFL</span>            
             </PopoverButton>
             <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
               <PopoverPanel class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
@@ -147,15 +147,14 @@ import { ref } from 'vue'
 import { Dialog, DialogPanel } from '@headlessui/vue'
 import { Bars3Icon, CubeTransparentIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
-import { InformationCircleIcon, PresentationChartLineIcon, ChartPieIcon, ChartBarIcon, 
+import { InformationCircleIcon, PresentationChartLineIcon, ForwardIcon, ChartBarIcon, 
          ArrowTrendingUpIcon } from '@heroicons/vue/24/outline'
 // import {} from '@heroicons/vue/20/solid'
-const navigation = [
-  { name: 'Women\'s March Madness', href: '/wcbb-games'},
-  { name: 'Men\'s March Madness', href: '/mcbb-games'},
-  { name: 'RTMs', href: '/rtm' },
-  { name: '4th Downs', href: '/decision' },
-  { name: 'W18 Draft Picks', href: '/draft-order' },
+const navigation = [, 
+  { name: 'Draft Day Predictor', href: '/draft-predictor'},
+  { name: 'Draft Simulator', href: '/draft-sim'},
+  { name: 'March Madness', href: '/wcbb-games'},
+  { name: 'RTMs', href: '/rtm' }
 ]
 const nfl = [
   { name: 'Receiver Tracking Metrics', description: 'Evaluate pass catchers a number of ways', href: '/rtm', icon: CubeTransparentIcon },
@@ -163,12 +162,14 @@ const nfl = [
   { name: 'Live Draft Pick Chances', description: "Live chances at a top 5 pick during Week 18", href: '/draft-order', icon: PresentationChartLineIcon },
 ]
 const mcbb = [
-  { name: 'March Madness Games', description: 'Full win probability wall for all men\'s games', href: '/mcbb-games', icon: ArrowTrendingUpIcon },
-  { name: 'March Madness Projections', description: 'Table showing live chances to advance to each round', href: '/mcbb-all', icon: ChartBarIcon }
+  { name: 'NFL Draft Day Predictor', description: 'Projections for how the NFL Draft will unfold', href: '/draft-predictor', icon: ChartBarIcon },
+  { name: 'NFL Draft Simulator', description: 'Be the GM and run a full simulation of the NFL Draft, make picks, trades and more', href: '/draft-sim', icon: ForwardIcon }
 ]
 const wcbb = [
-  { name: 'March Madness Games', description: 'Full win probability wall for all women\'s games', href: '/wcbb-games', icon: ArrowTrendingUpIcon },
-  { name: 'March Madness Projections', description: 'Table showing live chances to advance to each round', href: '/wcbb-all', icon: ChartBarIcon }
+  { name: 'Women\'s Games', description: 'Full win probability wall for all women\'s games', href: '/wcbb-games', icon: ArrowTrendingUpIcon },
+  { name: 'Women\'s Projections', description: 'Table showing live chances to advance to each round', href: '/wcbb-all', icon: ChartBarIcon },
+  { name: 'Men\'s Games', description: 'Full win probability wall for all men\'s games', href: '/mcbb-games', icon: ArrowTrendingUpIcon },
+  { name: 'Men\'s Projections', description: 'Table showing live chances to advance to each round', href: '/mcbb-all', icon: ChartBarIcon }
 ]
 // const callsToAction = [
 //   { name: 'Watch demo', href: '#', icon: PlayCircleIcon },

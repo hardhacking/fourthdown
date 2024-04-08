@@ -151,24 +151,24 @@ import { InformationCircleIcon, PresentationChartLineIcon, ChartPieIcon, ChartBa
          ArrowTrendingUpIcon } from '@heroicons/vue/24/outline'
 // import {} from '@heroicons/vue/20/solid'
 const navigation = [
-  { name: 'Women\'s March Madness', href: '/wcbbGames'},
-  { name: 'Men\'s March Madness', href: '/mcbbGames'},
+  { name: 'Women\'s March Madness', href: '/wcbb-games'},
+  { name: 'Men\'s March Madness', href: '/mcbb-games'},
   { name: 'RTMs', href: '/rtm' },
   { name: '4th Downs', href: '/decision' },
-  { name: 'W18 Draft Picks', href: '/draft' },
+  { name: 'W18 Draft Picks', href: '/draft-order' },
 ]
 const nfl = [
   { name: 'Receiver Tracking Metrics', description: 'Evaluate pass catchers a number of ways', href: '/rtm', icon: CubeTransparentIcon },
   { name: '4th Downs', description: 'See 4th down decision breakdowns', href: '/decision', icon: InformationCircleIcon },
-  { name: 'Live Draft Pick Chances', description: "Live chances at a top 5 pick during Week 18", href: '/draft', icon: PresentationChartLineIcon },
+  { name: 'Live Draft Pick Chances', description: "Live chances at a top 5 pick during Week 18", href: '/draft-order', icon: PresentationChartLineIcon },
 ]
 const mcbb = [
-  { name: 'March Madness Games', description: 'Full win probability wall for all men\'s games', href: '/mcbbGames', icon: ArrowTrendingUpIcon },
-  { name: 'March Madness Projections', description: 'Table showing live chances to advance to each round', href: '/mcbbAll', icon: ChartBarIcon }
+  { name: 'March Madness Games', description: 'Full win probability wall for all men\'s games', href: '/mcbb-games', icon: ArrowTrendingUpIcon },
+  { name: 'March Madness Projections', description: 'Table showing live chances to advance to each round', href: '/mcbb-all', icon: ChartBarIcon }
 ]
 const wcbb = [
-  { name: 'March Madness Games', description: 'Full win probability wall for all women\'s games', href: '/wcbbGames', icon: ArrowTrendingUpIcon },
-  { name: 'March Madness Projections', description: 'Table showing live chances to advance to each round', href: '/wcbbAll', icon: ChartBarIcon }
+  { name: 'March Madness Games', description: 'Full win probability wall for all women\'s games', href: '/wcbb-games', icon: ArrowTrendingUpIcon },
+  { name: 'March Madness Projections', description: 'Table showing live chances to advance to each round', href: '/wcbb-all', icon: ChartBarIcon }
 ]
 // const callsToAction = [
 //   { name: 'Watch demo', href: '#', icon: PlayCircleIcon },

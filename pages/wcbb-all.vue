@@ -3,8 +3,8 @@
       <Title>Live Women's March Madness Projections - ESPN Analytics</Title>
       <Meta property="og:title" content="Live Women's March Madness Projections - ESPN Analytics"/>
       <Meta property="og:site_name" content="Live Women's March Madness Projections - ESPN Analytics" />
-      <Meta property="og:url" content="https://www.espnanalytics.com/wcbbAll" />
-      <Meta name="twitter:url" content="https://www.espnanalytics.com/wcbbAll" />
+      <Meta property="og:url" content="https://www.espnanalytics.com/wcbb-all" />
+      <Meta name="twitter:url" content="https://www.espnanalytics.com/wcbb-all" />
       <Meta name="twitter:title" content="Live Women's March Madness Projections - ESPN Analytics"/>
       <Meta name="title" content="Live Women's March Madness Projections - ESPN Analytics"/>
     </Head>
@@ -33,8 +33,6 @@
   // import { server } from "@/utils/server.js";
   
   export default {
-    // name: 'WCBBProj',
-    // title: 'ESPN Analytics: Women\'s Tournament',
     data() {
       return {
         table: [],
@@ -452,9 +450,9 @@
         const currRoute = this.$route.name;
   
         if (currRoute.substring(0, 1) == 'w') {
-          return '/wcbbGames';
+          return '/wcbb-games';
         } else {
-          return '/mcbbGames';
+          return '/mcbb-games';
         }
   
       },
@@ -472,9 +470,9 @@
         const currRoute = this.$route.name;
   
         if (currRoute.substring(0, 1) == 'w') {
-          return '/wcbbAll';
+          return '/wcbb-all';
         } else {
-          return '/mcbbAll';
+          return '/mcbb-all';
         }
   
       },
@@ -482,9 +480,9 @@
         const currRoute = this.$route.name;
   
         if (currRoute.substring(0, 1) == 'w') {
-          return '/mcbbAll';
+          return '/mcbb-all';
         } else {
-          return '/wcbbAll';
+          return '/wcbb-all';
         }
       },
       menuClass1() {

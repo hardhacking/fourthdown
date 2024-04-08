@@ -1,12 +1,12 @@
 <template>
   <Head>
-      <Title>{{ (games[id] ? games[id][0].Game : '') }} 4th Downs</Title>
-      <Meta property="og:title" content="Live NFL 4th Down Decision Analysis - ESPN Analytics"/>
-      <Meta property="og:site_name" content="Live NFL 4th Down Decision Analysis - ESPN Analytics" />
+      <Title>{{ (games[id] ? games[id][0].Game : '') }} Live 4th Downs - ESPN Analytics</Title>
+      <Meta property="og:title" :content="(games[id] ? games[id][0].Game : '') + ' Live 4th Downs - ESPN Analytics'"/>
+      <Meta property="og:site_name" :content="(games[id] ? games[id][0].Game : '') + ' Live 4th Downs - ESPN Analytics'" />
       <Meta property="og:url" content="https://www.espnanalytics.com/decision" />
       <Meta name="twitter:url" content="https://www.espnanalytics.com/decision" />
-      <Meta name="twitter:title" content="Live NFL 4th Down Decision Analysis - ESPN Analytics"/>
-      <Meta name="title" content="Live NFL 4th Down Decision Analysis - ESPN Analytics"/>
+      <Meta name="twitter:title" :content="(games[id] ? games[id][0].Game : '') + ' Live 4th Downs - ESPN Analytics'"/>
+      <Meta name="title" :content="(games[id] ? games[id][0].Game : '') + ' Live 4th Downs - ESPN Analytics'"/>
   </Head>
   <div class="min-h-screen bg-espngray-100 pt-12">
     <Header></Header>

@@ -3,8 +3,8 @@
         <Title>Live NFL Draft Pick Projections - ESPN Analytics</Title>
         <Meta property="og:title" content="Live NFL Draft Pick Projections - ESPN Analytics"/>
         <Meta property="og:site_name" content="Live NFL Draft Pick Projections - ESPN Analytics" />
-        <Meta property="og:url" content="https://www.espnanalytics.com/draft" />
-        <Meta name="twitter:url" content="https://www.espnanalytics.com/draft" />
+        <Meta property="og:url" content="https://www.espnanalytics.com/draft-order" />
+        <Meta name="twitter:url" content="https://www.espnanalytics.com/draft-order" />
         <Meta name="twitter:title" content="Live NFL Draft Pick Projections - ESPN Analytics"/>
         <Meta name="title" content="Live NFL Draft Pick Projections - ESPN Analytics"/>
     </Head>
@@ -100,7 +100,6 @@ export default {
         }
     },
     mounted() {
-        document.title = 'Draft Pick Projections';
         this.loadPage();
         // window.addEventListener('resize', this.handleResize);
         

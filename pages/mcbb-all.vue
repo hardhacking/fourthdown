@@ -3,8 +3,8 @@
       <Title>Live Men's March Madness Projections - ESPN Analytics</Title>
       <Meta property="og:title" content="Live Men's March Madness Projections - ESPN Analytics"/>
       <Meta property="og:site_name" content="Live Men's March Madness Projections - ESPN Analytics" />
-      <Meta property="og:url" content="https://www.espnanalytics.com/mcbbAll" />
-      <Meta name="twitter:url" content="https://www.espnanalytics.com/mcbbAll" />
+      <Meta property="og:url" content="https://www.espnanalytics.com/mcbb-all" />
+      <Meta name="twitter:url" content="https://www.espnanalytics.com/mcbb-all" />
       <Meta name="twitter:title" content="Live Men's March Madness Projections - ESPN Analytics"/>
       <Meta name="title" content="Live Men's March Madness Projections - ESPN Analytics"/>
     </Head>
@@ -33,8 +33,6 @@
   // import { server } from "@/utils/server.js";
   
   export default {
-    // name: 'MCBBProj',
-    // title: 'ESPN Analytics: Men\'s Tournament',
     data() {
       return {
         table: [],
@@ -437,9 +435,9 @@
         const currRoute = this.$route.name;
   
         if (currRoute.substring(0, 1) == 'w') {
-          return '/wcbbGames';
+          return '/wcbb-games';
         } else {
-          return '/mcbbGames';
+          return '/mcbb-games';
         }
   
       },
@@ -457,9 +455,9 @@
         const currRoute = this.$route.name;
   
         if (currRoute.substring(0, 1) == 'w') {
-          return '/wcbbAll';
+          return '/wcbb-all';
         } else {
-          return '/mcbbAll';
+          return '/mcbb-all';
         }
   
       },
@@ -467,9 +465,9 @@
         const currRoute = this.$route.name;
   
         if (currRoute.substring(0, 1) == 'w') {
-          return '/mcbbAll';
+          return '/mcbb-all';
         } else {
-          return '/wcbbAll';
+          return '/wcbb-all';
         }
       },
       menuClass1() {

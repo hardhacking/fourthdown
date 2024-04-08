@@ -3,8 +3,8 @@
     <Title>Live Men's March Madness Win Probabilities - ESPN Analytics</Title>
     <Meta property="og:title" content="Live Men's March Madness Win Probabilities - ESPN Analytics"/>
     <Meta property="og:site_name" content="Live Men's March Madness Win Probabilities - ESPN Analytics" />
-    <Meta property="og:url" content="https://www.espnanalytics.com/mcbbGames" />
-    <Meta name="twitter:url" content="https://www.espnanalytics.com/mcbbGames" />
+    <Meta property="og:url" content="https://www.espnanalytics.com/mcbb-games" />
+    <Meta name="twitter:url" content="https://www.espnanalytics.com/mcbb-games" />
     <Meta name="twitter:title" content="Live Men's March Madness Win Probabilities - ESPN Analytics"/>
     <Meta name="title" content="Live Men's March Madness Win Probabilities - ESPN Analytics"/>
   </Head>
@@ -89,8 +89,6 @@
   import Chart from 'chart.js/auto'
 
   export default {
-    // name: 'MCBBGames',
-    // title: 'ESPN Analytics: Men\'s Games',
     data() {
 
       this.live_chartsArr = [];
@@ -1811,9 +1809,9 @@
         const currRoute = this.$route.name;
   
         if (currRoute.substring(0, 1) == 'w') {
-          return '/wcbbGames';
+          return '/wcbb-games';
         } else {
-          return '/mcbbGames';
+          return '/mcbb-games';
         }
   
       },
@@ -1831,9 +1829,9 @@
         const currRoute = this.$route.name;
   
         if (currRoute.substring(0, 1) == 'w') {
-          return '/wcbbAll';
+          return '/wcbb-all';
         } else {
-          return '/mcbbAll';
+          return '/mcbb-all';
         }
   
       },
@@ -1841,9 +1839,9 @@
         const currRoute = this.$route.name;
   
         if (currRoute.substring(0, 1) == 'w') {
-          return '/mcbbGames';
+          return '/mcbb-games';
         } else {
-          return '/wcbbGames';
+          return '/wcbb-games';
         }
       },
       menuClass1() {

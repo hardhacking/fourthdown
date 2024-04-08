@@ -150,7 +150,7 @@ import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { InformationCircleIcon, PresentationChartLineIcon, ForwardIcon, ChartBarIcon, 
          ArrowTrendingUpIcon } from '@heroicons/vue/24/outline'
 // import {} from '@heroicons/vue/20/solid'
-const navigation = [, 
+const navigation = [ 
   { name: 'Draft Day Predictor', href: '/draft-predictor'},
   { name: 'Draft Simulator', href: '/draft-sim'},
   { name: 'March Madness', href: '/wcbb-games'},

@@ -111,11 +111,11 @@
       // window.addEventListener('resize', this.setZoomLevel)
   
       this.loadPage();
-      if (this.chosenRound == 6) {
-        this.timer = setInterval(() => {
-          this.updatePageTemp()
-        }, 5000)
-      }
+      // if (this.chosenRound == 6) {
+      //   this.timer = setInterval(() => {
+      //     this.updatePageTemp()
+      //   }, 5000)
+      // }
     },
     methods: {
       async loadPage() {

@@ -48,7 +48,7 @@
           </Popover>
           <Popover class="relative">
             <PopoverButton class="inline-flex items-center gap-x-1 text-lg font-semibold leading-6 text-gray-900 focus-visible:outline-none">
-              <span>March Maddness</span>            
+              <span>March Madness</span>            
             </PopoverButton>
             <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
               <PopoverPanel class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">

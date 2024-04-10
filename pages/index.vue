@@ -34,14 +34,16 @@
               <a href="/features" class="pt-4 temp:pt-0 text-sm font-semibold leading-6 text-gray-900">Other ESPN Analytics Features <span aria-hidden="true">→</span></a>
             </div>
           </div>
-          <div class="mt-16 flow-root sm:mt-24">
-            <div class="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-              <a href="https://espnanalytics.com/draft-sim"><img src="../assets/sim_screenshot.png" alt="App screenshot" width="2432" height="1442" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
+          <div class="flex flex-wrap justify-between items-center">
+            <div class="mt-16 flow-root sm:mt-24 width-calc">
+              <div class="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+                <a href="https://espnanalytics.com/draft-sim"><img src="../assets/sim_screenshot.png" alt="App screenshot" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
+              </div>
             </div>
-          </div>
-          <div class="mt-16 flow-root sm:mt-24">
-            <div class="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-              <a href="https://espnanalytics.com/draft-predictor"><img src="../assets/ddp_screenshot.png" alt="App screenshot" width="2432" height="1442" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
+            <div class="mt-16 flow-root sm:mt-24 width-calc">
+              <div class="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+                <a href="https://espnanalytics.com/draft-predictor"><img src="../assets/ddp_screenshot.png" alt="App screenshot" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
+              </div>
             </div>
           </div>
         </div>
@@ -52,3 +54,11 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+@media only screen and (min-width: 640px) {
+  .width-calc {
+    width: calc(50% - 40px);
+  }
+}
+</style>

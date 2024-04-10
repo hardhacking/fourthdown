@@ -22,20 +22,20 @@
             <p class="mt-6 text-lg leading-8 text-gray-600">Models and data visualization from ESPN Analytics! Run a simulation of the NFL Draft, look at the Draft Day Predictor, compare receiver tracking metrics and more.</p>
             <div class="mt-10 flex items-center justify-center gap-x-6 flex-wrap">
               <div class="flex gap-x-6">
-                <a href="/draft-sim" class="rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL Draft Simulator</a>
-                <a href="/draft-predictor" class="rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL Draft Predictor</a>
+                <a href="https://espnanalytics.com/draft-sim" class="rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL Draft Simulator</a>
+                <a href="https://espnanalytics.com/draft-predictor" class="rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL Draft Predictor</a>
               </div>
               <a href="/features" class="pt-4 temp:pt-0 text-sm font-semibold leading-6 text-gray-900">Other ESPN Analytics Features <span aria-hidden="true">→</span></a>
             </div>
           </div>
           <div class="mt-16 flow-root sm:mt-24">
             <div class="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-              <a href="/draft-sim"><img src="../assets/sim_screenshot.png" alt="App screenshot" width="2432" height="1442" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
+              <a href="https://espnanalytics.com/draft-sim"><img src="../assets/sim_screenshot.png" alt="App screenshot" width="2432" height="1442" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
             </div>
           </div>
           <div class="mt-16 flow-root sm:mt-24">
             <div class="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-              <a href="/draft-predictor"><img src="../assets/ddp_screenshot.png" alt="App screenshot" width="2432" height="1442" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
+              <a href="https://espnanalytics.com/draft-predictor"><img src="../assets/ddp_screenshot.png" alt="App screenshot" width="2432" height="1442" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
             </div>
           </div>
         </div>

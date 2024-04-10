@@ -26,6 +26,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        'Sports-Gray-60': '#6C6E6F',
         'espnred-50': 'rgba(195, 30, 50, 0.1)',
         'espnred-600': 'rgba(195,30,50, 0.9)',
         'espnred': 'rgb(195,30,50)',
@@ -46,6 +47,7 @@ export default {
       screens: {
         'xxs': '385px',
         'xs': '480px',
+        'temp': '640px',
         // => @media (min-width: 385px) { ... }
       }
     },

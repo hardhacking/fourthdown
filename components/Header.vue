@@ -1,5 +1,5 @@
 <template>
-    <header class="absolute inset-x-0 top-0 z-20">
+    <header class="absolute inset-x-0 top-0 z-20 border-b border-[#9D9E9F]">
       <nav class="flex items-center justify-between p-6 lg:px-8">
         <div class="flex lg:flex-1">
           <a href="/" class="-m-1.5 p-1.5">
@@ -15,7 +15,7 @@
           </button>
         </div>
         <div class="hidden lg:flex lg:gap-x-12 lg:items-center">
-          <Popover class="relative">
+          <Popover class="relative px-10 w-[170px] text-center">
             <PopoverButton class="inline-flex items-center gap-x-1 text-lg font-semibold leading-6 text-gray-900 focus-visible:outline-none">
               <span>NFL Draft</span>            
             </PopoverButton>
@@ -27,7 +27,7 @@
                       <div class="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                         <component :is="item.icon" class="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
                       </div>
-                      <div>
+                      <div class="w-[316px]">
                         <a :href="item.href" class="font-semibold text-gray-900">
                           {{ item.name }}
                           <span class="absolute inset-0" ></span>
@@ -46,9 +46,9 @@
               </PopoverPanel>
             </transition>
           </Popover>
-          <Popover class="relative">
+          <Popover class="relative w-[170px] text-center">
             <PopoverButton class="inline-flex items-center gap-x-1 text-lg font-semibold leading-6 text-gray-900 focus-visible:outline-none">
-              <span>March Madness</span>            
+              <span>Everything Else</span>            
             </PopoverButton>
             <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
               <PopoverPanel class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
@@ -58,7 +58,7 @@
                       <div class="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                         <component :is="item.icon" class="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
                       </div>
-                      <div>
+                      <div class="w-[316px]">
                         <a :href="item.href" class="font-semibold text-gray-900">
                           {{ item.name }}
                           <span class="absolute inset-0" ></span>
@@ -77,7 +77,7 @@
               </PopoverPanel>
             </transition>
           </Popover>
-          <Popover class="relative">
+          <!-- <Popover class="relative w-[170px] text-center">
             <PopoverButton class="inline-flex items-center gap-x-1 text-lg font-semibold leading-6 text-gray-900 focus-visible:outline-none">
               <span>Other NFL</span>            
             </PopoverButton>
@@ -107,7 +107,7 @@
                 </div>
               </PopoverPanel>
             </transition>
-          </Popover>
+          </Popover> -->
           <!-- <a v-for="item in navigation" :key="item.name" :href="item.href" class="text-lg font-semibold leading-6 text-gray-900">{{ item.name }}</a> -->
         </div>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -166,6 +166,9 @@ const mcbb = [
   { name: 'NFL Draft Simulator', description: 'Be the GM and run a full simulation of the NFL Draft, make picks, trades and more', href: '/draft-sim', icon: ForwardIcon }
 ]
 const wcbb = [
+  { name: 'Receiver Tracking Metrics', description: 'Evaluate pass catchers a number of ways', href: '/rtm', icon: CubeTransparentIcon },
+  { name: '4th Downs', description: 'See 4th down decision breakdowns', href: '/decision', icon: InformationCircleIcon },
+  { name: 'Live Draft Pick Chances', description: "Live chances at a top 5 pick during Week 18", href: '/draft-order', icon: PresentationChartLineIcon },
   { name: 'Women\'s Games', description: 'Full win probability wall for all women\'s games', href: '/wcbb-games', icon: ArrowTrendingUpIcon },
   { name: 'Women\'s Projections', description: 'Table showing live chances to advance to each round', href: '/wcbb-all', icon: ChartBarIcon },
   { name: 'Men\'s Games', description: 'Full win probability wall for all men\'s games', href: '/mcbb-games', icon: ArrowTrendingUpIcon },

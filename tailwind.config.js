@@ -47,7 +47,7 @@ export default {
       screens: {
         'xxs': '385px',
         'xs': '480px',
-        'temp': '640px',
+        'temp': '705px',
         // => @media (min-width: 385px) { ... }
       }
     },

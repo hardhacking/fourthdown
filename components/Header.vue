@@ -23,7 +23,7 @@
               <PopoverPanel class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
                 <div class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
                   <div class="p-4">
-                    <div v-for="item in mcbb" :key="item.name" class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                    <div v-for="item in mcbb" :key="item.name" class="group relative flex items-center gap-x-6 rounded-lg p-4 hover:bg-gray-50">
                       <div class="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                         <component :is="item.icon" class="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
                       </div>
@@ -148,13 +148,13 @@ import { Dialog, DialogPanel } from '@headlessui/vue'
 import { Bars3Icon, CubeTransparentIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { InformationCircleIcon, PresentationChartLineIcon, ForwardIcon, ChartBarIcon, 
-         ArrowTrendingUpIcon } from '@heroicons/vue/24/outline'
+         ArrowTrendingUpIcon, ListBulletIcon } from '@heroicons/vue/24/outline'
 // import {} from '@heroicons/vue/20/solid'
 const navigation = [ 
+  { name: 'Mock Draft Builder', href: '/mock-draft'},
   { name: 'Draft Day Predictor', href: '/draft-predictor'},
   { name: 'Draft Simulator', href: '/draft-sim'},
-  { name: 'March Madness', href: '/wcbb-games'},
-  { name: 'RTMs', href: '/rtm' }
+  { name: 'Everything Else', href: '/features'}
 ]
 const nfl = [
   { name: 'Receiver Tracking Metrics', description: 'Evaluate pass catchers a number of ways', href: '/rtm', icon: CubeTransparentIcon },
@@ -162,6 +162,7 @@ const nfl = [
   { name: 'Live Draft Pick Chances', description: "Live chances at a top 5 pick during Week 18", href: '/draft-order', icon: PresentationChartLineIcon },
 ]
 const mcbb = [
+  { name: 'NFL Mock Draft Builder', description: 'Be the GM for every team in the NFL Draft, make picks, trades and more', href: '/mock-draft', icon: ListBulletIcon },
   { name: 'NFL Draft Day Predictor', description: 'Projections for how the NFL Draft will unfold', href: '/draft-predictor', icon: ChartBarIcon },
   { name: 'NFL Draft Simulator', description: 'Be the GM and run a full simulation of the NFL Draft, make picks, trades and more', href: '/draft-sim', icon: ForwardIcon }
 ]

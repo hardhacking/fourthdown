@@ -11,11 +11,11 @@
   <div class="min-h-screen bg-espngray-100 pt-12">
     <Header></Header>
     <div class="relative flex items-center justify-center w-full p-5 pt-12">
-      <button type="button" @click="navigateTo('/decision')" class="hidden xxs:flex gap-2 items-center absolute lg:top-10 lg:left-10 top-5 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+      <button type="button" @click="navigateTo('/decision')" class="hidden xxs:flex gap-2 items-center absolute lg:top-12 lg:left-10 top-12 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
         <ArrowLeftIcon class="w-4 h-4" />
         Back
       </button>
-      <button type="button" @click="navigateTo('/decision')" class="xxs:hidden flex gap-2 items-center absolute lg:top-10 lg:left-10 top-5 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+      <button type="button" @click="navigateTo('/decision')" class="xxs:hidden flex gap-2 items-center absolute lg:top-12 lg:left-10 top-12 left-5 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
         <ArrowLeftIcon class="w-4 h-4" />
       </button>
       <!-- <img src="../../assets/logo.png" @click="navigateTo('/')" class="h-12 xxs:h-20 cursor-pointer" alt=""> -->

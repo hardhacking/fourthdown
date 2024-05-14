@@ -36,12 +36,6 @@
                       </div>
                     </div>
                   </div>
-                  <div class="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                    <a v-for="item in callsToAction" :key="item.name" :href="item.href" class="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100">
-                      <component :is="item.icon" class="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-                      {{ item.name }}
-                    </a>
-                  </div>
                 </div>
               </PopoverPanel>
             </transition>
@@ -66,12 +60,6 @@
                         <p class="mt-1 text-gray-600">{{ item.description }}</p>
                       </div>
                     </div>
-                  </div>
-                  <div class="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                    <a v-for="item in callsToAction" :key="item.name" :href="item.href" class="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100">
-                      <component :is="item.icon" class="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-                      {{ item.name }}
-                    </a>
                   </div>
                 </div>
               </PopoverPanel>
@@ -149,11 +137,9 @@ import { Bars3Icon, CubeTransparentIcon, XMarkIcon } from '@heroicons/vue/24/out
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { InformationCircleIcon, PresentationChartLineIcon, ForwardIcon, ChartBarIcon, 
          ArrowTrendingUpIcon, ListBulletIcon } from '@heroicons/vue/24/outline'
-// import {} from '@heroicons/vue/20/solid'
+import { CalendarDaysIcon } from '@heroicons/vue/20/solid'
 const navigation = [ 
-  { name: 'Mock Draft Builder', href: '/mock-draft'},
-  { name: 'Draft Day Predictor', href: '/draft-predictor'},
-  { name: 'Draft Simulator', href: '/draft-sim'},
+  { name: 'NFL Schedule Analysis', href: '/schedule'},
   { name: 'Everything Else', href: '/features'}
 ]
 const nfl = [
@@ -167,6 +153,7 @@ const mcbb = [
   { name: 'NFL Draft Simulator', description: 'Be the GM and run a full simulation of the NFL Draft, make picks, trades and more', href: '/draft-sim', icon: ForwardIcon }
 ]
 const wcbb = [
+  { name: 'NFL Schedule Analysis', description: 'How does the NFL schedule impact each team?', href: '/schedule', icon: CalendarDaysIcon },
   { name: 'Receiver Tracking Metrics', description: 'Evaluate pass catchers a number of ways', href: '/rtm', icon: CubeTransparentIcon },
   { name: '4th Downs', description: 'See 4th down decision breakdowns', href: '/decision', icon: InformationCircleIcon },
   { name: 'Live Draft Pick Chances', description: "Live chances at a top 5 pick during Week 18", href: '/draft-order', icon: PresentationChartLineIcon },

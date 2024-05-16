@@ -372,7 +372,7 @@
             </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
-                <img src="@/assets/schedule/WEEKS_VS_OPPONENT_OFF_BYE_AFC_East.jpg">
+                <img src="@/assets/schedule/GAMES_VS_OPPONENT_OFF_BYE_AFC_East.jpg">
             </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
@@ -402,7 +402,7 @@
             </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
-                <img src="@/assets/schedule/WEEKS_VS_OPPONENT_OFF_BYE_AFC_North.jpg">
+                <img src="@/assets/schedule/GAMES_VS_OPPONENT_OFF_BYE_AFC_North.jpg">
             </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
@@ -432,7 +432,7 @@
             </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
-                <img src="@/assets/schedule/WEEKS_VS_OPPONENT_OFF_BYE_AFC_South.jpg">
+                <img src="@/assets/schedule/GAMES_VS_OPPONENT_OFF_BYE_AFC_South.jpg">
             </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
@@ -462,7 +462,7 @@
             </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
-                <img src="@/assets/schedule/WEEKS_VS_OPPONENT_OFF_BYE_AFC_West.jpg">
+                <img src="@/assets/schedule/GAMES_VS_OPPONENT_OFF_BYE_AFC_West.jpg">
             </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
@@ -492,7 +492,7 @@
             </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
-                <img src="@/assets/schedule/WEEKS_VS_OPPONENT_OFF_BYE_NFC_East.jpg">
+                <img src="@/assets/schedule/GAMES_VS_OPPONENT_OFF_BYE_NFC_East.jpg">
             </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
@@ -522,7 +522,7 @@
             </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
-                <img src="@/assets/schedule/WEEKS_VS_OPPONENT_OFF_BYE_NFC_North.jpg">
+                <img src="@/assets/schedule/GAMES_VS_OPPONENT_OFF_BYE_NFC_North.jpg">
             </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
@@ -552,7 +552,7 @@
             </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
-                <img src="@/assets/schedule/WEEKS_VS_OPPONENT_OFF_BYE_NFC_South.jpg">
+                <img src="@/assets/schedule/GAMES_VS_OPPONENT_OFF_BYE_NFC_South.jpg">
             </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
@@ -582,7 +582,7 @@
             </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
-                <img src="@/assets/schedule/WEEKS_VS_OPPONENT_OFF_BYE_NFC_West.jpg">
+                <img src="@/assets/schedule/GAMES_VS_OPPONENT_OFF_BYE_NFC_West.jpg">
             </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">

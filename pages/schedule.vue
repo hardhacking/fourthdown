@@ -40,10 +40,10 @@
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
                 <img src="@/assets/schedule/BEST_NET_REST_DIFFERENCE.jpg">
             </div>
-            <!-- <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px] 
+            <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px] 
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
-                <img src="@/assets/schedule/BEST_TRAVEL_DIFF.jpg">
-            </div> -->
+                <img src="@/assets/schedule/LEAST_NET_TRAVEL_MILES.jpg">
+            </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
                 <img src="@/assets/schedule/FEWEST_BACK-TO-BACK_ROAD_TRIPS.jpg">
@@ -128,10 +128,10 @@
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
                 <img src="@/assets/schedule/WORST_NET_REST_DIFFERENCE.jpg">
             </div>
-            <!-- <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
+            <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
-                <img src="@/assets/schedule/WORST_TRAVEL_DIFF.jpg">
-            </div> -->
+                <img src="@/assets/schedule/MOST_NET_TRAVEL_MILES.jpg">
+            </div>
         </div>
         <div class="flex flex-wrap justify-around items-center" v-else-if="selection == 'best'">
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px] 
@@ -142,10 +142,10 @@
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
                 <img src="@/assets/schedule/BEST_NET_REST_DIFFERENCE.jpg">
             </div>
-            <!-- <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px] 
+            <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px] 
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
-                <img src="@/assets/schedule/BEST_TRAVEL_DIFF.jpg">
-            </div> -->
+                <img src="@/assets/schedule/LEAST_NET_TRAVEL_MILES.jpg">
+            </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
                 <img src="@/assets/schedule/FEWEST_BACK-TO-BACK_ROAD_TRIPS.jpg">
@@ -232,10 +232,10 @@
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
                 <img src="@/assets/schedule/WORST_NET_REST_DIFFERENCE.jpg">
             </div>
-            <!-- <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
+            <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
-                <img src="@/assets/schedule/WORST_TRAVEL_DIFF.jpg">
-            </div> -->
+                <img src="@/assets/schedule/MOST_NET_TRAVEL_MILES.jpg">
+            </div>
         </div>
         <div class="flex flex-wrap justify-around items-center" v-else-if="selection == 'net'">
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px] 
@@ -306,10 +306,10 @@
             </div>
         </div>
         <div class="flex flex-wrap justify-around items-center" v-else-if="selection == 'travel'">
-            <!-- <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px] 
+            <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px] 
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
-                <img src="@/assets/schedule/BEST_TRAVEL_DIFF.jpg">
-            </div> -->
+                <img src="@/assets/schedule/LEAST_NET_TRAVEL_MILES.jpg">
+            </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
                 <img src="@/assets/schedule/LEAST_TRAVEL_MILES.jpg">
@@ -326,10 +326,10 @@
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
                 <img src="@/assets/schedule/MOST_TRAVEL_MILES.jpg">
             </div>
-            <!-- <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
+            <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
-                <img src="@/assets/schedule/WORST_TRAVEL_DIFF.jpg">
-            </div> -->
+                <img src="@/assets/schedule/MOST_NET_TRAVEL_MILES.jpg">
+            </div>
             <div class="w-72 xxs:w-96 xs:w-[450px] sm:w-[600px]
                         h-96 xxs:h-[475px] xs:h-[575px] sm:h-[750px] flex justify-center items-center">
                 <img src="@/assets/schedule/FEWEST_BACK-TO-BACK_ROAD_TRIPS.jpg">

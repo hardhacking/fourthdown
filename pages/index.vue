@@ -28,9 +28,10 @@
             <p class="mt-6 text-lg leading-8 text-gray-600">Models and data visualization from ESPN Analytics! Run a simulation of the NFL Draft, look at the Draft Day Predictor, compare receiver tracking metrics and more.</p>
             <div class="mt-10 flex items-center justify-center gap-x-6 flex-wrap">
               <div class="flex gap-x-6">
-                <a href="https://espnanalytics.com/mock-draft" class="flex items-center max-w-[120px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL Mock Draft Builder</a>
-                <a href="https://espnanalytics.com/draft-sim" class="flex items-center max-w-[120px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL Draft Simulator</a>
-                <a href="https://espnanalytics.com/draft-predictor" class="flex items-center max-w-[120px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL Draft Predictor</a>
+                <!-- <a href="/schedule" class="flex items-center max-w-[200px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL Schedule Analysis</a> -->
+                <a href="https://espnanalytics.com/nba-draft-sim" class="flex items-center max-w-[120px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NBA Draft Simulator</a>
+                <a href="https://espnanalytics.com/nba-draft-predictor" class="flex items-center max-w-[120px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NBA Draft Predictor</a>
+                <a href="https://espnanalytics.com/nba-mock-draft" class="flex items-center max-w-[120px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NBA Mock Draft Builder</a>
               </div>
               <a href="/features" class="pt-4 temp:pt-0 text-sm font-semibold leading-6 text-gray-900">Other ESPN Analytics Features <span aria-hidden="true">→</span></a>
             </div>
@@ -38,12 +39,12 @@
           <div class="flex flex-wrap justify-between items-center">
             <div class="mt-16 flow-root sm:mt-24 width-calc">
               <div class="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                <a href="https://espnanalytics.com/draft-sim"><img src="../assets/sim_screenshot.png" alt="App screenshot" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
+                <a href="https://espnanalytics.com/nba-draft-sim"><img src="../assets/nba_sim_screenshot.png" alt="App screenshot" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
               </div>
             </div>
             <div class="mt-16 flow-root sm:mt-24 width-calc">
               <div class="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                <a href="https://espnanalytics.com/draft-predictor"><img src="../assets/ddp_screenshot.png" alt="App screenshot" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
+                <a href="https://espnanalytics.com/nba-draft-predictor"><img src="../assets/nba_ddp_screenshot.png" alt="App screenshot" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
               </div>
             </div>
           </div>

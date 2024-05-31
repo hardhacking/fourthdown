@@ -17,7 +17,7 @@
         <div class="hidden lg:flex lg:gap-x-12 lg:items-center">
           <Popover class="relative px-10 w-[170px] text-center">
             <PopoverButton class="inline-flex items-center gap-x-1 text-lg font-semibold leading-6 text-gray-900 focus-visible:outline-none">
-              <span>NFL Draft</span>            
+              <span>NBA Draft</span>            
             </PopoverButton>
             <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
               <PopoverPanel class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
@@ -36,12 +36,6 @@
                       </div>
                     </div>
                   </div>
-                  <div class="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                    <a v-for="item in callsToAction" :key="item.name" :href="item.href" class="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100">
-                      <component :is="item.icon" class="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-                      {{ item.name }}
-                    </a>
-                  </div>
                 </div>
               </PopoverPanel>
             </transition>
@@ -53,7 +47,7 @@
             <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
               <PopoverPanel class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
                 <div class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
-                  <div class="p-4">
+                  <div class="p-4 max-h-[450px] overflow-y-auto">
                     <div v-for="item in wcbb" :key="item.name" class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
                       <div class="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                         <component :is="item.icon" class="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
@@ -66,12 +60,6 @@
                         <p class="mt-1 text-gray-600">{{ item.description }}</p>
                       </div>
                     </div>
-                  </div>
-                  <div class="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                    <a v-for="item in callsToAction" :key="item.name" :href="item.href" class="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100">
-                      <component :is="item.icon" class="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-                      {{ item.name }}
-                    </a>
                   </div>
                 </div>
               </PopoverPanel>
@@ -149,24 +137,26 @@ import { Bars3Icon, CubeTransparentIcon, XMarkIcon } from '@heroicons/vue/24/out
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { InformationCircleIcon, PresentationChartLineIcon, ForwardIcon, ChartBarIcon, 
          ArrowTrendingUpIcon, ListBulletIcon } from '@heroicons/vue/24/outline'
-// import {} from '@heroicons/vue/20/solid'
+import { CalendarDaysIcon } from '@heroicons/vue/20/solid'
 const navigation = [ 
-  { name: 'Mock Draft Builder', href: '/mock-draft'},
-  { name: 'Draft Day Predictor', href: '/draft-predictor'},
-  { name: 'Draft Simulator', href: '/draft-sim'},
+  { name: 'NBA Draft', href: '/nba-draft-predictor'},
   { name: 'Everything Else', href: '/features'}
 ]
-const nfl = [
-  { name: 'Receiver Tracking Metrics', description: 'Evaluate pass catchers a number of ways', href: '/rtm', icon: CubeTransparentIcon },
-  { name: '4th Downs', description: 'See 4th down decision breakdowns', href: '/decision', icon: InformationCircleIcon },
-  { name: 'Live Draft Pick Chances', description: "Live chances at a top 5 pick during Week 18", href: '/draft-order', icon: PresentationChartLineIcon },
-]
+// const nfl = [
+//   { name: 'Receiver Tracking Metrics', description: 'Evaluate pass catchers a number of ways', href: '/rtm', icon: CubeTransparentIcon },
+//   { name: '4th Downs', description: 'See 4th down decision breakdowns', href: '/decision', icon: InformationCircleIcon },
+//   { name: 'Live Draft Pick Chances', description: "Live chances at a top 5 pick during Week 18", href: '/draft-order', icon: PresentationChartLineIcon },
+// ]
 const mcbb = [
-  { name: 'NFL Mock Draft Builder', description: 'Be the GM for every team in the NFL Draft, make picks, trades and more', href: '/mock-draft', icon: ListBulletIcon },
-  { name: 'NFL Draft Day Predictor', description: 'Projections for how the NFL Draft will unfold', href: '/draft-predictor', icon: ChartBarIcon },
-  { name: 'NFL Draft Simulator', description: 'Be the GM and run a full simulation of the NFL Draft, make picks, trades and more', href: '/draft-sim', icon: ForwardIcon }
+  { name: 'NBA Draft Simulator', description: 'Be the GM and run a full simulation of the NFL Draft, make picks, trades and more', href: '/nba-draft-sim', icon: ForwardIcon },
+  { name: 'NBA Draft Day Predictor', description: 'Projections for how the NFL Draft will unfold', href: '/nba-draft-predictor', icon: ChartBarIcon },
+  { name: 'NBA Mock Draft Builder', description: 'Be the GM for every team in the NFL Draft, make picks, trades and more', href: '/nba-mock-draft', icon: ListBulletIcon }
 ]
 const wcbb = [
+  { name: 'NFL Draft Day Predictor', description: 'Projections for how the NFL Draft will unfold', href: '/draft-predictor', icon: ChartBarIcon },
+  { name: 'NFL Draft Simulator', description: 'Be the GM and run a full simulation of the NFL Draft, make picks, trades and more', href: '/draft-sim', icon: ForwardIcon },
+  { name: 'NFL Mock Draft Builder', description: 'Be the GM for every team in the NFL Draft, make picks, trades and more', href: '/mock-draft', icon: ListBulletIcon },
+  { name: 'NFL Schedule Analysis', description: 'How does the NFL schedule impact each team?', href: '/schedule', icon: CalendarDaysIcon },
   { name: 'Receiver Tracking Metrics', description: 'Evaluate pass catchers a number of ways', href: '/rtm', icon: CubeTransparentIcon },
   { name: '4th Downs', description: 'See 4th down decision breakdowns', href: '/decision', icon: InformationCircleIcon },
   { name: 'Live Draft Pick Chances', description: "Live chances at a top 5 pick during Week 18", href: '/draft-order', icon: PresentationChartLineIcon },

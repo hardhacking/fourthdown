@@ -27,17 +27,32 @@
               <p class="mt-6 text-lg leading-8 text-gray-600">Models and data visualization from ESPN Analytics! Run a simulation of the NFL Draft, look at the Draft Day Predictor, compare receiver tracking metrics and more.</p>
               <div class="mt-10 flex items-center justify-center gap-x-6 flex-wrap">
                 <div class="flex gap-x-1 gap-y-4 sm:gap-6 flex-wrap justify-center">
-                  <a href="/schedule" class="flex items-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL Schedule Analysis</a>
-                  <a href="https://espnanalytics.com/mock-draft" class="flex items-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL Mock Draft Builder</a>
-                  <a href="https://espnanalytics.com/draft-sim" class="flex items-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL Draft Simulator</a>
-                  <a href="https://espnanalytics.com/draft-predictor" class="flex items-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL Draft Predictor</a>
-                  <a href="/rtm" class="w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">RTMs</a>
-                  <a href="/wcbb-games" class="w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">March Madness</a>
-                  <a href="/draft-order" class="w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">Week 18 Draft Race</a>
-                  <a href="/decision" class="w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">4th Downs</a>
-                  <a href="https://espnanalytics.com/draft-predictor/2023" class="w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">2023 Predictor</a>
-                  <a href="https://espnanalytics.com/draft-sim/2023" class="w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">2023 Simulator</a>
-                  <a href="https://espnanalytics.com/draft-predictor/2022" class="w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">2022 Predictor</a>
+                  <a href="https://espnanalytics.com/nba-mock-draft" class="flex items-center justify-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NBA Mock Draft Builder</a>
+                  <a href="https://espnanalytics.com/nba-draft-sim" class="flex items-center justify-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NBA Draft Simulator</a>
+                  <a href="https://espnanalytics.com/nba-draft-predictor" class="flex items-center justify-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NBA Draft Predictor</a>
+                  <a href="/schedule" class="flex items-center justify-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">2024 NFL Schedule Analysis</a>
+                  <a href="https://espnanalytics.com/mock-draft" class="flex items-center justify-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">2024 NFL Mock Draft Builder</a>
+                  <a href="https://espnanalytics.com/draft-sim" class="flex items-center justify-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">2024 NFL Draft Simulator</a>
+                  <a href="https://espnanalytics.com/draft-predictor" class="flex items-center justify-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">2024 NFL Draft Predictor</a>
+                  <a href="/rtm" class="flex items-center justify-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">RTMs</a>
+                  <a href="/wcbb-games" class="flex items-center justify-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">2024 March Madness</a>
+                  <a href="/draft-order" class="flex items-center justify-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">2024 Week 18 Draft Race</a>
+                  <a href="/decision" class="flex items-center justify-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">4th Downs</a>
+                  <a href="https://espnanalytics.com/draft-predictor/2023" class="flex items-center justify-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">2023 NFL Draft Predictor</a>
+                  <a href="https://espnanalytics.com/draft-sim/2023" class="flex items-center justify-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">2023 NFL Draft Simulator</a>
+                  <a href="https://espnanalytics.com/draft-predictor/2022" class="flex items-center justify-center w-[162px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">2022 NFL Draft Predictor</a>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-wrap justify-between items-center">
+              <div class="mt-8 flow-root sm:mt-12 width-calc">
+                <div class="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+                  <a href="https://espnanalytics.com/draft-sim"><img src="../assets/sim_screenshot.png" alt="App screenshot" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
+                </div>
+              </div>
+              <div class="mt-8 flow-root sm:mt-12 width-calc">
+                <div class="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+                  <a href="https://espnanalytics.com/draft-predictor"><img src="../assets/ddp_screenshot.png" alt="App screenshot" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
                 </div>
               </div>
             </div>
@@ -55,4 +70,10 @@
     </div>
   </template>
   
-  
+<style scoped>
+@media only screen and (min-width: 640px) {
+  .width-calc {
+    width: calc(50% - 40px);
+  }
+}
+</style>

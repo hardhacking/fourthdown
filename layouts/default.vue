@@ -39,6 +39,34 @@ useHead({
         {
             type: "application/ld+json",
             children: {
+                "@context": "https://schema.org",
+                "@type":    "WebSite",
+                "name":     "ESPN Analytics",
+                "alternateName": "ESPN",
+                "url":      "https://espnanalytics.com/",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://query.espnanalytics.com/search?q={search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                }     
+            }
+        }, 
+        {
+            type: "application/ld+json",
+            children: {
+                "@context": "https://schema.org",
+                "@type":    "WebSite",
+                "name":     "ESPN Analytics",
+                "alternateName": "ESPN",
+                "url":      "https://espnanalytics.com/",
+            }
+        },
+        {
+            type: "application/ld+json",
+            children: {
                 "@context": "http://schema.org",
                 "@id": "https://www.espnanalytics.com/#organization",
                 "@type": "Organization",

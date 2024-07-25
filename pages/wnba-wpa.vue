@@ -22,10 +22,10 @@
                 <div class="hidden sm:block text-xl text-center font-black text-espngray-600">Four Different Ways</div>
             </div> -->
             <div class="hidden sm:flex flex-col cursor-crosshair mb-12 mt-6">
-                <div ref="overallRef"><WNBALineScale v-if="showOverall" :arr="overall.reverse()" value="overall" title="Overall" /></div>
-                <div ref="shotsRef"><WNBALineScale v-if="showShots" :arr="shots.reverse()" value="shots_score" title="Shots" /></div>
-                <div ref="rebRef"><WNBALineScale v-if="showReb" :arr="rebs.reverse()" value="reb_score" title="Reb" /></div>
-                <div ref="astRef"><WNBALineScale v-if="showAsts" :arr="asts.reverse()" value="ast_score" title="Ast" /></div>
+                <div ref="overallRef"><WNBALineScale v-if="showOverall" :arr="overall" value="overall" title="Overall" /></div>
+                <div ref="shotsRef"><WNBALineScale v-if="showShots" :arr="shots" value="shots_score" title="Shots" /></div>
+                <div ref="rebRef"><WNBALineScale v-if="showReb" :arr="rebs" value="reb_score" title="Reb" /></div>
+                <div ref="astRef"><WNBALineScale v-if="showAsts" :arr="asts" value="ast_score" title="Ast" /></div>
             </div>
             <!-- <div class="hidden sm:block p-2 lg:p-0 max-w-5xl text-left text-xs m-auto text-espngray-600">Wide receivers and tight ends with at least 20 targets in the 2023 season are eligible for leaderboards. Running backs are not eligible, as different weights 
                 are used to construct their composite scores than wide receiver and tight end composite scores.</div> -->
@@ -821,26 +821,26 @@ export default {
                   player['gap' + value] = 0;
               }
               else {                              //window width - padding - "Title" - padding - high # - padding - low# - padding - 5 player circles - extra bit
-                  player['gap' + value] = (previous - player[value]) * (window.innerWidth - 96 - 57.5 - 10 - 34.4 - 10 - 34.4 - 12 - 64 * numUniques - 5) / gap;
+                  player['gap' + value] = (previous - player[value]) * (window.innerWidth - 96 - 57.5 - 10 - 34.4 - 10 - 34.4 - 12 - 64 * numUniques - 15) / gap;
                   previous = player[value];
               }
           })
           const final = this.mergeObjectsWithSameScore(top5, value);
           switch (value) {
               case "overall":
-                  this.overall = final;
+                  this.overall = final.reverse();
                   this.showOverall = true
                   break;
               case "shots_score":
-                  this.shots = final;
+                  this.shots = final.reverse();
                   this.showShots = true
                   break;
               case "reb_score":
-                  this.rebs = final;
+                  this.rebs = final.reverse();
                   this.showReb = true
                   break;
               case "ast_score":
-                  this.asts = final;
+                  this.asts = final.reverse();
                   this.showAsts = true
                   break;
               default:

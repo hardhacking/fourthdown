@@ -809,7 +809,7 @@ export default {
                   player['gap' + value] = 0;
               }
               else {
-                  player['gap' + value] = (previous - player[value]) * (window.innerWidth - 96 - 57.5 - 10 - 24.5 - 10 - 23.5 - 12 - 64 * numUniques - 5) / gap;
+                  player['gap' + value] = (previous - player[value]) * (window.innerWidth - 96 - 57.5 - 10 - 24.5 - 10 - 23.5 - 12 - 64 * numUniques - 15) / gap;
                   previous = player[value];
               }
           })

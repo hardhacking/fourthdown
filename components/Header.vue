@@ -153,6 +153,7 @@ const mcbb = [
   { name: 'NBA Mock Draft Builder', description: 'Be the GM for every team in the NFL Draft, make picks, trades and more', href: '/nba-mock-draft', icon: ListBulletIcon }
 ]
 const wcbb = [
+  { name: 'WNBA Player Metrics', description: 'Measuring impact for WNBA players using Win Probability Added', href: '/wnba-wpa', icon: CubeTransparentIcon },
   { name: 'NFL Draft Day Predictor', description: 'Projections for how the NFL Draft will unfold', href: '/draft-predictor', icon: ChartBarIcon },
   { name: 'NFL Draft Simulator', description: 'Be the GM and run a full simulation of the NFL Draft, make picks, trades and more', href: '/draft-sim', icon: ForwardIcon },
   { name: 'NFL Mock Draft Builder', description: 'Be the GM for every team in the NFL Draft, make picks, trades and more', href: '/mock-draft', icon: ListBulletIcon },

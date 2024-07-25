@@ -1,38 +1,36 @@
 <template>
     <Head>
-        <Title>NFL Receiver Tracking Metrics - ESPN Analytics</Title>
-        <Meta property="og:title" content="NFL Receiver Tracking Metrics - ESPN Analytics"/>
-        <Meta property="og:site_name" content="NFL Receiver Tracking Metrics - ESPN Analytics" />
-        <Meta property="og:url" content="https://www.espnanalytics.com/rtm" />
-        <Meta name="twitter:url" content="https://www.espnanalytics.com/rtm" />
-        <Meta name="twitter:title" content="NFL Receiver Tracking Metrics - ESPN Analytics"/>
-        <Meta name="title" content="NFL Receiver Tracking Metrics - ESPN Analytics"/>
+        <Title>WNBA Win Probability Added - ESPN Analytics</Title>
+        <Meta property="og:title" content="WNBA Win Probability Added - ESPN Analytics"/>
+        <Meta property="og:site_name" content="WNBA Win Probability Added - ESPN Analytics" />
+        <Meta property="og:url" content="https://www.espnanalytics.com/wnba-wpa" />
+        <Meta name="twitter:url" content="https://www.espnanalytics.com/wnba-wpa" />
+        <Meta name="twitter:title" content="WNBA Win Probability Added - ESPN Analytics"/>
+        <Meta name="title" content="WNBA Win Probability Added - ESPN Analytics"/>
     </Head>
     <div class="bg-espngray-100">
         <Header></Header>
         <div class="pt-28">
             <div class="flex flex-col items-center gap-4">
-                <div class="text-4xl font-bold text-center text-espngray-900">The Best NFL Receivers</div>
-                <div class="text-espngray-600 font-normal text-sm" v-if="weekUpdate <= 18">Updated through Week {{ weekUpdate }}</div>
-                <div class="text-espngray-600 font-normal text-sm" v-else>Updated through {{ weekUpdate2 }}</div>
-                <div class="p-2 lg:p-0 max-w-4xl text-center font-medium text-espngray-600">These ratings, updated weekly, use player-tracking data from NFL Next Gen Stats to evaluate every route a pass catcher runs and scores his performance in three phases of the
-                game, from 0 to 99<sup class="cursor-pointer" @click="clickedFootnote()">1</sup>.</div>
+                <div class="text-4xl font-bold text-center text-espngray-900">The Best WNBA Players</div>
+                <div class="text-espngray-600 font-normal text-sm">Updated through {{ dateUpdate }}</div>
+                <div class="p-2 lg:p-0 max-w-4xl text-center font-medium text-espngray-600">These ratings, updated daily, use play-by-play data from the WNBA and utilize ESPN's WNBA Win Probability model to measure how impactful a player is to her team winning based on her performance<sup class="cursor-pointer" @click="clickedFootnote()">1</sup>.</div>
             </div>
-            <div class="hidden sm:block text-xl pt-5 text-center font-bold text-espngray-900">The Top Five: Four Different Ways</div>
+            <div class="hidden sm:block text-xl pt-5 text-center font-bold text-espngray-900">The Top Five: Four Different Categories</div>
             <!-- <div class="flex flex-col justify-center pt-5">
                 <div class="hidden sm:block text-xl text-center font-black text-espngray-600">The Top Five</div>
                 <div class="hidden sm:block text-xl text-center font-black text-espngray-600">Four Different Ways</div>
             </div> -->
             <div class="hidden sm:flex flex-col cursor-crosshair mb-12 mt-6">
-                <div ref="overallRef"><LineScale v-if="showOverall" :arr="overall" value="overall" title="Overall" /></div>
-                <div ref="openRef"><LineScale v-if="showOpen" :arr="open" value="open_score" title="Open" /></div>
-                <div ref="catchRef"><LineScale v-if="showCatch" :arr="catches" value="catch_score" title="Catch" /></div>
-                <div ref="yacRef"><LineScale v-if="showYards" :arr="yards" value="yac_score" title="YAC" /></div>
+                <div ref="overallRef"><WNBALineScale v-if="showOverall" :arr="overall.reverse()" value="overall" title="Overall" /></div>
+                <div ref="shotsRef"><WNBALineScale v-if="showShots" :arr="shots.reverse()" value="shots_score" title="Shots" /></div>
+                <div ref="rebRef"><WNBALineScale v-if="showReb" :arr="rebs.reverse()" value="reb_score" title="Reb" /></div>
+                <div ref="astRef"><WNBALineScale v-if="showAsts" :arr="asts.reverse()" value="ast_score" title="Ast" /></div>
             </div>
             <!-- <div class="hidden sm:block p-2 lg:p-0 max-w-5xl text-left text-xs m-auto text-espngray-600">Wide receivers and tight ends with at least 20 targets in the 2023 season are eligible for leaderboards. Running backs are not eligible, as different weights 
                 are used to construct their composite scores than wide receiver and tight end composite scores.</div> -->
-            <div class="text-xl pt-5 text-center font-bold text-espngray-900">Where Every NFL Pass Catcher Stands</div>
-            <div class="p-2 text-center font-medium text-espngray-600">Open, Catch, YAC and Overall receiver ratings</div>
+            <div class="text-xl pt-5 text-center font-bold text-espngray-900">Where Every WNBA Player Stands</div>
+            <div class="p-2 text-center font-medium text-espngray-600">WPA Added from shots, rebounds, assists and overall</div>
             <div class="max-w-5xl m-auto">
                 <div>
                     <div class="px-4 xs:pl-8">
@@ -40,38 +38,38 @@
                             <div class="flex flex-col items-start">
                                 <div class="text-xs text-espngray-900">SHOW ME:</div>
                                 <div class="flex flex-col items-start">
-                                    <label class="text-espngray-900"><input class="mr-0.5" type="radio" name="radio_but" :value=true v-model="radioChoice" @click="updateChartSeason('2023', true)">Individual season(s)</label>
-                                    <label class="text-espngray-900"><input class="mr-0.5 text-espngray-600" type="radio" name="radio_but" :value=false v-model="radioChoice" @click="updateChartSeason('2020-23', true)">Combined seasons</label>
+                                    <label class="text-espngray-900"><input class="mr-0.5" type="radio" name="radio_but" :value=true v-model="radioChoice" @click="updateChartSeason('2024', true)">Individual season(s)</label>
+                                    <!-- <label class="text-espngray-900"><input class="mr-0.5 text-espngray-600" type="radio" name="radio_but" :value=false v-model="radioChoice" @click="updateChartSeason('2020-23', true)">Combined seasons</label> -->
                                 </div>
                             </div>
                             <div class="flex flex-col items-start" v-if="radioChoice">
                                 <div class="text-sm text-left lg:pl-1 text-espngray-900">CHOOSE INDIVIDUAL SEASON(S)</div>
                                 <div class="flex flex-wrap">
-                                    <div class="flex">
+                                    <!-- <div class="flex">
                                         <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-1" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2017</label></div>
                                         <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-2" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2018</label></div>
                                         <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-3" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2019</label></div>
                                         <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-4" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2020</label></div>
-                                    </div>
+                                    </div> -->
                                     <div class="flex">
-                                        <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-5" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2021</label></div>
-                                        <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-6" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2022</label></div>
-                                        <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-7" name="check_seas" type="checkbox" @click="updateChartSeason('check')" checked>2023</label></div>
+                                        <!-- <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-5" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2021</label></div> -->
+                                        <!-- <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-6" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2022</label></div> -->
+                                        <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-7" name="check_seas" type="checkbox" @click="updateChartSeason('check')" checked>2024</label></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="flex flex-col items-start" v-else>
                                 <div class="text-sm text-left lg:pl-1 text-espngray-900">CHOOSE COMBINED SEASONS</div>
                                 <div class="flex flex-wrap">
-                                    <div class="flex">
+                                    <!-- <div class="flex">
                                         <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2017-23')" />2017-23</label></div>
                                         <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2018-23')" />2018-23</label></div>
                                         <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2019-23')" />2019-23</label></div>
-                                    </div>
+                                    </div> -->
                                     <div class="flex">
-                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="initial-check" name="radio_seas" type="radio" @click="updateChartSeason('2020-23')" />2020-23</label></div>
-                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2021-23')" />2021-23</label></div>
-                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2022-23')" />2022-23</label></div>
+                                        <!-- <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="initial-check" name="radio_seas" type="radio" @click="updateChartSeason('2020-23')" />2020-23</label></div> -->
+                                        <!-- <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2021-23')" />2021-23</label></div> -->
+                                        <!-- <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2022-23')" />2022-23</label></div> -->
                                     </div>
                                 </div>
                             </div>
@@ -82,10 +80,12 @@
                                 <option v-for="team in teams" :value="team.tm">{{ team.team_name }}</option>
                             </select>
                             <select class="rounded-sm bg-gray-50 border border-espngray-300 text-espngray-900 text-sm focus:ring-blue-500 focus:border-blue-500" v-model="chartPos" @change="updateScatterData()">
-                                <option value="wrte">WR/TE</option>
-                                <option value="WR">WR</option>
-                                <option value="TE">TE</option>
-                                <option value="RB">RB</option>
+                                <option value="all">All</option>
+                                <option value="gf">G/F</option>
+                                <option value="fc">F/C</option>
+                                <option value="G">G</option>
+                                <option value="F">F</option>
+                                <option value="C">C</option>
                             </select>
                             <input class="rounded-sm bg-gray-50 border border-espngray-300 text-espngray-900 text-sm focus:ring-blue-500 focus:border-blue-500" type="search" placeholder="Search" v-model="searchString" @keyup="updateScatterData()" @click="handleClick()">
                         </div>
@@ -95,9 +95,9 @@
                             <div class="hidden xs:block px-1 py-1.5 m-0.5 text-espngray-900">SORT CHART: </div>
                             <div class="block xs:hidden px-1 py-1.5 m-0.5 text-espngray-900">SORT: </div>
                             <div class="flex flex-wrap">
-                                <div class="text-espngray-900 text-center cursor-pointer p-1.5 m-0.5 rounded-sm border border-espngray-900 w-16 hover:bg-espnred hover:font-semibold" :class="openBtn" @click="updateChartSort('open_score')">OPEN</div>
-                                <div class="text-espngray-900 text-center cursor-pointer p-1.5 m-0.5 rounded-sm border border-espngray-900 w-20 hover:bg-emerald-400 hover:font-semibold" :class="catchBtn" @click="updateChartSort('catch_score')">CATCH</div>
-                                <div class="text-espngray-900 text-center cursor-pointer p-1.5 m-0.5 rounded-sm border border-espngray-900 w-14 hover:bg-espncyan-200 hover:font-semibold" :class="yacBtn" @click="updateChartSort('yac_score')">YAC</div>
+                                <div class="text-espngray-900 text-center cursor-pointer p-1.5 m-0.5 rounded-sm border border-espngray-900 w-16 hover:bg-espnred hover:font-semibold" :class="shotsBtn" @click="updateChartSort('shots_score')">SHOTS</div>
+                                <div class="text-espngray-900 text-center cursor-pointer p-1.5 m-0.5 rounded-sm border border-espngray-900 w-20 hover:bg-emerald-400 hover:font-semibold" :class="rebBtn" @click="updateChartSort('reb_score')">REB</div>
+                                <div class="text-espngray-900 text-center cursor-pointer p-1.5 m-0.5 rounded-sm border border-espngray-900 w-14 hover:bg-espncyan-200 hover:font-semibold" :class="astBtn" @click="updateChartSort('ast_score')">AST</div>
                                 <div class="text-espngray-900 text-center block xs:hidden cursor-pointer p-1.5 m-0.5 rounded-sm border border-espngray-900 w-14 hover:bg-espngray-600 hover:font-semibold hover:text-espngray-100" :class="overallBtn" @click="updateChartSort('overall')">OVR</div>
                                 <div class="text-espngray-900 text-center hidden xs:block cursor-pointer p-1.5 m-0.5 rounded-sm border border-espngray-900 w-24 hover:bg-espngray-600 hover:font-semibold hover:text-espngray-100" :class="overallBtn" @click="updateChartSort('overall')">OVERALL</div>
                             </div>
@@ -121,7 +121,7 @@
                         <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div class="inline-block min-w-full py-2 align-middle">
                                 <div class="flex justify-center">
-                                    <table class="min-w-[32%] mt-4 xs:mt-[1.075em] divide-y divide-gray-900">
+                                    <table class="min-w-[45%] mt-4 xs:mt-[1.075em] divide-y divide-gray-900">
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="py-1 pl-0.5 xs:pl-1 pr-0.5" :class="nmHeader" @click="sortFromTable('full_nm')"></th>
@@ -143,41 +143,41 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <table class="min-w-[32%] divide-y divide-gray-900 hidden lg:table">
-                                        <caption class="text-xs font-semibold text-espngray-900">RECEIVING STATS</caption>
+                                    <table class="min-w-[10%] mt-4 xs:mt-[1.075em] divide-y divide-gray-900 hidden lg:table">
+                                        <!-- <caption class="text-xs font-semibold text-espngray-900">RECEIVING STATS</caption> -->
                                         <thead>
                                             <tr>
-                                                <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" :class="ydsHeader" @click="sortFromTable('yds')">YDS</th>
-                                                <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" :class="rtsHeader" @click="sortFromTable('rtm_routes')">ROUTES</th>
-                                                <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" :class="tgtsHeader" @click="sortFromTable('rtm_targets')">TGTS</th>
-                                                <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" :class="ydsPerRtHeader" @click="sortFromTable('yds_per_rt')">YDS/RT</th>
+                                                <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" :class="ydsHeader" @click="sortFromTable('wpa_games')">G</th>
+                                                <!-- <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" :class="rtsHeader" @click="sortFromTable('rtm_routes')">ROUTES</th> -->
+                                                <!-- <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" :class="tgtsHeader" @click="sortFromTable('rtm_targets')">TGTS</th> -->
+                                                <!-- <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" :class="ydsPerRtHeader" @click="sortFromTable('yds_per_rt')">YDS/RT</th> -->
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white">
                                             <tr v-for="player in tableArr" class="odd:bg-espngray-100 even:bg-gray-50">
-                                                <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack">{{ player.yds }}</td>
-                                                <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack">{{ player.rtm_routes }}</td>
-                                                <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack">{{ player.rtm_targets }}</td>
-                                                <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack">{{ (player.yds / player.rtm_routes).toFixed(1) }}</td>
+                                                <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack">{{ player.wpa_games }}</td>
+                                                <!-- <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack">{{ player.rtm_routes }}</td> -->
+                                                <!-- <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack">{{ player.rtm_targets }}</td> -->
+                                                <!-- <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack">{{ (player.yds / player.rtm_routes).toFixed(1) }}</td> -->
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <table class="min-w-[32%] divide-y divide-gray-900">
-                                        <caption class="text-[10px] xs:text-xs font-semibold text-espngray-900">RECEIVING RATINGS</caption>
+                                    <table class="min-w-[45%] mt-4 xs:mt-[1.075em] divide-y divide-gray-900">
+                                        <!-- <caption class="text-[10px] xs:text-xs font-semibold text-espngray-900">RECEIVING RATINGS</caption> -->
                                         <thead>
                                             <tr>
-                                                <th scope="col" class="px-1 xs:px-2 py-1 text-right text-[10px] xs:text-xs w-1/4 font-normal text-espnblack hover:bg-espnred hover:cursor-pointer" :class="openHeader" @click="updateChartSort('open_score')">OPEN</th>
-                                                <th scope="col" class="px-1 xs:px-2 py-1 text-right text-[10px] xs:text-xs w-1/4 font-normal text-espnblack hover:bg-emerald-400 hover:cursor-pointer" :class="catchHeader" @click="updateChartSort('catch_score')">CATCH</th>
-                                                <th scope="col" class="px-1 xs:px-2 py-1 text-right text-[10px] xs:text-xs w-1/4 font-normal text-espnblack hover:bg-espncyan-200 hover:cursor-pointer" :class="yacHeader" @click="updateChartSort('yac_score')">YAC</th>
+                                                <th scope="col" class="px-1 xs:px-2 py-1 text-right text-[10px] xs:text-xs w-1/4 font-normal text-espnblack hover:bg-espnred hover:cursor-pointer" :class="shotsHeader" @click="updateChartSort('shots_score')">SHOTS</th>
+                                                <th scope="col" class="px-1 xs:px-2 py-1 text-right text-[10px] xs:text-xs w-1/4 font-normal text-espnblack hover:bg-emerald-400 hover:cursor-pointer" :class="rebHeader" @click="updateChartSort('reb_score')">REB</th>
+                                                <th scope="col" class="px-1 xs:px-2 py-1 text-right text-[10px] xs:text-xs w-1/4 font-normal text-espnblack hover:bg-espncyan-200 hover:cursor-pointer" :class="astHeader" @click="updateChartSort('ast_score')">AST</th>
                                                 <th scope="col" class="px-1 xs:px-2 py-1 text-center text-[10px] xs:text-xs w-1/4 font-normal text-espnblack hover:bg-espngray-600 hover:cursor-pointer hover:text-espngray-100" :class="overallHeader" @click="updateChartSort('overall')">OVERALL</th>
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white">
                                             <tr v-for="player in tableArr" class="odd:bg-espngray-100 even:bg-gray-50">
-                                                <td :style="{ '--tw-bg-opacity': `${player.open_score/100}`}" class="whitespace-nowrap text-right px-1 xs:px-2 py-4 w-1/4 font-semibold text-xs xs:text-sm text-espnblack bg-espnred">{{ player.open_score }}</td>
-                                                <td :style="{ '--tw-bg-opacity': `${player.catch_score/100}`}" class="whitespace-nowrap text-right px-1 xs:px-2 py-4 w-1/4 font-semibold text-xs xs:text-sm text-espnblack bg-emerald-400">{{ player.catch_score }}</td>
-                                                <td :style="{ '--tw-bg-opacity': `${player.yac_score/100}`}" class="whitespace-nowrap text-right px-1 xs:px-2 py-4 w-1/4 font-semibold text-xs xs:text-sm text-espnblack bg-espncyan-200">{{ player.yac_score }}</td>
-                                                <td :style="{ '--tw-bg-opacity': `${player.overall/100}`}" class="whitespace-nowrap text-right px-1 xs:px-2 py-4 w-1/4 font-bold text-xs xs:text-sm text-espnblack bg-espngray-600">{{ player.overall }}</td>
+                                                <td :style="{ '--tw-bg-opacity': `${player.shots_score_z/100}`}" class="whitespace-nowrap text-right px-1 xs:px-2 py-4 w-1/4 font-semibold text-xs xs:text-sm text-espnblack bg-espnred">{{ player.shots_score }}</td>
+                                                <td :style="{ '--tw-bg-opacity': `${player.reb_score_z/100}`}" class="whitespace-nowrap text-right px-1 xs:px-2 py-4 w-1/4 font-semibold text-xs xs:text-sm text-espnblack bg-emerald-400">{{ player.reb_score }}</td>
+                                                <td :style="{ '--tw-bg-opacity': `${player.ast_score_z/100}`}" class="whitespace-nowrap text-right px-1 xs:px-2 py-4 w-1/4 font-semibold text-xs xs:text-sm text-espnblack bg-espncyan-200">{{ player.ast_score }}</td>
+                                                <td :style="{ '--tw-bg-opacity': `${player.overall_z/100}`}" class="whitespace-nowrap text-right px-1 xs:px-2 py-4 w-1/4 font-bold text-xs xs:text-sm text-espnblack bg-espngray-600">{{ player.overall }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -187,8 +187,8 @@
                     </div>
                 </div>
             </div>
-            <div class="p-2 lg:p-0 lg:mt-4 max-w-5xl mx-auto py-5 text-left text-xs text-espngray-600">Wide receivers and tight ends with at least {{ minWrTgt }} targets and running backs with at least {{ minRbTgt }} in the 2023 season are eligible for a score. Only WR/TE are eligible for the Top 5 leaderboard graphic. For prior seasons, all players with at least 48 targets are included.</div>
-            <div class="p-2 lg:p-0 lg:pb-4 lg:mt-4 max-w-5xl mx-auto pt-5 pb-10 text-left text-xs text-espngray-600"><sup>1</sup><a class="text-blue-600 underline" href="https://www.espn.com/nfl/story/_/id/34649390/espn-receiver-tracking-metrics-how-new-nfl-stats-work-open-catch-yac-scores" target="_blank">Read more</a> about how ESPN Analytics's receiver ratings work.</div>
+            <!-- <div class="p-2 lg:p-0 lg:mt-4 max-w-5xl mx-auto py-5 text-left text-xs text-espngray-600">Wide receivers and tight ends with at least {{ minWrTgt }} targets and running backs with at least {{ minRbTgt }} in the 2023 season are eligible for a score. Only WR/TE are eligible for the Top 5 leaderboard graphic. For prior seasons, all players with at least 48 targets are included.</div> -->
+            <div class="p-2 lg:p-0 lg:pb-4 lg:mt-4 max-w-5xl mx-auto pt-5 pb-10 text-left text-xs text-espngray-600"><sup>1</sup>Win Probability represents the chance to win at any point in the game. Win Probability Added (WPA) captures how much probability goes up or down when a player is on the court and gives them approximate credit.</div>
             <!-- <div class="footnote">Design ideas from <a href="https://fivethirtyeight.com/contributors/ryan-best/" target="_blank">Ryan Best</a>. Statistical model by Brian Burke. Additional contributions by <a href="https://benjaminharden.vercel.app/" target="_blank">Ben Harden</a>, Henry Gargiulo, Matt Morris and Chris Harden.</div> -->
         </div>
     </div>
@@ -206,34 +206,34 @@ export default {
           seasonArr: [],
           chartArr: [],
           overall: [],
-          open: [],
-          catches: [],
-          yards: [],
+          shots: [],
+          rebs: [],
+          asts: [],
           teams: [],
           tableArr: [],
           json: [],
           response: null,
 
           showOverall: false,
-          showOpen: false,
-          showCatch: false,
-          showYards: false,
+          showShots: false,
+          showReb: false,
+          showAsts: false,
 
           radioChoice: true,
-          chartSeason: '2023',
-          chartSeasons: [2023],
-          chartPos: 'wrte',
+          chartSeason: '2024',
+          chartSeasons: [2024],
+          chartPos: 'all',
           chartSort: 'overall',
           prevChartSort: -1,
           chartTeams: 'all',
           searchString: '',
-          openBtn: '',
-          catchBtn: '',
-          yacBtn: '',
+          shotsBtn: '',
+          rebBtn: '',
+          astBtn: '',
           overallBtn: 'overall_btn_click',
-          openHeader: '',
-          catchHeader: '',
-          yacHeader: '',
+          shotsHeader: '',
+          rebHeader: '',
+          astHeader: '',
           nmHeader: '',
           tmHeader: '',
           posHeader: '', 
@@ -242,42 +242,34 @@ export default {
           tgtsHeader: '',
           ydsPerRtHeader: '',
           overallHeader: 'overall_header',
-          minWrTgt: 22,
-          minRbTgt: 15,
-          weekUpdate: null,
-          weekUpdate2: null,
+          minTgt: 1,
+          dateUpdate: null,
+          dataMin: -2,
+          dataMax: 6,
       }
   },
   async mounted() {
     await this.getData();
-    this.minWrTgt = this.json.filter(f => {
-        return f.min_season == 2023 & f.max_season == 2023 & (f.position == 'WR' | f.position == 'TE')
-    })[0].min_rtm_targets
-    this.minRbTgt = this.json.filter(f => {
-        return f.min_season == 2023 & f.max_season == 2023 & (f.position == 'RB' | f.position == 'FB')
-    })[0].min_rtm_targets
+    this.minTgt = this.json[0].min_wpa_games
     const lastMod = new Date(this.response.headers['last-modified'])
-    const week0 = new Date("2023-09-05")
-    const timeDifferenceInMilliseconds = lastMod.getTime() - week0.getTime()
-    this.weekUpdate = Math.round(timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24) / 7)
-    this.weekUpdate2 = this.weekUpdate == 19 ? 'Wild Card Round' : (this.weekUpdate == 20 ? 'Divisional Round' : (this.weekUpdate == 21 ? 'Conference Championship' : 'Super Bowl'))
-      await this.getSeason(this.json);
-      
-      this.buildPage();
-      this.buildScatter();
-      window.addEventListener('resize', this.handleResize);
-      var tm = this.chartArr.map(function(i) {
-          return i.tm;
-      });
-      var team_name = this.chartArr.map(function(i) {
-          return i.team_name;
-      })
-      tm = [... new Set(tm)];
-      team_name = [... new Set(team_name)];
-      this.teams = tm.map(function(x, i) {
-          return {tm: x, team_name: team_name[i]};
-      });
-      this.teams.sort((a, b) => d3.ascending(a.team_name, b.team_name));
+    this.dateUpdate = new Date(lastMod.getTime() - 1000 * 60 * 60 * 24).toDateString()
+    await this.getSeason(this.json);
+    
+    this.buildPage();
+    this.buildScatter();
+    window.addEventListener('resize', this.handleResize);
+    var tm = this.chartArr.map(function(i) {
+        return i.tm;
+    });
+    var team_name = this.chartArr.map(function(i) {
+        return i.team_name;
+    })
+    tm = [... new Set(tm)];
+    team_name = [... new Set(team_name)];
+    this.teams = tm.map(function(x, i) {
+        return {tm: x, team_name: team_name[i]};
+    });
+    this.teams.sort((a, b) => d3.ascending(a.team_name, b.team_name));
   },
   methods: {
     handleClick() {
@@ -289,28 +281,43 @@ export default {
         window.scrollTo(0, document.body.scrollHeight)
     },
     async getData() {
-        this.response = await axios.get('https://nfl-player-metrics.s3.amazonaws.com/rtm/rtm_data.json');
+        this.response = await axios.get('https://nfl-player-metrics.s3.amazonaws.com/wpa/wpa_data.json');
         this.json = this.response.data;
+        var ovrOldMin = Math.min(...this.json.map(o => o.overall))
+        var ovrOldRange = Math.max(...this.json.map(o => o.overall)) - ovrOldMin
+        var shotsOldMin = Math.min(...this.json.map(o => o.shots_score))
+        var shotsOldRange = Math.max(...this.json.map(o => o.shots_score)) - shotsOldMin
+        var rebOldMin = Math.min(...this.json.map(o => o.reb_score))
+        var rebOldRange = Math.max(...this.json.map(o => o.reb_score)) - rebOldMin
+        var astOldMin = Math.min(...this.json.map(o => o.ast_score))
+        var astOldRange = Math.max(...this.json.map(o => o.ast_score)) - astOldMin
         this.json.map(player => {
             player.first_last_nm = player.first_nm.substring(0, 1) + ". " + player.last_nm;
-            player.yds_per_rt = (player.yds / player.rtm_routes).toFixed(1)
+            player.overall_z = Math.round((player.overall - ovrOldMin) * 99 / ovrOldRange)
+            player.shots_score_z = Math.round((player.shots_score - shotsOldMin) * 99 / shotsOldRange)
+            player.reb_score_z = Math.round((player.reb_score - rebOldMin) * 99 / rebOldRange)
+            player.ast_score_z = Math.round((player.ast_score - astOldMin) * 99 / astOldRange)
+            // player.yds_per_rt = (player.yds / player.rtm_routes).toFixed(1)
             return player;
         })
+        this.dataMin = Math.floor(Math.min(ovrOldMin, shotsOldMin, rebOldMin, astOldMin))
+        this.dataMax = Math.ceil(Math.max(Math.max(...this.json.map(o => o.overall)), Math.max(...this.json.map(o => o.shots_score)), 
+                                Math.max(...this.json.map(o => o.reb_score)), Math.max(...this.json.map(o => o.ast_score))))
     },
       buildScatter() {
           const ctx = document.getElementById('chart');
 
           this.getChartData(this.json);
           let overallMap = this.sortAndRankBy(this.chartArr, this.chartSort);
-          let openMap = this.sortAndRankBy(this.chartArr, this.chartSort);
-          let catchMap = this.sortAndRankBy(this.chartArr, this.chartSort);
-          let yacMap = this.sortAndRankBy(this.chartArr, this.chartSort);
+          let shotsMap = this.sortAndRankBy(this.chartArr, this.chartSort);
+          let rebMap = this.sortAndRankBy(this.chartArr, this.chartSort);
+          let astMap = this.sortAndRankBy(this.chartArr, this.chartSort);
           this.tableArr = this.chartArr.reverse();
 
           let overallArr = this.reduceToXYByMetric(overallMap, 'overall');
-          let openArr = this.reduceToXYByMetric(openMap, 'open_score');
-          let catchArr = this.reduceToXYByMetric(catchMap, 'catch_score');
-          let yacArr = this.reduceToXYByMetric(yacMap, 'yac_score');
+          let shotsArr = this.reduceToXYByMetric(shotsMap, 'shots_score');
+          let rebArr = this.reduceToXYByMetric(rebMap, 'reb_score');
+          let astArr = this.reduceToXYByMetric(astMap, 'ast_score');
           document.getElementById('chart_container').style.width = (overallArr.length + 2) * 10 + 100 + 'px';
 
           this.chart = new Chart(ctx, {
@@ -341,7 +348,7 @@ export default {
                       // spanGaps: true,
                   }, 
                   {
-                      data: openArr,
+                      data: shotsArr,
                       allData: overallMap,
                       pointRadius: 5,
                       pointHoverRadius: 8,
@@ -350,7 +357,7 @@ export default {
                       borderColor: 'rgb(195, 30, 50)',
                   }, 
                   {
-                      data: catchArr,
+                      data: rebArr,
                       allData: overallMap,
                       pointRadius: 5,
                       pointHoverRadius: 8,
@@ -359,7 +366,7 @@ export default {
                       borderColor: 'rgb(110 231 183)',
                   }, 
                   {
-                      data: yacArr,
+                      data: astArr,
                       allData: overallMap,
                       pointRadius: 5,
                       pointHoverRadius: 8,
@@ -402,11 +409,11 @@ export default {
                           if (context.datasetIndex == 0) {
                               label.push('Overall: ' + context.dataset.allData[context.dataIndex].overall);
                           } else if (context.datasetIndex == 1) {
-                              label.push('Open: ' + context.dataset.allData[context.dataIndex].open_score);
+                              label.push('Shots: ' + context.dataset.allData[context.dataIndex].shots_score);
                           } else if (context.datasetIndex == 2) {
-                              label.push('Catch: ' + context.dataset.allData[context.dataIndex].catch_score);
+                              label.push('Reb: ' + context.dataset.allData[context.dataIndex].reb_score);
                           } else {
-                              label.push('YAC: ' + context.dataset.allData[context.dataIndex].yac_score);
+                              label.push('Ast: ' + context.dataset.allData[context.dataIndex].ast_score);
                           }
                           
                           
@@ -420,14 +427,14 @@ export default {
                       y: {
                           beginAtZero: true,
                           display: true,
-                          min: 0, 
-                          max: 100,
+                          min: this.dataMin, 
+                          max: this.dataMax,
                           grid: {
                               drawTicks: false,
                           },
                           ticks: {
                               display: false,
-                              stepSize: 25,
+                              stepSize: 2,
                           },
                       },
                       x: {
@@ -467,10 +474,10 @@ export default {
                       y: {
                           beginAtZero: true,
                           display: true,
-                          min: 0, 
-                          max: 100,
+                          min: this.dataMin, 
+                          max: this.dataMax,
                           ticks: {
-                              stepSize: 25,
+                              stepSize: 2,
                           },
                           afterFit: (ctx) => {
                               ctx.width = 32;
@@ -496,24 +503,24 @@ export default {
       },
       updateScatter() {
           let overallMap = this.sortAndRankBy(this.chartArr, this.chartSort);
-          let openMap = this.sortAndRankBy(this.chartArr, this.chartSort);
-          let catchMap = this.sortAndRankBy(this.chartArr, this.chartSort);
-          let yacMap = this.sortAndRankBy(this.chartArr, this.chartSort);
+          let shotsMap = this.sortAndRankBy(this.chartArr, this.chartSort);
+          let rebMap = this.sortAndRankBy(this.chartArr, this.chartSort);
+          let astMap = this.sortAndRankBy(this.chartArr, this.chartSort);
           this.tableArr = this.chartArr.reverse();
-
+        
           let overallArr = this.reduceToXYByMetric(overallMap, 'overall');
-          let openArr = this.reduceToXYByMetric(openMap, 'open_score');
-          let catchArr = this.reduceToXYByMetric(catchMap, 'catch_score');
-          let yacArr = this.reduceToXYByMetric(yacMap, 'yac_score');
+          let shotsArr = this.reduceToXYByMetric(shotsMap, 'shots_score');
+          let rebArr = this.reduceToXYByMetric(rebMap, 'reb_score');
+          let astArr = this.reduceToXYByMetric(astMap, 'ast_score');
           document.getElementById('chart_container').style.width = (overallArr.length + 2) * 10 + 100 + 'px';
 
           this.chart.data.datasets[0].data = overallArr;
           this.chart.data.datasets[0].allData = overallMap;
-          this.chart.data.datasets[1].data = openArr;
+          this.chart.data.datasets[1].data = shotsArr;
           this.chart.data.datasets[1].allData = overallMap;
-          this.chart.data.datasets[2].data = catchArr;
+          this.chart.data.datasets[2].data = rebArr;
           this.chart.data.datasets[2].allData = overallMap;
-          this.chart.data.datasets[3].data = yacArr;
+          this.chart.data.datasets[3].data = astArr;
           this.chart.data.datasets[3].allData = overallMap;
           if (overallArr.length > 3) {
             this.chart.options.scales.x.max = overallArr.length + 1;
@@ -576,7 +583,7 @@ export default {
         return arr.reverse();
       },
       sortFromTable(value) {
-        if (value == 'yds') {
+        if (value == 'wpa_games') {
             this.nmHeader = ''
             this.tmHeader = ''
             this.posHeader = '' 
@@ -641,13 +648,13 @@ export default {
             this.tgtsHeader = ''
             this.ydsPerRtHeader = ''
         }
-        this.openBtn = '';
-        this.catchBtn = '';
-        this.yacBtn = '';
+        this.shotsBtn = '';
+        this.rebBtn = '';
+        this.astBtn = '';
         this.overallBtn = '';
-        this.openHeader = '';
-        this.catchHeader = '';
-        this.yacHeader = '';
+        this.shotsHeader = '';
+        this.rebHeader = '';
+        this.astHeader = '';
         this.overallHeader = '';
         if (this.chartSort == value) {
             this.prevChartSort = this.prevChartSort * -1;
@@ -665,8 +672,7 @@ export default {
       },
       getSeason(arr) {
           arr.forEach((player) => {
-              if (player.max_season == '2023' && player.min_season == '2023' && 
-              (player.position == 'WR' || player.position == 'TE')) {
+              if (player.max_season == '2024' && player.min_season == '2024') {
                   this.seasonArr.push(player);
               }
           });
@@ -674,17 +680,23 @@ export default {
       getChartData(arr) {
           var tmpArr = [];
           if (this.radioChoice) {
-              if (this.chartPos == 'wrte') {
+              if (this.chartPos == 'all') {
                   arr.forEach((player) => {
-                      if (player.max_season == player.min_season && this.chartSeasons.includes(player.max_season) && 
-                      player.position != 'RB' && player.position != 'FB') {
+                      if (player.max_season == player.min_season && this.chartSeasons.includes(player.max_season)) {
                           tmpArr.push(player);
                       }
                   });
-              } else if (this.chartPos == 'RB') {
+              } else if (this.chartPos == 'gf') {
+                  arr.forEach((player) => {
+                      if (player.max_season == player.min_season && this.chartSeasons.includes(player.max_season) &&
+                      (player.position == 'G' || player.position == 'F')) {
+                          tmpArr.push(player);
+                      }
+                  });
+              } else if (this.chartPos == 'fc') {
                 arr.forEach((player) => {
                     if (player.max_season == player.min_season && this.chartSeasons.includes(player.max_season) && 
-                    (player.position == 'RB' || player.position == 'FB')) {
+                    (player.position == 'F' || player.position == 'C')) {
                         tmpArr.push(player);
                     }
                 });
@@ -696,55 +708,55 @@ export default {
                       }
                   });
               }
-          } else {
-              if (this.chartSeason.length == 4 && this.chartPos == 'wrte') {
-                  arr.forEach((player) => {
-                      if (player.max_season == this.chartSeason && player.min_season == this.chartSeason && 
-                      player.position != 'RB' && player.position != 'FB') {
-                          tmpArr.push(player);
-                      }
-                  });
-              } else if (this.chartSeason.length == 4) {
-                if (this.chartPos == 'RB') {
-                    arr.forEach((player) => {
-                        if (player.max_season == this.chartSeason && player.min_season == this.chartSeason && 
-                        (player.position == 'RB' || player.position == 'FB')) {
-                            tmpArr.push(player);
-                        }
-                    });
-                } else {
-                  arr.forEach((player) => {
-                      if (player.max_season == this.chartSeason && player.min_season == this.chartSeason && 
-                      player.position == this.chartPos) {
-                          tmpArr.push(player);
-                      }
-                  });
-                }
-              } else if (this.chartPos == 'wrte') {
-                  arr.forEach((player) => {
-                      if (player.min_season == this.chartSeason.substring(0, 4) && player.max_season == '2023' && 
-                      player.position != 'RB' && player.position != 'FB') {
-                          tmpArr.push(player);
-                      }
-                  });
-              } else {
-                if (this.chartPos == 'RB') {
-                    arr.forEach((player) => {
-                        if (player.min_season == this.chartSeason.substring(0, 4) && player.max_season == '2023' && 
-                        (player.position == 'RB' || player.position == 'FB')) {
-                            tmpArr.push(player);
-                        }
-                    });
-                } else {
-                  arr.forEach((player) => {
-                      if (player.min_season == this.chartSeason.substring(0, 4) && player.max_season == '2023' && 
-                      player.position == this.chartPos) {
-                          tmpArr.push(player);
-                      }
-                  });
-                }
-              }
-          }
+          } //else {
+        //       if (this.chartSeason.length == 4 && this.chartPos == 'wrte') {
+        //           arr.forEach((player) => {
+        //               if (player.max_season == this.chartSeason && player.min_season == this.chartSeason && 
+        //               player.position != 'RB' && player.position != 'FB') {
+        //                   tmpArr.push(player);
+        //               }
+        //           });
+        //       } else if (this.chartSeason.length == 4) {
+        //         if (this.chartPos == 'RB') {
+        //             arr.forEach((player) => {
+        //                 if (player.max_season == this.chartSeason && player.min_season == this.chartSeason && 
+        //                 (player.position == 'RB' || player.position == 'FB')) {
+        //                     tmpArr.push(player);
+        //                 }
+        //             });
+        //         } else {
+        //           arr.forEach((player) => {
+        //               if (player.max_season == this.chartSeason && player.min_season == this.chartSeason && 
+        //               player.position == this.chartPos) {
+        //                   tmpArr.push(player);
+        //               }
+        //           });
+        //         }
+        //       } else if (this.chartPos == 'wrte') {
+        //           arr.forEach((player) => {
+        //               if (player.min_season == this.chartSeason.substring(0, 4) && player.max_season == '2023' && 
+        //               player.position != 'RB' && player.position != 'FB') {
+        //                   tmpArr.push(player);
+        //               }
+        //           });
+        //       } else {
+        //         if (this.chartPos == 'RB') {
+        //             arr.forEach((player) => {
+        //                 if (player.min_season == this.chartSeason.substring(0, 4) && player.max_season == '2023' && 
+        //                 (player.position == 'RB' || player.position == 'FB')) {
+        //                     tmpArr.push(player);
+        //                 }
+        //             });
+        //         } else {
+        //           arr.forEach((player) => {
+        //               if (player.min_season == this.chartSeason.substring(0, 4) && player.max_season == '2023' && 
+        //               player.position == this.chartPos) {
+        //                   tmpArr.push(player);
+        //               }
+        //           });
+        //         }
+        //       }
+        //   }
           if (this.chartTeams != 'all') {
             if (this.searchString != '') {
                 let search = this.searchString.replace(/ /g, '')
@@ -781,7 +793,7 @@ export default {
             }
           }
       },
-      getTopFive(arr, value, gap, numStacks) {
+      getTopFive(arr, value, gap) {
           arr.sort((a, b) => b[value] - a[value]);
           var top5 = arr.filter(f => {
               return f[value] >= arr[4][value];
@@ -808,8 +820,8 @@ export default {
                   previous = player[value]; 
                   player['gap' + value] = 0;
               }
-              else {
-                  player['gap' + value] = (previous - player[value]) * (window.innerWidth - 96 - 57.5 - 10 - 24.5 - 10 - 23.5 - 12 - 64 * numUniques - 5) / gap;
+              else {                              //window width - padding - "Title" - padding - high # - padding - low# - padding - 5 player circles - extra bit
+                  player['gap' + value] = (previous - player[value]) * (window.innerWidth - 96 - 57.5 - 10 - 34.4 - 10 - 34.4 - 12 - 64 * numUniques - 5) / gap;
                   previous = player[value];
               }
           })
@@ -819,17 +831,17 @@ export default {
                   this.overall = final;
                   this.showOverall = true
                   break;
-              case "open_score":
-                  this.open = final;
-                  this.showOpen = true
+              case "shots_score":
+                  this.shots = final;
+                  this.showShots = true
                   break;
-              case "catch_score":
-                  this.catches = final;
-                  this.showCatch = true
+              case "reb_score":
+                  this.rebs = final;
+                  this.showReb = true
                   break;
-              case "yac_score":
-                  this.yards = final;
-                  this.showYards = true
+              case "ast_score":
+                  this.asts = final;
+                  this.showAsts = true
                   break;
               default:
                   console.log("Unknown day!");
@@ -868,86 +880,56 @@ export default {
         })
         return maxGap
       },
-    //   getNumStacks(arr, valueArr, gap) {
-    //     var numStacks = 0;
-    //     valueArr.forEach(d => {
-    //         var value = d;
-    //         arr.sort((a, b) => b[value] - a[value]);
-    //         var top5 = arr.filter(f => {
-    //             return f[value] >= arr[4][value];
-    //         });
-    //         var thisGap = top5[0][value] - top5[4][value]
-    //         if (thisGap == gap) {
-    //             var previous = -1000;
-    //             var used = -1000;
-    //             top5.forEach((player, index) => {
-    //                 if (index === 0) {
-    //                     previous = player[value]; 
-    //                 }
-    //                 else {
-    //                     if (previous == player[value] && player[value] != used) {
-    //                         numStacks = numStacks + 1
-    //                         used = player[value]
-    //                     }
-    //                     previous = player[value];
-    //                 }
-    //             })
-    //         }
-    //     })
-    //     return numStacks
-    //   },
       buildPage() {
-          var maxGap = this.getMaxGap(this.seasonArr, ['overall', 'open_score', 'catch_score', 'yac_score']);
-        //   var numStacks = this.getNumStacks(this.seasonArr, ['overall', 'open_score', 'catch_score', 'yac_score'], maxGap);
-          var numStacks = 0;
-          this.getTopFive(this.seasonArr, 'overall', maxGap, numStacks);
-          this.getTopFive(this.seasonArr, 'open_score', maxGap, numStacks);
-          this.getTopFive(this.seasonArr, 'catch_score', maxGap, numStacks);
-          this.getTopFive(this.seasonArr, 'yac_score', maxGap, numStacks);
+          var maxGap = this.getMaxGap(this.seasonArr, ['overall', 'shots_score', 'reb_score', 'ast_score']);
+          this.getTopFive(this.seasonArr, 'overall', maxGap);
+          this.getTopFive(this.seasonArr, 'shots_score', maxGap);
+          this.getTopFive(this.seasonArr, 'reb_score', maxGap);
+          this.getTopFive(this.seasonArr, 'ast_score', maxGap);
       },
       handleResize() {
           this.showOverall = false;
-          this.showOpen = false;
-          this.showCatch = false;
-          this.showYards = false;
+          this.showShots = false;
+          this.showReb = false;
+          this.showAsts = false;
           this.buildPage();
       },
       updateChartSort(value) {
-          if (value == 'open_score') {
-              this.openBtn = 'open_btn_click';
-              this.catchBtn = '';
-              this.yacBtn = '';
+          if (value == 'shots_score') {
+              this.shotsBtn = 'shots_btn_click';
+              this.rebBtn = '';
+              this.astBtn = '';
               this.overallBtn = '';
-              this.openHeader = 'open_header';
-              this.catchHeader = '';
-              this.yacHeader = '';
+              this.shotsHeader = 'shots_header';
+              this.rebHeader = '';
+              this.astHeader = '';
               this.overallHeader = '';
-          } else if (value == 'catch_score') {
-              this.catchBtn = 'catch_btn_click';
-              this.openBtn = '';
-              this.yacBtn = '';
+          } else if (value == 'reb_score') {
+              this.rebBtn = 'reb_btn_click';
+              this.shotsBtn = '';
+              this.astBtn = '';
               this.overallBtn = '';
-              this.openHeader = '';
-              this.catchHeader = 'catch_header';
-              this.yacHeader = '';
+              this.shotsHeader = '';
+              this.rebHeader = 'reb_header';
+              this.astHeader = '';
               this.overallHeader = '';
-          } else if (value == 'yac_score') {
-              this.yacBtn = 'yac_btn_click';
-              this.catchBtn = '';
-              this.openBtn = '';
+          } else if (value == 'ast_score') {
+              this.astBtn = 'ast_btn_click';
+              this.rebBtn = '';
+              this.shotsBtn = '';
               this.overallBtn = '';
-              this.openHeader = '';
-              this.catchHeader = '';
-              this.yacHeader = 'yac_header';
+              this.shotsHeader = '';
+              this.rebHeader = '';
+              this.astHeader = 'ast_header';
               this.overallHeader = '';
           } else {
               this.overallBtn = 'overall_btn_click';
-              this.catchBtn = '';
-              this.yacBtn = '';
-              this.openBtn = '';
-              this.openHeader = '';
-              this.catchHeader = '';
-              this.yacHeader = '';
+              this.rebBtn = '';
+              this.astBtn = '';
+              this.shotsBtn = '';
+              this.shotsHeader = '';
+              this.rebHeader = '';
+              this.astHeader = '';
               this.overallHeader = 'overall_header';
           }
         this.nmHeader = ''
@@ -969,34 +951,34 @@ export default {
           if (radioBool) this.radioChoice = !this.radioChoice;
           if (value != 'check') {
               this.chartSeason = value;
-              this.chartSeasons = [2023];
+              this.chartSeasons = [2024];
               await this.updateScatterData();
           } else {
               this.chartSeasons = [];
               if (document.getElementById('check-1').checked) {
-                  this.chartSeasons.push(2017);
-              } 
-              if (document.getElementById('check-2').checked) {
                   this.chartSeasons.push(2018);
               } 
-              if (document.getElementById('check-3').checked) {
+              if (document.getElementById('check-2').checked) {
                   this.chartSeasons.push(2019);
               } 
-              if (document.getElementById('check-4').checked) {
+              if (document.getElementById('check-3').checked) {
                   this.chartSeasons.push(2020);
               } 
-              if (document.getElementById('check-5').checked) {
+              if (document.getElementById('check-4').checked) {
                   this.chartSeasons.push(2021);
               } 
-              if (document.getElementById('check-6').checked) {
+              if (document.getElementById('check-5').checked) {
                   this.chartSeasons.push(2022);
               } 
-              if (document.getElementById('check-7').checked) {
+              if (document.getElementById('check-6').checked) {
                   this.chartSeasons.push(2023);
+              } 
+              if (document.getElementById('check-7').checked) {
+                  this.chartSeasons.push(2024);
               } 
               await this.updateScatterData();
           }
-        if (value == '2020-23') document.getElementById('initial-check').checked = true;
+        // if (value == '2020-23') document.getElementById('initial-check').checked = true;
       },
   },
 }
@@ -1004,8 +986,8 @@ export default {
 </script>
 
 <style scoped>
-.open_btn_click, 
-.open_header {
+.shots_btn_click, 
+.shots_header {
   background-color: rgb(195, 30, 50);
   font-weight: 600;
 }
@@ -1015,13 +997,13 @@ export default {
   font-weight: 600;
   color: rgb(242, 242, 242);
 }
-.catch_btn_click, 
-.catch_header {
+.reb_btn_click, 
+.reb_header {
   background-color: rgb(110 231 183);
   font-weight: 600;
 }
-.yac_btn_click, 
-.yac_header {
+.ast_btn_click, 
+.ast_header {
   background-color: rgb(0, 167, 225);
   font-weight: 600;
 }

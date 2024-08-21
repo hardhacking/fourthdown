@@ -96,8 +96,8 @@
                             <div class="block xs:hidden px-1 py-1.5 m-0.5 text-espngray-900">SORT: </div>
                             <div class="flex flex-wrap">
                                 <div class="text-espngray-900 text-center cursor-pointer p-1.5 m-0.5 rounded-sm border border-espngray-900 w-16 hover:bg-espnred hover:font-semibold" :class="shotsBtn" @click="updateChartSort('shots_score')">SHOTS</div>
-                                <div class="text-espngray-900 text-center cursor-pointer p-1.5 m-0.5 rounded-sm border border-espngray-900 w-20 hover:bg-emerald-400 hover:font-semibold" :class="rebBtn" @click="updateChartSort('reb_score')">REB</div>
-                                <div class="text-espngray-900 text-center cursor-pointer p-1.5 m-0.5 rounded-sm border border-espngray-900 w-14 hover:bg-espncyan-200 hover:font-semibold" :class="astBtn" @click="updateChartSort('ast_score')">AST</div>
+                                <div class="text-espngray-900 text-center cursor-pointer p-1.5 m-0.5 rounded-sm border border-espngray-900 w-16 hover:bg-emerald-400 hover:font-semibold" :class="rebBtn" @click="updateChartSort('reb_score')">REB</div>
+                                <div class="text-espngray-900 text-center cursor-pointer p-1.5 m-0.5 rounded-sm border border-espngray-900 w-16 hover:bg-espncyan-200 hover:font-semibold" :class="astBtn" @click="updateChartSort('ast_score')">AST</div>
                                 <div class="text-espngray-900 text-center block xs:hidden cursor-pointer p-1.5 m-0.5 rounded-sm border border-espngray-900 w-14 hover:bg-espngray-600 hover:font-semibold hover:text-espngray-100" :class="overallBtn" @click="updateChartSort('overall')">OVR</div>
                                 <div class="text-espngray-900 text-center hidden xs:block cursor-pointer p-1.5 m-0.5 rounded-sm border border-espngray-900 w-24 hover:bg-espngray-600 hover:font-semibold hover:text-espngray-100" :class="overallBtn" @click="updateChartSort('overall')">OVERALL</div>
                             </div>
@@ -121,7 +121,7 @@
                         <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div class="inline-block min-w-full py-2 align-middle">
                                 <div class="flex justify-center">
-                                    <table class="min-w-[45%] mt-4 xs:mt-[1.075em] divide-y divide-gray-900">
+                                    <table class="min-w-[32%] mt-4 xs:mt-[1.075em] divide-y divide-gray-900">
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="py-1 pl-0.5 xs:pl-1 pr-0.5" :class="nmHeader" @click="sortFromTable('full_nm')"></th>
@@ -143,26 +143,28 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <table class="min-w-[10%] mt-4 xs:mt-[1.075em] divide-y divide-gray-900 hidden lg:table">
+                                    <table class="min-w-[32%] mt-4 xs:mt-[1.075em] divide-y divide-gray-900 hidden lg:table">
                                         <!-- <caption class="text-xs font-semibold text-espngray-900">RECEIVING STATS</caption> -->
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" :class="ydsHeader" @click="sortFromTable('wpa_games')">G</th>
-                                                <!-- <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" :class="rtsHeader" @click="sortFromTable('rtm_routes')">ROUTES</th> -->
-                                                <!-- <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" :class="tgtsHeader" @click="sortFromTable('rtm_targets')">TGTS</th> -->
-                                                <!-- <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" :class="ydsPerRtHeader" @click="sortFromTable('yds_per_rt')">YDS/RT</th> -->
+                                                <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" :class="tovHeader" @click="sortFromTable('tov_score')">TOV</th>
+                                                <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" :class="stlHeader" @click="sortFromTable('stl_score')">STL</th>
+                                                <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" :class="blkHeader" @click="sortFromTable('blk_score')">BLK</th>
+                                                <th scope="col" class="px-2 py-1 text-right text-xs font-normal text-espngray-900 hover:bg-espngray-300 hover:cursor-pointer" :class="clutchHeader" @click="sortFromTable('clutch_score')">CLUTCH</th>
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white">
                                             <tr v-for="player in tableArr" class="odd:bg-espngray-100 even:bg-gray-50">
                                                 <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack">{{ player.wpa_games }}</td>
-                                                <!-- <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack">{{ player.rtm_routes }}</td> -->
-                                                <!-- <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack">{{ player.rtm_targets }}</td> -->
-                                                <!-- <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack">{{ (player.yds / player.rtm_routes).toFixed(1) }}</td> -->
+                                                <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack">{{ player.tov_score }}</td>
+                                                <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack">{{ player.stl_score }}</td>
+                                                <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack">{{ player.blk_score }}</td>
+                                                <td class="whitespace-nowrap text-right px-2 py-4 font-medium text-sm text-espnblack">{{ player.clutch_score }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <table class="min-w-[45%] mt-4 xs:mt-[1.075em] divide-y divide-gray-900">
+                                    <table class="min-w-[32%] mt-4 xs:mt-[1.075em] divide-y divide-gray-900">
                                         <!-- <caption class="text-[10px] xs:text-xs font-semibold text-espngray-900">RECEIVING RATINGS</caption> -->
                                         <thead>
                                             <tr>
@@ -238,9 +240,10 @@ export default {
           tmHeader: '',
           posHeader: '', 
           ydsHeader: '',
-          rtsHeader: '',
-          tgtsHeader: '',
-          ydsPerRtHeader: '',
+          tovHeader: '',
+          stlHeader: '',
+          blkHeader: '',
+          clutchHeader: '',
           overallHeader: 'overall_header',
           minTgt: 1,
           dateUpdate: null,
@@ -254,7 +257,7 @@ export default {
     const lastMod = new Date(this.response.headers['last-modified'])
     this.dateUpdate = new Date(lastMod.getTime() - 1000 * 60 * 60 * 24).toDateString()
     await this.getSeason(this.json);
-    
+    // console.log(this.json);
     this.buildPage();
     this.buildScatter();
     window.addEventListener('resize', this.handleResize);
@@ -291,13 +294,24 @@ export default {
         var rebOldRange = Math.max(...this.json.map(o => o.reb_score)) - rebOldMin
         var astOldMin = Math.min(...this.json.map(o => o.ast_score))
         var astOldRange = Math.max(...this.json.map(o => o.ast_score)) - astOldMin
+        // var tovOldMin = Math.min(...this.json.map(o => o.tov_score))
+        // var tovOldRange = Math.max(...this.json.map(o => o.tov_score)) - tovOldMin
+        // var stlOldMin = Math.min(...this.json.map(o => o.stl_score))
+        // var stlOldRange = Math.max(...this.json.map(o => o.stl_score)) - stlOldMin
+        // var blkOldMin = Math.min(...this.json.map(o => o.blk_score))
+        // var blkOldRange = Math.max(...this.json.map(o => o.blk_score)) - blkOldMin
+        // var cluOldMin = Math.min(...this.json.map(o => o.clutch_score))
+        // var cluOldRange = Math.max(...this.json.map(o => o.clutch_score)) - cluOldMin
         this.json.map(player => {
             player.first_last_nm = player.first_nm.substring(0, 1) + ". " + player.last_nm;
             player.overall_z = Math.round((player.overall - ovrOldMin) * 99 / ovrOldRange)
             player.shots_score_z = Math.round((player.shots_score - shotsOldMin) * 99 / shotsOldRange)
             player.reb_score_z = Math.round((player.reb_score - rebOldMin) * 99 / rebOldRange)
             player.ast_score_z = Math.round((player.ast_score - astOldMin) * 99 / astOldRange)
-            // player.yds_per_rt = (player.yds / player.rtm_routes).toFixed(1)
+            // player.tov_score_z = Math.round((player.tov_score - tovOldMin) * 99 / tovOldRange)
+            // player.stl_score_z = Math.round((player.stl_score - stlOldMin) * 99 / stlOldRange)
+            // player.blk_score_z = Math.round((player.blk_score - blkOldMin) * 99 / blkOldRange)
+            // player.clutch_score_z = Math.round((player.clutch_score - cluOldMin) * 99 / cluOldRange)
             return player;
         })
         this.dataMin = Math.floor(Math.min(ovrOldMin, shotsOldMin, rebOldMin, astOldMin))
@@ -588,65 +602,82 @@ export default {
             this.tmHeader = ''
             this.posHeader = '' 
             this.ydsHeader = 'yds_header'
-            this.rtsHeader = ''
-            this.tgtsHeader = ''
-            this.ydsPerRtHeader = ''
-        } else if (value == 'rtm_targets') {
+            this.tovHeader = ''
+            this.stlHeader = ''
+            this.blkHeader = ''
+            this.clutchHeader = ''
+        } else if (value == 'stl_score') {
             this.nmHeader = ''
             this.tmHeader = ''
             this.posHeader = '' 
             this.ydsHeader = ''
-            this.rtsHeader = ''
-            this.tgtsHeader = 'tgts_header'
-            this.ydsPerRtHeader = ''
-        } else if (value == 'rtm_routes') {
+            this.tovHeader = ''
+            this.stlHeader = 'tgts_header'
+            this.blkHeader = ''
+            this.clutchHeader = ''
+        } else if (value == 'tov_score') {
             this.nmHeader = ''
             this.tmHeader = ''
             this.posHeader = '' 
             this.ydsHeader = ''
-            this.rtsHeader = 'rts_header'
-            this.tgtsHeader = ''
-            this.ydsPerRtHeader = ''
+            this.tovHeader = 'rts_header'
+            this.stlHeader = ''
+            this.blkHeader = ''
+            this.clutchHeader = ''
         } else if (value == 'tm') {
             this.nmHeader = ''
             this.tmHeader = 'tm_header'
             this.posHeader = '' 
             this.ydsHeader = ''
-            this.rtsHeader = ''
-            this.tgtsHeader = ''
-            this.ydsPerRtHeader = ''
+            this.tovHeader = ''
+            this.stlHeader = ''
+            this.blkHeader = ''
+            this.clutchHeader = ''
         } else if (value == 'full_nm') {
             this.nmHeader = 'nm_header'
             this.tmHeader = ''
             this.posHeader = '' 
             this.ydsHeader = ''
-            this.rtsHeader = ''
-            this.tgtsHeader = ''
-            this.ydsPerRtHeader = ''
+            this.tovHeader = ''
+            this.stlHeader = ''
+            this.blkHeader = ''
+            this.clutchHeader = ''
         } else if (value == 'first_last_nm') {
             this.nmHeader = 'nm_header'
             this.tmHeader = ''
             this.posHeader = '' 
             this.ydsHeader = ''
-            this.rtsHeader = ''
-            this.tgtsHeader = ''
-            this.ydsPerRtHeader = ''
-        } else if (value == 'yds_per_rt') {
+            this.tovHeader = ''
+            this.stlHeader = ''
+            this.blkHeader = ''
+            this.clutchHeader = ''
+        } else if (value == 'blk_score') {
             this.nmHeader = ''
             this.tmHeader = ''
             this.posHeader = '' 
             this.ydsHeader = ''
-            this.rtsHeader = ''
-            this.tgtsHeader = ''
-            this.ydsPerRtHeader = 'yds_per_rt_header'
+            this.tovHeader = ''
+            this.stlHeader = ''
+            this.blkHeader = 'yds_per_rt_header'
+            this.clutchHeader = ''
         } else if (value == 'position') {
             this.nmHeader = ''
             this.tmHeader = ''
             this.posHeader = 'pos_header'
             this.ydsHeader = ''
-            this.rtsHeader = ''
-            this.tgtsHeader = ''
-            this.ydsPerRtHeader = ''
+            this.tovHeader = ''
+            this.stlHeader = ''
+            this.blkHeader = ''
+            this.clutchHeader = ''
+        } else if (value == 'clutch_score') {
+            this.nmHeader = ''
+            this.tmHeader = ''
+            this.posHeader = ''
+            this.ydsHeader = ''
+            this.tovHeader = ''
+            this.stlHeader = ''
+            this.blkHeader = ''
+            this.clutchHeader = 'clutch_header'
         }
         this.shotsBtn = '';
         this.rebBtn = '';
@@ -659,7 +690,7 @@ export default {
         if (this.chartSort == value) {
             this.prevChartSort = this.prevChartSort * -1;
         } else {
-            this.prevChartSort = -1;
+            this.prevChartSort = -1 * (value == 'tov_score' ? -1 : 1);
         }
         this.chartSort = value;
         this.updateScatter();
@@ -936,9 +967,10 @@ export default {
         this.tmHeader = ''
         this.posHeader = '' 
         this.ydsHeader = ''
-        this.rtsHeader = ''
-        this.tgtsHeader = ''
-        this.ydsPerRtHeader = ''
+        this.tovHeader = ''
+        this.stlHeader = ''
+        this.blkHeader = ''
+        this.clutchHeader = ''
         if (this.chartSort == value) {
             this.prevChartSort = this.prevChartSort * -1;
         } else {
@@ -1009,7 +1041,7 @@ export default {
 }
 
 .yds_header, .nm_header, .tm_header, .pos_header, 
-.rts_header, .tgts_header, .yds_per_rt_header {
+.rts_header, .tgts_header, .yds_per_rt_header, .clutch_header {
     background-color: rgb(220, 220, 220);
 }
 </style>

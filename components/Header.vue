@@ -17,7 +17,7 @@
         <div class="hidden lg:flex lg:gap-x-12 lg:items-center">
           <Popover class="relative px-10 w-[170px] text-center">
             <PopoverButton class="inline-flex items-center gap-x-1 text-lg font-semibold leading-6 text-gray-900 focus-visible:outline-none">
-              <span>NBA Draft</span>            
+              <span>NFL</span>            
             </PopoverButton>
             <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
               <PopoverPanel class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
@@ -148,23 +148,23 @@ const navigation = [
 //   { name: 'Live Draft Pick Chances', description: "Live chances at a top 5 pick during Week 18", href: '/draft-order', icon: PresentationChartLineIcon },
 // ]
 const mcbb = [
-  { name: 'NBA Draft Simulator', description: 'Be the GM and run a full simulation of the NFL Draft, make picks, trades and more', href: '/nba-draft-sim', icon: ForwardIcon },
-  { name: 'NBA Draft Day Predictor', description: 'Projections for how the NFL Draft will unfold', href: '/nba-draft-predictor', icon: ChartBarIcon },
-  { name: 'NBA Mock Draft Builder', description: 'Be the GM for every team in the NFL Draft, make picks, trades and more', href: '/nba-mock-draft', icon: ListBulletIcon }
+  { name: '4th Downs', description: 'See 4th down decision breakdowns', href: '/decision', icon: InformationCircleIcon }, 
+  { name: 'Receiver Tracking Metrics', description: 'Evaluate pass catchers a number of ways', href: '/rtm', icon: CubeTransparentIcon },
+  { name: 'NFL Schedule Analysis', description: 'How does the NFL schedule impact each team?', href: '/schedule', icon: CalendarDaysIcon }
 ]
 const wcbb = [
   { name: 'WNBA Player Metrics', description: 'Measuring impact for WNBA players using Win Probability Added', href: '/wnba-wpa', icon: CubeTransparentIcon },
+  { name: 'NBA Draft Simulator', description: 'Be the GM and run a full simulation of the NFL Draft, make picks, trades and more', href: '/nba-draft-sim', icon: ForwardIcon },
+  { name: 'NBA Draft Day Predictor', description: 'Projections for how the NFL Draft will unfold', href: '/nba-draft-predictor', icon: ChartBarIcon },
+  { name: 'NBA Mock Draft Builder', description: 'Be the GM for every team in the NFL Draft, make picks, trades and more', href: '/nba-mock-draft', icon: ListBulletIcon }, 
   { name: 'NFL Draft Day Predictor', description: 'Projections for how the NFL Draft will unfold', href: '/draft-predictor', icon: ChartBarIcon },
   { name: 'NFL Draft Simulator', description: 'Be the GM and run a full simulation of the NFL Draft, make picks, trades and more', href: '/draft-sim', icon: ForwardIcon },
   { name: 'NFL Mock Draft Builder', description: 'Be the GM for every team in the NFL Draft, make picks, trades and more', href: '/mock-draft', icon: ListBulletIcon },
-  { name: 'NFL Schedule Analysis', description: 'How does the NFL schedule impact each team?', href: '/schedule', icon: CalendarDaysIcon },
-  { name: 'Receiver Tracking Metrics', description: 'Evaluate pass catchers a number of ways', href: '/rtm', icon: CubeTransparentIcon },
-  { name: '4th Downs', description: 'See 4th down decision breakdowns', href: '/decision', icon: InformationCircleIcon },
-  { name: 'Live Draft Pick Chances', description: "Live chances at a top 5 pick during Week 18", href: '/draft-order', icon: PresentationChartLineIcon },
   { name: 'Women\'s Games', description: 'Full win probability wall for all women\'s games', href: '/wcbb-games', icon: ArrowTrendingUpIcon },
   { name: 'Women\'s Projections', description: 'Table showing live chances to advance to each round', href: '/wcbb-all', icon: ChartBarIcon },
   { name: 'Men\'s Games', description: 'Full win probability wall for all men\'s games', href: '/mcbb-games', icon: ArrowTrendingUpIcon },
-  { name: 'Men\'s Projections', description: 'Table showing live chances to advance to each round', href: '/mcbb-all', icon: ChartBarIcon }
+  { name: 'Men\'s Projections', description: 'Table showing live chances to advance to each round', href: '/mcbb-all', icon: ChartBarIcon },
+  { name: 'Live Draft Pick Chances', description: "Live chances at a top 5 pick during Week 18", href: '/draft-order', icon: PresentationChartLineIcon }
 ]
 // const callsToAction = [
 //   { name: 'Watch demo', href: '#', icon: PlayCircleIcon },

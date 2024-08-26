@@ -12,6 +12,7 @@
         <Header></Header>
         <div class="pt-28">
             <div class="flex flex-col items-center gap-4">
+                <img class="h-16 w-auto" src="../assets/logo.png" alt="" />
                 <div class="text-4xl font-bold text-center text-espngray-900">The Best WNBA Players</div>
                 <div class="text-espngray-600 font-normal text-sm">Updated through {{ dateUpdate }}</div>
                 <div class="p-2 lg:p-0 max-w-4xl text-center font-medium text-espngray-600">These ratings, updated daily, use play-by-play data from the WNBA and utilize ESPN's WNBA Win Probability model to measure how impactful a player is to her team winning based on her performance<sup class="cursor-pointer" @click="clickedFootnote()">1</sup>.</div>

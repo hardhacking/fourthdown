@@ -51,7 +51,7 @@
             <div class="flex flex-wrap justify-between items-center">
               <div class="mt-8 flow-root sm:mt-12 width-calc">
                 <div class="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                  <a href="https://espnanalytics.com/draft-sim"><img src="../assets/sim_screenshot.png" alt="App screenshot" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
+                  <a href="https://espnanalytics.com/draft-sim"><img src="../assets/nba_sim_screenshot.png" alt="App screenshot" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
                 </div>
               </div>
               <div class="mt-8 flow-root sm:mt-12 width-calc">

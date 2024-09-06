@@ -2,8 +2,8 @@
     <div class="min-h-screen bg-espngray-100">
         <h1 class="text-3xl flex w-full justify-around py-8">ESPN QBR Best Ball League</h1>
         <div class="flex w-full justify-around">
-            <select class="text-2xl my-4" v-model="selectedWeek">
-                <option v-for="option in [1]" :value="option">Week {{option}}</option>
+            <select class="text-2xl my-4" v-model="selectedWeek" v-on:change="reLoad">
+                <option v-for="option in [1, 2]" :value="option">Week {{option}}</option>
             </select>
         </div>
         <h2 class="text-2xl flex w-full justify-around py-4">Team Standings</h2>
@@ -130,7 +130,7 @@
     ] 
 
     const selectedTeam = ref('Andre')
-    const selectedWeek = ref(1)
+    const selectedWeek = ref(2)
 
     const store = useGameStore()
     const weeksTable = ref([])
@@ -144,10 +144,13 @@
     const eachTeamTable = ref([])
     const gameBox = ref(null)
     onMounted(async () => {
-        weeksTable.value = await store.weeksTable1
-        QBRs.value = weeksTable.value.athletes
+        weeksTable.value = selectedWeek.value == 1 ? await store.weeksTable1 : 
+                                (selectedWeek.value == 2 ? await store.weeksTable2 : [])
+                                
+        QBRs.value = weeksTable.value.athletes ? weeksTable.value.athletes : []
 
-        scoreBoard.value = await store.boxScores1
+        scoreBoard.value = selectedWeek.value == 1 ? await store.boxScores1 :
+                                (selectedWeek.value == 2 ? await store.boxScores2 : [])
         events.value = scoreBoard.value.events
 
         events.value.map(d => {
@@ -342,6 +345,199 @@
     function getLess() {
         counter.value = counter.value - 1
         tableData.value = QBRs.value.slice(0, counter.value * 10 + 10)
+    }
+
+    async function reLoad() {
+        weeksTable.value = selectedWeek.value == 1 ? await store.weeksTable1 : 
+                                (selectedWeek.value == 2 ? await store.weeksTable2 : [])
+        QBRs.value = weeksTable.value.athletes ? weeksTable.value.athletes : []
+
+        scoreBoard.value = selectedWeek.value == 1 ? await store.boxScores1 :
+                                (selectedWeek.value == 2 ? await store.boxScores2 : [])
+        events.value = scoreBoard.value.events
+
+        events.value.map(d => {
+            d.home = d.competitions[0].competitors[0].id
+            d.away = d.competitions[0].competitors[1].id
+            return d
+        })
+
+        const initPromise = new Promise(resolve => {
+        draft.forEach(async p => {
+            // add in QBs with <20 action plays by grabbing box scores
+            if (!QBRs.value.map(d => d.athlete.id).map(d => {
+                    d = Number(d)
+                    return d
+                }).includes(p.id)) {
+                const boxResponse = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=' + events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].id)
+                gameBox.value = boxResponse
+                // console.log(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id))
+                if (Number(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].home) == p.cfb_team_id &&
+                    gameBox.value.boxscore && gameBox.value.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
+                    //home
+                    QBRsToAdd.value.push({
+                        'athlete':{
+                            'id': p.id,
+                            'displayName': p.player,
+                            'teamShortName': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
+                        }, 
+                        'categories':[
+                            {
+                                'totals':[
+                                    gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0] ? Number(gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0].stats[5]) : 0, 
+                                    0, 
+                                    gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0] ? Number(gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0].stats[0].substr(gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0].stats[0].indexOf("/") + 1)) : 0
+                                ]
+                            }
+                        ], 
+                        'game':{
+                            'homeAway': 'home',
+                            'teamOpponent': {
+                                'abbreviation': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
+                            }
+                        }
+                    })
+                } else if (Number(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].away) == p.cfb_team_id &&
+                gameBox.value.boxscore && gameBox.value.boxscore.players[0].statistics[0].athletes[0].stats[5]) {
+                    //away
+                    QBRsToAdd.value.push({
+                        'athlete':{
+                            'id': p.id,
+                            'displayName': p.player,
+                            'teamShortName': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
+                        }, 
+                        'categories':[
+                            {
+                                'totals':[
+                                    gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0] ? Number(gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0].stats[5]) : 0, 
+                                    0, 
+                                    gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0] ? Number(gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0].stats[0].substr(gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0].stats[0].indexOf("/") + 1)) : 0
+                                ]
+                            }
+                        ], 
+                        'game':{
+                            'homeAway': 'away',
+                            'teamOpponent': {
+                                'abbreviation': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
+                            }
+                        }
+                    })
+                } else {
+                    QBRsToAdd.value.push({
+                        'athlete':{
+                            'id': p.id,
+                            'displayName': p.player,
+                            'teamShortName': ''
+                        }, 
+                        'categories':[
+                            {
+                                'totals':[
+                                    0, 
+                                    0, 
+                                    0
+                                ]
+                            }
+                        ], 
+                        'game':{
+                            'homeAway': 'away',
+                            'teamOpponent': {
+                                'abbreviation': ''
+                            }
+                        }
+                    })
+                }
+            }
+        })
+        setTimeout(() => {
+            resolve();
+        }, 3000);
+        })
+
+        await initPromise
+        // console.log(QBRsToAdd.value)
+
+        QBRs.value.push(...QBRsToAdd.value)
+
+        QBRs.value.map(d => {
+            d.score = d.categories[0].totals[2] <= 35 ? d.categories[0].totals[0] * (d.categories[0].totals[2] / 35) : d.categories[0].totals[0] * Math.pow((d.categories[0].totals[2] / 35), 1/4)
+            return d
+        })
+        
+        QBRs.value = QBRs.value.map(d => {
+            if (selectedWeek.value == 1 && [4429020, 4428993, 4709977, 5105849, 4432767].includes(Number(d.athlete.id))) {
+                d.scoreToUse = QBRs.value.filter(f => f.athlete.id == d.athlete.id).reduce((acc, obj) => acc + obj.score, 0) / 2
+            } else {
+                d.scoreToUse = d.score
+            }
+            return d
+        }).sort((a, b) => d3.descending(a.score, b.score))
+
+        tableData.value = QBRs.value.slice(0, counter.value * 10 + 10)
+
+        teamData.value = draft.map(({team}) => ({team})).slice(0, 11)
+        teamData.value.map(d => {
+            if (QBRs.value.filter(f => {
+                    return draft.filter(ff => ff.team == d.team).map(dd => dd.id).includes(Number(f.athlete.id))
+                }).length > 0) {
+                d.wScore = QBRs.value.filter(f => {
+                    return draft.filter(ff => ff.team == d.team).map(dd => dd.id).includes(Number(f.athlete.id))
+                }).slice(0, 3).reduce((acc, obj) => acc + obj.scoreToUse, 0)
+            } else {
+                d.wScore = 0
+            }
+            
+            d.sScore = d.wScore
+            return d
+        })
+        teamData.value = teamData.value.sort((a, b) => d3.descending(a.wScore, b.wScore))
+
+        eachTeamTable.value = draft.map(({team, player, id}) => ({team, player, id}))
+
+        eachTeamTable.value = eachTeamTable.value.map(d => {
+            if (QBRs.value.filter(f => {
+                    return Number(f.athlete.id) == Number(d.id)
+                }).length > 0) {
+                d.wScore = QBRs.value.filter(f => {
+                    return Number(f.athlete.id) == Number(d.id)
+                })[0].scoreToUse
+                d.name = QBRs.value.filter(f => {
+                    return Number(f.athlete.id) == Number(d.id)
+                })[0].athlete.displayName
+                d.qbr = QBRs.value.filter(f => {
+                    return Number(f.athlete.id) == Number(d.id)
+                })[0].categories[0].totals[0]
+                d.plays = QBRs.value.filter(f => {
+                    return Number(f.athlete.id) == Number(d.id)
+                })[0].categories[0].totals[2]
+            } else {
+                d.wScore = 0
+                d.name = d.player
+                d.qbr = 0
+                d.plays = 0
+            }
+            return d
+        })
+        eachTeamTable.value = eachTeamTable.value.sort((a, b) => d3.descending(a.wScore, b.wScore))
     }
 
     

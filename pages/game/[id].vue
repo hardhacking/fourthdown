@@ -99,10 +99,10 @@
                   </dd>
                 </div>
                 <div class="flex justify-between py-3 gap-x-4 h-24 overflow-y-hidden" v-if="play.ydline <= 55">
-                  <dt class="text-gray-500">{{ play.text }}</dt>
+                  <dt class="text-gray-500">{{ play.text + getPlayWP(play.UNQPLY_GROUP, play.team) }}</dt>
                 </div>
                 <div class="flex justify-between py-3 gap-x-4 h-36 overflow-y-hidden" v-else>
-                  <dt class="text-gray-500">{{ play.text }}</dt>
+                  <dt class="text-gray-500">{{ play.text + getPlayWP(play.UNQPLY_GROUP, play.team) }}</dt>
                 </div>
               </dl>
             </div>
@@ -203,10 +203,10 @@
                   </dd>
                 </div>
                 <div class="flex justify-between py-3 gap-x-4 h-24 overflow-y-auto" v-if="play.ydline <= 55">
-                  <dt class="text-gray-500">{{ play.text }}</dt>
+                  <dt class="text-gray-500">{{ play.text + getPlayWP(play.UNQPLY_GROUP, play.team) }}</dt>
                 </div>
                 <div class="flex justify-between py-3 gap-x-4 h-36 overflow-y-auto" v-else>
-                  <dt class="text-gray-500">{{ play.text }}</dt>
+                  <dt class="text-gray-500">{{ play.text + getPlayWP(play.UNQPLY_GROUP, play.team) }}</dt>
                 </div>
               </dl>
             </div>
@@ -232,11 +232,14 @@ const scores = ref(null)
 const captureFront = ref([])
 const captureBack = ref([])
 const showToolTip = ref(null)
+const playsArr = ref([])
 showToolTip.value = 'hidden'
 onMounted(async () => {
   games.value = await store.games
   scores.value = await store.scores
   
+  const initRes = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=' + games.value[id.value][0].EVENT_ID)
+  playsArr.value = initRes.winprobability
   // games.value[id.value] = games.value[id.value].filter(f => {
   //   return !(translateText(f.play) == 'Punt' && f.ydline <= 30) && !(translateText(f.play) == 'Field Goal' && f.ydline > 55)
   // })
@@ -278,6 +281,23 @@ const getTeamLogo = (str) => {
   if (str == 'PHI' || str == 'PHL' || str == 'PIL') return new URL('../../assets/nfl_logo/phi.png', import.meta.url)
 }
 
+const getTeamAbbr = (str) => {
+  if (str == 'BLT' || str == 'BAL') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/bal.png'
+  if (str == 'CLV' || str == 'CLE') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png'
+  if (str == 'HST' || str == 'HOU') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/hou.png'
+  if (str == 'WSH' || str == 'WAS') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/wsh.png'
+  if (str == 'ARZ' || str == 'AR' || str == 'ARI') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ari.png'
+  if (str == 'CAR' || str == 'CAL' || str == 'CR') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/car.png'
+  if (str == 'KA' || str == 'KAN' || str == 'KC') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/kc.png'
+  if (str == 'LAS' || str == 'LV' || str == 'LAV') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/lv.png'
+  if (str == 'LOS' || str == 'LSA' || str == 'LAR' || str == 'LA') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/lar.png'
+  if (str == 'PIT' || str == 'PT') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/pit.png'
+  if (str == 'SEA' || str == 'SET' || str == 'SAT') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sea.png'
+  if (str == 'TAM' || str == 'TAB' || str == 'TB' || str == 'TA') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/tb.png'
+  if (str == 'PHI' || str == 'PHL' || str == 'PIL') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/phi.png'
+  else return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/' + str.toLowerCase() + '.png'
+}
+
 const translateText = (str) => {
   if (str == 'P') return 'Punt'
   if (str == 'FG') return 'Field Goal'
@@ -306,6 +326,15 @@ const setToolTip = (play) => {
   if (window.innerWidth < 1024) {
     if (play.toolClass == 'block') play.toolClass = 'hidden'
     else play.toolClass = 'block'
+  }
+}
+const getPlayWP = (playId, tm) => {
+  let playWP = playsArr.value.filter(f => Number(f.playId.slice(9)) == playId)
+  
+  if (games.value[id.value].filter(f => f.UNQPLY_GROUP == playId)[0].firstTeamLogo == getTeamAbbr(tm)) {
+    return " WP: " + Math.round((1 - playWP[0].homeWinPercentage) * 100 * 10) / 10 + "%"
+  } else {
+    return " WP: " + Math.round(playWP[0].homeWinPercentage * 100 * 10) / 10 + "%"
   }
 }
 const flipTool = (play) => {

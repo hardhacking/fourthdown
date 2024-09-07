@@ -177,7 +177,7 @@
                 }).includes(p.id) && events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id).length > 0) {
                 const boxResponse = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=' + events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].id)
                 gameBox.value = boxResponse
-                // console.log(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id))
+                
                 if (Number(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].home) == p.cfb_team_id &&
                     gameBox.value.boxscore.players && gameBox.value.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
                     //home
@@ -289,7 +289,7 @@
                 }).includes(p.id)) {
                 const boxResponse = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=' + events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].id)
                 let gameBox1 = boxResponse
-                // console.log(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id))
+                
                 if (Number(events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].home) == p.cfb_team_id &&
                     gameBox1.boxscore && gameBox1.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
                     //home
@@ -393,7 +393,6 @@
 
         await initPromise
         await initPromise2
-        // console.log(QBRsToAdd.value)
 
         QBRs.value.push(...QBRsToAdd.value)
         QBRs1.push(...QBRsToAdd1)
@@ -501,6 +500,16 @@
     }
 
     async function reLoad() {
+        store.value = useGameStore()
+        weeksTable.value = []
+        scoreBoard.value = []
+        events.value = null
+        QBRs.value = null
+        tableData.value = null
+        QBRsToAdd.value = []
+        eachTeamTable.value = []
+        gameBox.value = null
+        counter.value = 0
         weeksTable.value = selectedWeek.value == 1 ? await store.weeksTable1 : 
                                 (selectedWeek.value == 2 ? await store.weeksTable2 : [])
         QBRs.value = weeksTable.value.athletes ? weeksTable.value.athletes : []
@@ -524,7 +533,7 @@
                 }).includes(p.id) && events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id).length > 0) {
                 const boxResponse = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=' + events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].id)
                 gameBox.value = boxResponse
-                // console.log(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id))
+                
                 if (Number(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].home) == p.cfb_team_id &&
                     gameBox.value.boxscore.players && gameBox.value.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
                     //home
@@ -627,7 +636,6 @@
         })
 
         await initPromise
-        // console.log(QBRsToAdd.value)
 
         QBRs.value.push(...QBRsToAdd.value)
 

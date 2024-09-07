@@ -144,20 +144,29 @@
     const eachTeamTable = ref([])
     const gameBox = ref(null)
     onMounted(async () => {
-        weeksTable.value = selectedWeek.value == 1 ? await store.weeksTable1 : 
-                                (selectedWeek.value == 2 ? await store.weeksTable2 : [])
+        weeksTable.value = await store.weeksTable2 
+        let weeksTable1 = await store.weeksTable1
                                 
         QBRs.value = weeksTable.value.athletes ? weeksTable.value.athletes : []
+        let QBRs1 = weeksTable1.athletes ? weeksTable1.athletes : []
 
-        scoreBoard.value = selectedWeek.value == 1 ? await store.boxScores1 :
-                                (selectedWeek.value == 2 ? await store.boxScores2 : [])
+        scoreBoard.value = await store.boxScores2
+        let scoreBoard1 = await store.boxScores1
+
         events.value = scoreBoard.value.events
+        let events1 = scoreBoard1.events
 
         events.value.map(d => {
             d.home = d.competitions[0].competitors[0].id
             d.away = d.competitions[0].competitors[1].id
             return d
         })
+        events1.map(d => {
+            d.home = d.competitions[0].competitors[0].id
+            d.away = d.competitions[0].competitors[1].id
+            return d
+        })
+        let draft1 = draft.map(d => d)
 
         const initPromise = new Promise(resolve => {
         draft.forEach(async p => {
@@ -165,12 +174,12 @@
             if (!QBRs.value.map(d => d.athlete.id).map(d => {
                     d = Number(d)
                     return d
-                }).includes(p.id)) {
+                }).includes(p.id) && events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id).length > 0) {
                 const boxResponse = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=' + events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].id)
                 gameBox.value = boxResponse
                 // console.log(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id))
                 if (Number(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].home) == p.cfb_team_id &&
-                    gameBox.value.boxscore && gameBox.value.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
+                    gameBox.value.boxscore.players && gameBox.value.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
                     //home
                     QBRsToAdd.value.push({
                         'athlete':{
@@ -205,7 +214,7 @@
                         }
                     })
                 } else if (Number(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].away) == p.cfb_team_id &&
-                gameBox.value.boxscore && gameBox.value.boxscore.players[0].statistics[0].athletes[0].stats[5]) {
+                gameBox.value.boxscore.players && gameBox.value.boxscore.players[0].statistics[0].athletes[0].stats[5]) {
                     //away
                     QBRsToAdd.value.push({
                         'athlete':{
@@ -267,22 +276,145 @@
         })
         setTimeout(() => {
             resolve();
-        }, 3000);
+        }, 1000);
+        })
+
+        let QBRsToAdd1 = []
+        const initPromise2 = new Promise(resolve => {
+        draft1.forEach(async p => {
+            // add in QBs with <20 action plays by grabbing box scores
+            if (!QBRs1.map(d => d.athlete.id).map(d => {
+                    d = Number(d)
+                    return d
+                }).includes(p.id)) {
+                const boxResponse = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=' + events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].id)
+                let gameBox1 = boxResponse
+                // console.log(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id))
+                if (Number(events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].home) == p.cfb_team_id &&
+                    gameBox1.boxscore && gameBox1.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
+                    //home
+                    QBRsToAdd1.push({
+                        'athlete':{
+                            'id': p.id,
+                            'displayName': p.player,
+                            'teamShortName': events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
+                        }, 
+                        'categories':[
+                            {
+                                'totals':[
+                                    gameBox1.boxscore.players[1].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0] ? Number(gameBox1.boxscore.players[1].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0].stats[5]) : 0, 
+                                    0, 
+                                    gameBox1.boxscore.players[1].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0] ? Number(gameBox1.boxscore.players[1].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0].stats[0].substr(gameBox1.boxscore.players[1].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0].stats[0].indexOf("/") + 1)) : 0
+                                ]
+                            }
+                        ], 
+                        'game':{
+                            'homeAway': 'home',
+                            'teamOpponent': {
+                                'abbreviation': events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
+                            }
+                        }
+                    })
+                } else if (Number(events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].away) == p.cfb_team_id &&
+                gameBox1.boxscore && gameBox1.boxscore.players[0].statistics[0].athletes[0].stats[5]) {
+                    //away
+                    QBRsToAdd1.push({
+                        'athlete':{
+                            'id': p.id,
+                            'displayName': p.player,
+                            'teamShortName': events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
+                        }, 
+                        'categories':[
+                            {
+                                'totals':[
+                                    gameBox1.boxscore.players[0].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0] ? Number(gameBox1.boxscore.players[0].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0].stats[5]) : 0, 
+                                    0, 
+                                    gameBox1.boxscore.players[0].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0] ? Number(gameBox1.boxscore.players[0].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0].stats[0].substr(gameBox1.boxscore.players[0].statistics[0].athletes.filter(f => {
+                                        return Number(f.athlete.id) == p.id
+                                    })[0].stats[0].indexOf("/") + 1)) : 0
+                                ]
+                            }
+                        ], 
+                        'game':{
+                            'homeAway': 'away',
+                            'teamOpponent': {
+                                'abbreviation': events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
+                            }
+                        }
+                    })
+                } else {
+                    QBRsToAdd1.push({
+                        'athlete':{
+                            'id': p.id,
+                            'displayName': p.player,
+                            'teamShortName': ''
+                        }, 
+                        'categories':[
+                            {
+                                'totals':[
+                                    0, 
+                                    0, 
+                                    0
+                                ]
+                            }
+                        ], 
+                        'game':{
+                            'homeAway': 'away',
+                            'teamOpponent': {
+                                'abbreviation': ''
+                            }
+                        }
+                    })
+                }
+            }
+        })
+        setTimeout(() => {
+            resolve();
+        }, 1000);
         })
 
         await initPromise
+        await initPromise2
         // console.log(QBRsToAdd.value)
 
         QBRs.value.push(...QBRsToAdd.value)
+        QBRs1.push(...QBRsToAdd1)
 
         QBRs.value.map(d => {
             d.score = d.categories[0].totals[2] <= 35 ? d.categories[0].totals[0] * (d.categories[0].totals[2] / 35) : d.categories[0].totals[0] * Math.pow((d.categories[0].totals[2] / 35), 1/4)
             return d
         })
+        QBRs1.map(d => {
+            d.score = d.categories[0].totals[2] <= 35 ? d.categories[0].totals[0] * (d.categories[0].totals[2] / 35) : d.categories[0].totals[0] * Math.pow((d.categories[0].totals[2] / 35), 1/4)
+            return d
+        })
         
         QBRs.value = QBRs.value.map(d => {
-            if (selectedWeek.value == 1 && [4429020, 4428993, 4709977, 5105849, 4432767].includes(Number(d.athlete.id))) {
-                d.scoreToUse = QBRs.value.filter(f => f.athlete.id == d.athlete.id).reduce((acc, obj) => acc + obj.score, 0) / 2
+            d.scoreToUse = d.score
+            return d
+        }).sort((a, b) => d3.descending(a.score, b.score))
+
+        QBRs1 = QBRs1.map(d => {
+            if ([4429020, 4428993, 4709977, 5105849, 4432767].includes(Number(d.athlete.id))) {
+                d.scoreToUse = QBRs1.filter(f => f.athlete.id == d.athlete.id).reduce((acc, obj) => acc + obj.score, 0) / 2
             } else {
                 d.scoreToUse = d.score
             }
@@ -307,6 +439,27 @@
             return d
         })
         teamData.value = teamData.value.sort((a, b) => d3.descending(a.wScore, b.wScore))
+
+        let teamData1 = draft.map(({team}) => ({team})).slice(0, 11)
+        teamData1.map(d => {
+            if (QBRs1.filter(f => {
+                    return draft.filter(ff => ff.team == d.team).map(dd => dd.id).includes(Number(f.athlete.id))
+                }).length > 0) {
+                d.wScore = QBRs1.filter(f => {
+                    return draft.filter(ff => ff.team == d.team).map(dd => dd.id).includes(Number(f.athlete.id))
+                }).slice(0, 3).reduce((acc, obj) => acc + obj.scoreToUse, 0)
+            } else {
+                d.wScore = 0
+            }
+            
+            d.sScore = d.wScore
+            return d
+        })
+
+        teamData.value.map(d => {
+            d.sScore = d.sScore + teamData1.filter(f => f.team == d.team)[0].sScore
+            return d
+        })
 
         eachTeamTable.value = draft.map(({team, player, id}) => ({team, player, id}))
 
@@ -368,12 +521,12 @@
             if (!QBRs.value.map(d => d.athlete.id).map(d => {
                     d = Number(d)
                     return d
-                }).includes(p.id)) {
+                }).includes(p.id) && events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id).length > 0) {
                 const boxResponse = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=' + events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].id)
                 gameBox.value = boxResponse
                 // console.log(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id))
                 if (Number(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].home) == p.cfb_team_id &&
-                    gameBox.value.boxscore && gameBox.value.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
+                    gameBox.value.boxscore.players && gameBox.value.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
                     //home
                     QBRsToAdd.value.push({
                         'athlete':{
@@ -408,7 +561,7 @@
                         }
                     })
                 } else if (Number(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].away) == p.cfb_team_id &&
-                gameBox.value.boxscore && gameBox.value.boxscore.players[0].statistics[0].athletes[0].stats[5]) {
+                gameBox.value.boxscore.players && gameBox.value.boxscore.players[0].statistics[0].athletes[0].stats[5]) {
                     //away
                     QBRsToAdd.value.push({
                         'athlete':{
@@ -494,7 +647,6 @@
 
         tableData.value = QBRs.value.slice(0, counter.value * 10 + 10)
 
-        teamData.value = draft.map(({team}) => ({team})).slice(0, 11)
         teamData.value.map(d => {
             if (QBRs.value.filter(f => {
                     return draft.filter(ff => ff.team == d.team).map(dd => dd.id).includes(Number(f.athlete.id))
@@ -506,7 +658,6 @@
                 d.wScore = 0
             }
             
-            d.sScore = d.wScore
             return d
         })
         teamData.value = teamData.value.sort((a, b) => d3.descending(a.wScore, b.wScore))

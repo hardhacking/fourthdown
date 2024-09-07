@@ -12,7 +12,7 @@ export const useGameStore = defineStore('game', () => {
   const weeksTable1 = computed(async () => {
     if (weeksArray1 > 0) return weeksArray1
     else {
-      const weeksResponse1 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=1&seasontype=2&limit=1000')
+      const weeksResponse1 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=1&limit=1000')
       weeksArray1 = weeksResponse1
       return weeksArray1
     }
@@ -21,7 +21,7 @@ export const useGameStore = defineStore('game', () => {
   const weeksTable2 = computed(async () => {
     if (weeksArray2 > 0) return weeksArray2
     else {
-      const weeksResponse2 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=2&seasontype=2&limit=1000')
+      const weeksResponse2 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=2&limit=1000')
       weeksArray2 = weeksResponse2
       return weeksArray2
     }
@@ -30,7 +30,7 @@ export const useGameStore = defineStore('game', () => {
   const weeksTable3 = computed(async () => {
     if (weeksArray3 > 0) return weeksArray3
     else {
-      const weeksResponse3 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=3&seasontype=2&limit=1000')
+      const weeksResponse3 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=3&limit=1000')
       weeksArray3 = weeksResponse3
       return weeksArray3
     }
@@ -39,7 +39,7 @@ export const useGameStore = defineStore('game', () => {
   const weeksTable4 = computed(async () => {
     if (weeksArray4 > 0) return weeksArray4
     else {
-      const weeksResponse4 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=4&seasontype=2&limit=1000')
+      const weeksResponse4 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=4&limit=1000')
       weeksArray4 = weeksResponse4
       return weeksArray4
     }
@@ -48,7 +48,7 @@ export const useGameStore = defineStore('game', () => {
   const weeksTable5 = computed(async () => {
     if (weeksArray5 > 0) return weeksArray5
     else {
-      const weeksResponse5 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=5&seasontype=2&limit=1000')
+      const weeksResponse5 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=5&limit=1000')
       weeksArray5 = weeksResponse5
       return weeksArray5
     }
@@ -58,7 +58,7 @@ export const useGameStore = defineStore('game', () => {
   const weeksTable6 = computed(async () => {
     if (weeksArray6 > 0) return weeksArray6
     else {
-      const weeksResponse6 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=6&seasontype=2&limit=1000')
+      const weeksResponse6 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=6&limit=1000')
       weeksArray6 = weeksResponse6
       return weeksArray6
     }
@@ -68,7 +68,7 @@ export const useGameStore = defineStore('game', () => {
   const weeksTable7 = computed(async () => {
     if (weeksArray7 > 0) return weeksArray7
     else {
-      const weeksResponse7 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=7&seasontype=2&limit=1000')
+      const weeksResponse7 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=7&limit=1000')
       weeksArray7 = weeksResponse7
       return weeksArray7
     }
@@ -78,7 +78,7 @@ export const useGameStore = defineStore('game', () => {
   const weeksTable8 = computed(async () => {
     if (weeksArray8 > 0) return weeksArray8
     else {
-      const weeksResponse8 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=8&seasontype=2&limit=1000')
+      const weeksResponse8 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=8&limit=1000')
       weeksArray8 = weeksResponse8
       return weeksArray8
     }
@@ -88,7 +88,7 @@ export const useGameStore = defineStore('game', () => {
   const weeksTable9 = computed(async () => {
     if (weeksArray9 > 0) return weeksArray9
     else {
-      const weeksResponse9 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=9&seasontype=2&limit=1000')
+      const weeksResponse9 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=9&limit=1000')
       weeksArray9 = weeksResponse9
       return weeksArray9
     }
@@ -98,7 +98,7 @@ export const useGameStore = defineStore('game', () => {
   const weeksTable10 = computed(async () => {
     if (weeksArray10 > 0) return weeksArray10
     else {
-      const weeksResponse10 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=10&seasontype=2&limit=1000')
+      const weeksResponse10 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=10&limit=1000')
       weeksArray10 = weeksResponse10
       return weeksArray10
     }
@@ -108,7 +108,7 @@ export const useGameStore = defineStore('game', () => {
   const weeksTable11 = computed(async () => {
     if (weeksArray11 > 0) return weeksArray11
     else {
-      const weeksResponse11 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=11&seasontype=2&limit=1000')
+      const weeksResponse11 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=11&limit=1000')
       weeksArray11 = weeksResponse11
       return weeksArray11
     }
@@ -118,7 +118,7 @@ export const useGameStore = defineStore('game', () => {
   const weeksTable12 = computed(async () => {
     if (weeksArray12 > 0) return weeksArray12
     else {
-      const weeksResponse12 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=12&seasontype=2&limit=1000')
+      const weeksResponse12 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=12&limit=1000')
       weeksArray12 = weeksResponse12
       return weeksArray12
     }
@@ -128,7 +128,7 @@ export const useGameStore = defineStore('game', () => {
   const weeksTable13 = computed(async () => {
     if (weeksArray13 > 0) return weeksArray13
     else {
-      const weeksResponse13 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=13&seasontype=2&limit=1000')
+      const weeksResponse13 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=13&limit=1000')
       weeksArray13 = weeksResponse13
       return weeksArray13
     }
@@ -138,7 +138,7 @@ export const useGameStore = defineStore('game', () => {
   const weeksTable14 = computed(async () => {
     if (weeksArray14 > 0) return weeksArray14
     else {
-      const weeksResponse14 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=14&seasontype=2&limit=1000')
+      const weeksResponse14 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=14&limit=1000')
       weeksArray14 = weeksResponse14
       return weeksArray14
     }
@@ -148,7 +148,7 @@ export const useGameStore = defineStore('game', () => {
   const weeksTable15 = computed(async () => {
     if (weeksArray15 > 0) return weeksArray15
     else {
-      const weeksResponse15 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=15&seasontype=2&limit=1000')
+      const weeksResponse15 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=15&limit=1000')
       weeksArray15 = weeksResponse15
       return weeksArray15
     }
@@ -158,7 +158,7 @@ export const useGameStore = defineStore('game', () => {
   const weeksTable16 = computed(async () => {
     if (weeksArray16 > 0) return weeksArray16
     else {
-      const weeksResponse16 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=16&seasontype=2&limit=1000')
+      const weeksResponse16 = await $fetch('https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=16&limit=1000')
       weeksArray16 = weeksResponse16
       return weeksArray16
     }
@@ -167,13 +167,13 @@ export const useGameStore = defineStore('game', () => {
  
 
 
-  // https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=1&seasontype=2&limit=1000
+  // https://site.web.api.espn.com/apis/fitt/v3/sports/football/college-football/qbr?qbrType=weeks&season=2024&week=1&limit=1000
 
   var scoresArray1 = ref([])
   const boxScores1 = computed(async () => {
     if (scoresArray1 > 0) return scoresArray1
     else {
-      const scoresResponse1 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=1&dates=2024&seasontype=2&tz=America%2FNew_York')
+      const scoresResponse1 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=1&dates=2024&tz=America%2FNew_York')
       scoresArray1 = scoresResponse1
       return scoresArray1
     }
@@ -182,7 +182,7 @@ export const useGameStore = defineStore('game', () => {
   const boxScores2 = computed(async () => {
     if (scoresArray2 > 0) return scoresArray2
     else {
-      const scoresResponse2 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=2&dates=2024&seasontype=2&tz=America%2FNew_York')
+      const scoresResponse2 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=2&dates=2024&tz=America%2FNew_York')
       scoresArray2 = scoresResponse2
       return scoresArray2
     }
@@ -191,7 +191,7 @@ export const useGameStore = defineStore('game', () => {
   const boxScores3 = computed(async () => {
     if (scoresArray3 > 0) return scoresArray3
     else {
-      const scoresResponse3 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=3&dates=2024&seasontype=2&tz=America%2FNew_York')
+      const scoresResponse3 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=3&dates=2024&tz=America%2FNew_York')
       scoresArray3 = scoresResponse3
       return scoresArray3
     }
@@ -200,7 +200,7 @@ export const useGameStore = defineStore('game', () => {
   const boxScores4 = computed(async () => {
     if (scoresArray4 > 0) return scoresArray4
     else {
-      const scoresResponse4 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=4&dates=2024&seasontype=2&tz=America%2FNew_York')
+      const scoresResponse4 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=4&dates=2024&tz=America%2FNew_York')
       scoresArray4 = scoresResponse4
       return scoresArray4
     }
@@ -209,7 +209,7 @@ export const useGameStore = defineStore('game', () => {
   const boxScores5 = computed(async () => {
     if (scoresArray5 > 0) return scoresArray5
     else {
-      const scoresResponse5 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=5&dates=2024&seasontype=2&tz=America%2FNew_York')
+      const scoresResponse5 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=5&dates=2024&tz=America%2FNew_York')
       scoresArray5 = scoresResponse5
       return scoresArray5
     }
@@ -218,7 +218,7 @@ export const useGameStore = defineStore('game', () => {
   const boxScores6 = computed(async () => {
     if (scoresArray6 > 0) return scoresArray6
     else {
-      const scoresResponse6 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=6&dates=2024&seasontype=2&tz=America%2FNew_York')
+      const scoresResponse6 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=6&dates=2024&tz=America%2FNew_York')
       scoresArray6 = scoresResponse6
       return scoresArray6
     }
@@ -227,7 +227,7 @@ export const useGameStore = defineStore('game', () => {
   const boxScores7 = computed(async () => {
     if (scoresArray7 > 0) return scoresArray7
     else {
-      const scoresResponse7 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=7&dates=2024&seasontype=2&tz=America%2FNew_York')
+      const scoresResponse7 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=7&dates=2024&tz=America%2FNew_York')
       scoresArray7 = scoresResponse7
       return scoresArray7
     }
@@ -236,7 +236,7 @@ export const useGameStore = defineStore('game', () => {
   const boxScores8 = computed(async () => {
     if (scoresArray8 > 0) return scoresArray8
     else {
-      const scoresResponse8 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=8&dates=2024&seasontype=2&tz=America%2FNew_York')
+      const scoresResponse8 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=8&dates=2024&tz=America%2FNew_York')
       scoresArray8 = scoresResponse8
       return scoresArray8
     }
@@ -245,7 +245,7 @@ export const useGameStore = defineStore('game', () => {
   const boxScores9 = computed(async () => {
     if (scoresArray9 > 0) return scoresArray9
     else {
-      const scoresResponse9 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=9&dates=2024&seasontype=2&tz=America%2FNew_York')
+      const scoresResponse9 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=9&dates=2024&tz=America%2FNew_York')
       scoresArray9 = scoresResponse9
       return scoresArray9
     }
@@ -254,7 +254,7 @@ export const useGameStore = defineStore('game', () => {
   const boxScores10 = computed(async () => {
     if (scoresArray10 > 0) return scoresArray10
     else {
-      const scoresResponse10 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=10&dates=2024&seasontype=2&tz=America%2FNew_York')
+      const scoresResponse10 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=10&dates=2024&tz=America%2FNew_York')
       scoresArray10 = scoresResponse10
       return scoresArray10
     }
@@ -263,7 +263,7 @@ export const useGameStore = defineStore('game', () => {
   const boxScores11 = computed(async () => {
     if (scoresArray11 > 0) return scoresArray11
     else {
-      const scoresResponse11 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=11&dates=2024&seasontype=2&tz=America%2FNew_York')
+      const scoresResponse11 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=11&dates=2024&tz=America%2FNew_York')
       scoresArray11 = scoresResponse11
       return scoresArray11
     }
@@ -272,7 +272,7 @@ export const useGameStore = defineStore('game', () => {
   const boxScores12 = computed(async () => {
     if (scoresArray12 > 0) return scoresArray12
     else {
-      const scoresResponse12 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=12&dates=2024&seasontype=2&tz=America%2FNew_York')
+      const scoresResponse12 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=12&dates=2024&tz=America%2FNew_York')
       scoresArray12 = scoresResponse12
       return scoresArray12
     }
@@ -281,7 +281,7 @@ export const useGameStore = defineStore('game', () => {
   const boxScores13 = computed(async () => {
     if (scoresArray13 > 0) return scoresArray13
     else {
-      const scoresResponse13 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=13&dates=2024&seasontype=2&tz=America%2FNew_York')
+      const scoresResponse13 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=13&dates=2024&tz=America%2FNew_York')
       scoresArray13 = scoresResponse13
       return scoresArray13
     }
@@ -290,7 +290,7 @@ export const useGameStore = defineStore('game', () => {
   const boxScores14 = computed(async () => {
     if (scoresArray14 > 0) return scoresArray14
     else {
-      const scoresResponse14 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=14&dates=2024&seasontype=2&tz=America%2FNew_York')
+      const scoresResponse14 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=14&dates=2024&tz=America%2FNew_York')
       scoresArray14 = scoresResponse14
       return scoresArray14
     }
@@ -299,7 +299,7 @@ export const useGameStore = defineStore('game', () => {
   const boxScores15 = computed(async () => {
     if (scoresArray15 > 0) return scoresArray15
     else {
-      const scoresResponse15 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=15&dates=2024&seasontype=2&tz=America%2FNew_York')
+      const scoresResponse15 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=15&dates=2024&tz=America%2FNew_York')
       scoresArray15 = scoresResponse15
       return scoresArray15
     }
@@ -308,7 +308,7 @@ export const useGameStore = defineStore('game', () => {
   const boxScores16 = computed(async () => {
     if (scoresArray16 > 0) return scoresArray16
     else {
-      const scoresResponse16 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=16&dates=2024&seasontype=2&tz=America%2FNew_York')
+      const scoresResponse16 = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&groups=80&week=16&dates=2024&tz=America%2FNew_York')
       scoresArray16 = scoresResponse16
       return scoresArray16
     }

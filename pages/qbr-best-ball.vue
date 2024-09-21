@@ -3,7 +3,7 @@
         <h1 class="text-3xl flex w-full justify-around py-8">ESPN QBR Best Ball League</h1>
         <div class="flex w-full justify-around">
             <select class="text-2xl my-4" v-model="selectedWeek" v-on:change="reLoad">
-                <option v-for="option in [1, 2, 3]" :value="option">Week {{option}}</option>
+                <option v-for="option in [1, 2, 3, 4]" :value="option">Week {{option}}</option>
             </select>
         </div>
         <h2 class="text-2xl flex w-full justify-around py-4">Team Standings</h2>
@@ -130,396 +130,553 @@
     ] 
 
     const selectedTeam = ref('Andre')
-    const selectedWeek = ref(3)
+    const selectedWeek = ref(4)
 
     const store = useGameStore()
     const weeksTable = ref([])
-    const scoreBoard = ref([])
-    const events = ref(null)
+    // const scoreBoard = ref([])
+    // const events = ref(null)
     const QBRs = ref(null)
     const tableData = ref(null)
-    const QBRsToAdd = ref([])
+    // const QBRsToAdd = ref([])
     const counter = ref(0)
     const teamData = ref([])
     const eachTeamTable = ref([])
-    const gameBox = ref(null)
+    // const gameBox = ref(null)
     onMounted(async () => {
-        weeksTable.value = await store.weeksTable3
+        weeksTable.value = await store.weeksTable4
         let weeksTable1 = await store.weeksTable1
         let weeksTable2 = await store.weeksTable2
+        let weeksTable3 = await store.weeksTable3
                                 
         QBRs.value = weeksTable.value.athletes ? weeksTable.value.athletes : []
         let QBRs1 = weeksTable1.athletes ? weeksTable1.athletes : []
         let QBRs2 = weeksTable2.athletes ? weeksTable2.athletes : []
+        let QBRs3 = weeksTable3.athletes ? weeksTable3.athletes : []
 
-        scoreBoard.value = await store.boxScores3
-        let scoreBoard1 = await store.boxScores1
-        let scoreBoard2 = await store.boxScores2
+        // scoreBoard.value = await store.boxScores4
+        // let scoreBoard1 = await store.boxScores1
+        // let scoreBoard2 = await store.boxScores2
+        // let scoreBoard3 = await store.boxScores3
 
-        events.value = scoreBoard.value.events
-        let events1 = scoreBoard1.events
-        let events2 = scoreBoard2.events
+        // events.value = scoreBoard.value.events
+        // let events1 = scoreBoard1.events
+        // let events2 = scoreBoard2.events
+        // let events3 = scoreBoard3.events
 
-        events.value.map(d => {
-            d.home = d.competitions[0].competitors[0].id
-            d.away = d.competitions[0].competitors[1].id
-            return d
-        })
-        events1.map(d => {
-            d.home = d.competitions[0].competitors[0].id
-            d.away = d.competitions[0].competitors[1].id
-            return d
-        })
-        events2.map(d => {
-            d.home = d.competitions[0].competitors[0].id
-            d.away = d.competitions[0].competitors[1].id
-            return d
-        })
-        let draft1 = draft.map(d => d)
-        let draft2 = draft.map(d => d)
+        // events.value.map(d => {
+        //     d.home = d.competitions[0].competitors[0].id
+        //     d.away = d.competitions[0].competitors[1].id
+        //     return d
+        // })
+        // events1.map(d => {
+        //     d.home = d.competitions[0].competitors[0].id
+        //     d.away = d.competitions[0].competitors[1].id
+        //     return d
+        // })
+        // events2.map(d => {
+        //     d.home = d.competitions[0].competitors[0].id
+        //     d.away = d.competitions[0].competitors[1].id
+        //     return d
+        // })
+        // events3.map(d => {
+        //     d.home = d.competitions[0].competitors[0].id
+        //     d.away = d.competitions[0].competitors[1].id
+        //     return d
+        // })
+        // let draft1 = draft.map(d => d)
+        // let draft2 = draft.map(d => d)
+        // let draft3 = draft.map(d => d)
 
-        const initPromise = new Promise(resolve => {
-        draft.forEach(async p => {
-            // add in QBs with <20 action plays by grabbing box scores
-            if (!QBRs.value.map(d => d.athlete.id).map(d => {
-                    d = Number(d)
-                    return d
-                }).includes(p.id) && events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id).length > 0) {
-                const boxResponse = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=' + events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].id)
-                gameBox.value = boxResponse
+        // let QBRsToAdd3 = []
+        // let QBRsToAdd2 = []
+        // let QBRsToAdd1 = []
+        // const initPromise = new Promise(resolve => {
+        // draft.forEach(async p => {
+        //     // add in QBs with <20 action plays by grabbing box scores
+        //     if (!QBRs.value.map(d => d.athlete.id).map(d => {
+        //             d = Number(d)
+        //             return d
+        //         }).includes(p.id) && events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id).length > 0) {
+        //         const boxResponse = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=' + events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].id)
+        //         gameBox.value = boxResponse
                 
-                if (Number(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].home) == p.cfb_team_id &&
-                    gameBox.value.boxscore.players && gameBox.value.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
-                    //home
-                    QBRsToAdd.value.push({
-                        'athlete':{
-                            'id': p.id,
-                            'displayName': p.player,
-                            'teamShortName': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
-                        }, 
-                        'categories':[
-                            {
-                                'totals':[
-                                    gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0] ? Number(gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[5]) : 0, 
-                                    0, 
-                                    gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0] ? Number(gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[0].substr(gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[0].indexOf("/") + 1)) : 0
-                                ]
-                            }
-                        ], 
-                        'game':{
-                            'homeAway': 'home',
-                            'teamOpponent': {
-                                'abbreviation': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
-                            }
-                        }
-                    })
-                } else if (Number(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].away) == p.cfb_team_id &&
-                gameBox.value.boxscore.players && gameBox.value.boxscore.players[0].statistics[0].athletes[0].stats[5]) {
-                    //away
-                    QBRsToAdd.value.push({
-                        'athlete':{
-                            'id': p.id,
-                            'displayName': p.player,
-                            'teamShortName': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
-                        }, 
-                        'categories':[
-                            {
-                                'totals':[
-                                    gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0] ? Number(gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[5]) : 0, 
-                                    0, 
-                                    gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0] ? Number(gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[0].substr(gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[0].indexOf("/") + 1)) : 0
-                                ]
-                            }
-                        ], 
-                        'game':{
-                            'homeAway': 'away',
-                            'teamOpponent': {
-                                'abbreviation': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
-                            }
-                        }
-                    })
-                } else {
-                    QBRsToAdd.value.push({
-                        'athlete':{
-                            'id': p.id,
-                            'displayName': p.player,
-                            'teamShortName': ''
-                        }, 
-                        'categories':[
-                            {
-                                'totals':[
-                                    0, 
-                                    0, 
-                                    0
-                                ]
-                            }
-                        ], 
-                        'game':{
-                            'homeAway': 'away',
-                            'teamOpponent': {
-                                'abbreviation': ''
-                            }
-                        }
-                    })
-                }
-            }
-        })
-        setTimeout(() => {
-            resolve();
-        }, 1000);
-        })
-
-        let QBRsToAdd1 = []
-        const initPromise2 = new Promise(resolve => {
-        draft1.forEach(async p => {
-            // add in QBs with <20 action plays by grabbing box scores
-            if (!QBRs1.map(d => d.athlete.id).map(d => {
-                    d = Number(d)
-                    return d
-                }).includes(p.id)) {
-                const boxResponse = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=' + events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].id)
-                let gameBox1 = boxResponse
+        //         if (Number(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].home) == p.cfb_team_id &&
+        //             gameBox.value.boxscore.players && gameBox.value.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
+        //             //home
+        //             QBRsToAdd.value.push({
+        //                 'athlete':{
+        //                     'id': p.id,
+        //                     'displayName': p.player,
+        //                     'teamShortName': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
+        //                 }, 
+        //                 'categories':[
+        //                     {
+        //                         'totals':[
+        //                             gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[5]) : 0, 
+        //                             0, 
+        //                             gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].substr(gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].indexOf("/") + 1)) : 0
+        //                         ]
+        //                     }
+        //                 ], 
+        //                 'game':{
+        //                     'homeAway': 'home',
+        //                     'teamOpponent': {
+        //                         'abbreviation': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
+        //                     }
+        //                 }
+        //             })
+        //         } else if (Number(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].away) == p.cfb_team_id &&
+        //         gameBox.value.boxscore.players && gameBox.value.boxscore.players[0].statistics[0].athletes[0].stats[5]) {
+        //             //away
+        //             QBRsToAdd.value.push({
+        //                 'athlete':{
+        //                     'id': p.id,
+        //                     'displayName': p.player,
+        //                     'teamShortName': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
+        //                 }, 
+        //                 'categories':[
+        //                     {
+        //                         'totals':[
+        //                             gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[5]) : 0, 
+        //                             0, 
+        //                             gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].substr(gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].indexOf("/") + 1)) : 0
+        //                         ]
+        //                     }
+        //                 ], 
+        //                 'game':{
+        //                     'homeAway': 'away',
+        //                     'teamOpponent': {
+        //                         'abbreviation': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
+        //                     }
+        //                 }
+        //             })
+        //         } else {
+        //             QBRsToAdd.value.push({
+        //                 'athlete':{
+        //                     'id': p.id,
+        //                     'displayName': p.player,
+        //                     'teamShortName': ''
+        //                 }, 
+        //                 'categories':[
+        //                     {
+        //                         'totals':[
+        //                             0, 
+        //                             0, 
+        //                             0
+        //                         ]
+        //                     }
+        //                 ], 
+        //                 'game':{
+        //                     'homeAway': 'away',
+        //                     'teamOpponent': {
+        //                         'abbreviation': ''
+        //                     }
+        //                 }
+        //             })
+        //         }
+        //     }
+        // })
+        // draft1.forEach(async p => {
+        //     // add in QBs with <20 action plays by grabbing box scores
+        //     if (!QBRs1.map(d => d.athlete.id).map(d => {
+        //             d = Number(d)
+        //             return d
+        //         }).includes(p.id)) {
+        //         const boxResponse = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=' + events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].id)
+        //         let gameBox1 = boxResponse
                 
-                if (Number(events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].home) == p.cfb_team_id &&
-                    gameBox1.boxscore && gameBox1.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
-                    //home
-                    QBRsToAdd1.push({
-                        'athlete':{
-                            'id': p.id,
-                            'displayName': p.player,
-                            'teamShortName': events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
-                        }, 
-                        'categories':[
-                            {
-                                'totals':[
-                                    gameBox1.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0] ? Number(gameBox1.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[5]) : 0, 
-                                    0, 
-                                    gameBox1.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0] ? Number(gameBox1.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[0].substr(gameBox1.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[0].indexOf("/") + 1)) : 0
-                                ]
-                            }
-                        ], 
-                        'game':{
-                            'homeAway': 'home',
-                            'teamOpponent': {
-                                'abbreviation': events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
-                            }
-                        }
-                    })
-                } else if (Number(events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].away) == p.cfb_team_id &&
-                gameBox1.boxscore && gameBox1.boxscore.players[0].statistics[0].athletes[0].stats[5]) {
-                    //away
-                    QBRsToAdd1.push({
-                        'athlete':{
-                            'id': p.id,
-                            'displayName': p.player,
-                            'teamShortName': events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
-                        }, 
-                        'categories':[
-                            {
-                                'totals':[
-                                    gameBox1.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0] ? Number(gameBox1.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[5]) : 0, 
-                                    0, 
-                                    gameBox1.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0] ? Number(gameBox1.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[0].substr(gameBox1.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[0].indexOf("/") + 1)) : 0
-                                ]
-                            }
-                        ], 
-                        'game':{
-                            'homeAway': 'away',
-                            'teamOpponent': {
-                                'abbreviation': events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
-                            }
-                        }
-                    })
-                } else {
-                    QBRsToAdd1.push({
-                        'athlete':{
-                            'id': p.id,
-                            'displayName': p.player,
-                            'teamShortName': ''
-                        }, 
-                        'categories':[
-                            {
-                                'totals':[
-                                    0, 
-                                    0, 
-                                    0
-                                ]
-                            }
-                        ], 
-                        'game':{
-                            'homeAway': 'away',
-                            'teamOpponent': {
-                                'abbreviation': ''
-                            }
-                        }
-                    })
-                }
-            }
-        })
-        setTimeout(() => {
-            resolve();
-        }, 1000);
-        })
-
-        let QBRsToAdd2 = []
-        const initPromise3 = new Promise(resolve => {
-        draft2.forEach(async p => {
-            // add in QBs with <20 action plays by grabbing box scores
-            if (!QBRs2.map(d => d.athlete.id).map(d => {
-                    d = Number(d)
-                    return d
-                }).includes(p.id)) {
-                const boxResponse = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=' + events2.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].id)
-                let gameBox2 = boxResponse
+        //         if (Number(events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].home) == p.cfb_team_id &&
+        //             gameBox1.boxscore && gameBox1.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
+        //             //home
+        //             QBRsToAdd1.push({
+        //                 'athlete':{
+        //                     'id': p.id,
+        //                     'displayName': p.player,
+        //                     'teamShortName': events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
+        //                 }, 
+        //                 'categories':[
+        //                     {
+        //                         'totals':[
+        //                             gameBox1.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox1.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[5]) : 0, 
+        //                             0, 
+        //                             gameBox1.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? (gameBox1.boxscore.players[1].statistics[1].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox1.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].substr(gameBox1.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].indexOf("/") + 1)) + 
+        //                             Number(gameBox1.boxscore.players[1].statistics[1].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0]) : Number(gameBox1.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].substr(gameBox1.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].indexOf("/") + 1))) : 0
+        //                         ]
+        //                     }
+        //                 ], 
+        //                 'game':{
+        //                     'homeAway': 'home',
+        //                     'teamOpponent': {
+        //                         'abbreviation': events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
+        //                     }
+        //                 }
+        //             })
+        //         } else if (Number(events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].away) == p.cfb_team_id &&
+        //         gameBox1.boxscore && gameBox1.boxscore.players[0].statistics[0].athletes[0].stats[5]) {
+        //             //away
+        //             QBRsToAdd1.push({
+        //                 'athlete':{
+        //                     'id': p.id,
+        //                     'displayName': p.player,
+        //                     'teamShortName': events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
+        //                 }, 
+        //                 'categories':[
+        //                     {
+        //                         'totals':[
+        //                             gameBox1.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox1.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[5]) : 0, 
+        //                             0, 
+        //                             gameBox1.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? (gameBox1.boxscore.players[0].statistics[1].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox1.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].substr(gameBox1.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].indexOf("/") + 1)) + 
+        //                             Number(gameBox1.boxscore.players[0].statistics[1].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0]) : Number(gameBox1.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].substr(gameBox1.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].indexOf("/") + 1))) : 0
+        //                         ]
+        //                     }
+        //                 ], 
+        //                 'game':{
+        //                     'homeAway': 'away',
+        //                     'teamOpponent': {
+        //                         'abbreviation': events1.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
+        //                     }
+        //                 }
+        //             })
+        //         } else {
+        //             QBRsToAdd1.push({
+        //                 'athlete':{
+        //                     'id': p.id,
+        //                     'displayName': p.player,
+        //                     'teamShortName': ''
+        //                 }, 
+        //                 'categories':[
+        //                     {
+        //                         'totals':[
+        //                             0, 
+        //                             0, 
+        //                             0
+        //                         ]
+        //                     }
+        //                 ], 
+        //                 'game':{
+        //                     'homeAway': 'away',
+        //                     'teamOpponent': {
+        //                         'abbreviation': ''
+        //                     }
+        //                 }
+        //             })
+        //         }
+        //     }
+        // })
+        // draft2.forEach(async p => {
+        //     // add in QBs with <20 action plays by grabbing box scores
+        //     if (!QBRs2.map(d => d.athlete.id).map(d => {
+        //             d = Number(d)
+        //             return d
+        //         }).includes(p.id)) {
+        //         const boxResponse = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=' + events2.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].id)
+        //         let gameBox2 = boxResponse
                 
-                if (Number(events2.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].home) == p.cfb_team_id &&
-                    gameBox2.boxscore && gameBox2.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
-                    //home
-                    QBRsToAdd2.push({
-                        'athlete':{
-                            'id': p.id,
-                            'displayName': p.player,
-                            'teamShortName': events2.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
-                        }, 
-                        'categories':[
-                            {
-                                'totals':[
-                                    gameBox2.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0] ? Number(gameBox2.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[5]) : 0, 
-                                    0, 
-                                    gameBox2.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0] ? Number(gameBox2.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[0].substr(gameBox2.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[0].indexOf("/") + 1)) : 0
-                                ]
-                            }
-                        ], 
-                        'game':{
-                            'homeAway': 'home',
-                            'teamOpponent': {
-                                'abbreviation': events2.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
-                            }
-                        }
-                    })
-                } else if (Number(events2.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].away) == p.cfb_team_id &&
-                gameBox2.boxscore && gameBox2.boxscore.players[0].statistics[0].athletes[0].stats[5]) {
-                    //away
-                    QBRsToAdd2.push({
-                        'athlete':{
-                            'id': p.id,
-                            'displayName': p.player,
-                            'teamShortName': events2.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
-                        }, 
-                        'categories':[
-                            {
-                                'totals':[
-                                    gameBox2.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0] ? Number(gameBox2.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[5]) : 0, 
-                                    0, 
-                                    gameBox2.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0] ? Number(gameBox2.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[0].substr(gameBox2.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[0].indexOf("/") + 1)) : 0
-                                ]
-                            }
-                        ], 
-                        'game':{
-                            'homeAway': 'away',
-                            'teamOpponent': {
-                                'abbreviation': events2.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
-                            }
-                        }
-                    })
-                } else {
-                    QBRsToAdd2.push({
-                        'athlete':{
-                            'id': p.id,
-                            'displayName': p.player,
-                            'teamShortName': ''
-                        }, 
-                        'categories':[
-                            {
-                                'totals':[
-                                    0, 
-                                    0, 
-                                    0
-                                ]
-                            }
-                        ], 
-                        'game':{
-                            'homeAway': 'away',
-                            'teamOpponent': {
-                                'abbreviation': ''
-                            }
-                        }
-                    })
-                }
-            }
-        })
-        setTimeout(() => {
-            resolve();
-        }, 1000);
-        })
+        //         if (Number(events2.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].home) == p.cfb_team_id &&
+        //             gameBox2.boxscore && gameBox2.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
+        //             //home
+        //             QBRsToAdd2.push({
+        //                 'athlete':{
+        //                     'id': p.id,
+        //                     'displayName': p.player,
+        //                     'teamShortName': events2.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
+        //                 }, 
+        //                 'categories':[
+        //                     {
+        //                         'totals':[
+        //                             gameBox2.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox2.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[5]) : 0, 
+        //                             0, 
+        //                             gameBox2.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? (gameBox2.boxscore.players[1].statistics[1].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox2.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].substr(gameBox2.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].indexOf("/") + 1)) + 
+        //                             Number(gameBox2.boxscore.players[1].statistics[1].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0]) : Number(gameBox2.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].substr(gameBox2.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].indexOf("/") + 1))) : 0
+        //                         ]
+        //                     }
+        //                 ], 
+        //                 'game':{
+        //                     'homeAway': 'home',
+        //                     'teamOpponent': {
+        //                         'abbreviation': events2.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
+        //                     }
+        //                 }
+        //             })
+        //         } else if (Number(events2.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].away) == p.cfb_team_id &&
+        //         gameBox2.boxscore && gameBox2.boxscore.players[0].statistics[0].athletes[0].stats[5]) {
+        //             //away
+        //             QBRsToAdd2.push({
+        //                 'athlete':{
+        //                     'id': p.id,
+        //                     'displayName': p.player,
+        //                     'teamShortName': events2.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
+        //                 }, 
+        //                 'categories':[
+        //                     {
+        //                         'totals':[
+        //                             gameBox2.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox2.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[5]) : 0, 
+        //                             0, 
+        //                             gameBox2.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? (gameBox2.boxscore.players[0].statistics[1].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox2.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].substr(gameBox2.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].indexOf("/") + 1)) + 
+        //                             Number(gameBox2.boxscore.players[0].statistics[1].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0]) : Number(gameBox2.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].substr(gameBox2.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].indexOf("/") + 1))) : 0
+        //                         ]
+        //                     }
+        //                 ], 
+        //                 'game':{
+        //                     'homeAway': 'away',
+        //                     'teamOpponent': {
+        //                         'abbreviation': events2.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
+        //                     }
+        //                 }
+        //             })
+        //         } else {
+        //             QBRsToAdd2.push({
+        //                 'athlete':{
+        //                     'id': p.id,
+        //                     'displayName': p.player,
+        //                     'teamShortName': ''
+        //                 }, 
+        //                 'categories':[
+        //                     {
+        //                         'totals':[
+        //                             0, 
+        //                             0, 
+        //                             0
+        //                         ]
+        //                     }
+        //                 ], 
+        //                 'game':{
+        //                     'homeAway': 'away',
+        //                     'teamOpponent': {
+        //                         'abbreviation': ''
+        //                     }
+        //                 }
+        //             })
+        //         }
+        //     }
+        // })
+        // draft3.forEach(async p => {
+        //     // add in QBs with <20 action plays by grabbing box scores
+        //     if (!QBRs3.map(d => d.athlete.id).map(d => {
+        //             d = Number(d)
+        //             return d
+        //         }).includes(p.id)) {
+        //         const boxResponse = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=' + events3.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].id)
+        //         let gameBox3 = boxResponse
+                
+        //         if (Number(events3.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].home) == p.cfb_team_id &&
+        //             gameBox3.boxscore && gameBox3.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
+        //             //home
+        //             QBRsToAdd3.push({
+        //                 'athlete':{
+        //                     'id': p.id,
+        //                     'displayName': p.player,
+        //                     'teamShortName': events3.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
+        //                 }, 
+        //                 'categories':[
+        //                     {
+        //                         'totals':[
+        //                             gameBox3.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox3.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[5]) : 0, 
+        //                             0, 
+        //                             gameBox3.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? (gameBox3.boxscore.players[1].statistics[1].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox3.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].substr(gameBox3.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].indexOf("/") + 1)) + 
+        //                             Number(gameBox3.boxscore.players[1].statistics[1].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0]) : Number(gameBox3.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].substr(gameBox3.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].indexOf("/") + 1))) : 0
+        //                         ]
+        //                     }
+        //                 ], 
+        //                 'game':{
+        //                     'homeAway': 'home',
+        //                     'teamOpponent': {
+        //                         'abbreviation': events3.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
+        //                     }
+        //                 }
+        //             })
+        //         } else if (Number(events3.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].away) == p.cfb_team_id &&
+        //         gameBox3.boxscore && gameBox3.boxscore.players[0].statistics[0].athletes[0].stats[5]) {
+        //             //away
+        //             QBRsToAdd3.push({
+        //                 'athlete':{
+        //                     'id': p.id,
+        //                     'displayName': p.player,
+        //                     'teamShortName': events3.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
+        //                 }, 
+        //                 'categories':[
+        //                     {
+        //                         'totals':[
+        //                             gameBox3.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox3.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[5]) : 0, 
+        //                             0, 
+        //                             gameBox3.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? (gameBox3.boxscore.players[0].statistics[1].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox3.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].substr(gameBox3.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].indexOf("/") + 1)) + 
+        //                             Number(gameBox3.boxscore.players[0].statistics[1].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0]) : Number(gameBox3.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].substr(gameBox3.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].indexOf("/") + 1))) : 0
+        //                         ]
+        //                     }
+        //                 ], 
+        //                 'game':{
+        //                     'homeAway': 'away',
+        //                     'teamOpponent': {
+        //                         'abbreviation': events3.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
+        //                     }
+        //                 }
+        //             })
+        //         } else {
+        //             QBRsToAdd3.push({
+        //                 'athlete':{
+        //                     'id': p.id,
+        //                     'displayName': p.player,
+        //                     'teamShortName': ''
+        //                 }, 
+        //                 'categories':[
+        //                     {
+        //                         'totals':[
+        //                             0, 
+        //                             0, 
+        //                             0
+        //                         ]
+        //                     }
+        //                 ], 
+        //                 'game':{
+        //                     'homeAway': 'away',
+        //                     'teamOpponent': {
+        //                         'abbreviation': ''
+        //                     }
+        //                 }
+        //             })
+        //         }
+        //     }
+        // })
+        // setTimeout(() => {
+        //     resolve();
+        // }, 1000);
+        // })
 
-        await initPromise
-        await initPromise2
-        await initPromise3
+        // await initPromise
 
-        QBRs.value.push(...QBRsToAdd.value)
-        QBRs1.push(...QBRsToAdd1)
-        QBRs2.push(...QBRsToAdd2)
+        // QBRs.value.push(...QBRsToAdd.value)
+        // QBRs1.push(...QBRsToAdd1)
+        // QBRs2.push(...QBRsToAdd2)
+        // QBRs3.push(...QBRsToAdd3)
 
         QBRs.value.map(d => {
             d.score = d.categories[0].totals[2] <= 35 ? d.categories[0].totals[0] * (d.categories[0].totals[2] / 35) : d.categories[0].totals[0] * Math.pow((d.categories[0].totals[2] / 35), 1/4)
@@ -530,6 +687,10 @@
             return d
         })
         QBRs2.map(d => {
+            d.score = d.categories[0].totals[2] <= 35 ? d.categories[0].totals[0] * (d.categories[0].totals[2] / 35) : d.categories[0].totals[0] * Math.pow((d.categories[0].totals[2] / 35), 1/4)
+            return d
+        })
+        QBRs3.map(d => {
             d.score = d.categories[0].totals[2] <= 35 ? d.categories[0].totals[0] * (d.categories[0].totals[2] / 35) : d.categories[0].totals[0] * Math.pow((d.categories[0].totals[2] / 35), 1/4)
             return d
         })
@@ -548,6 +709,10 @@
             return d
         }).sort((a, b) => d3.descending(a.score, b.score))
         QBRs2 = QBRs2.map(d => {
+            d.scoreToUse = d.score
+            return d
+        }).sort((a, b) => d3.descending(a.score, b.score))
+        QBRs3 = QBRs3.map(d => {
             d.scoreToUse = d.score
             return d
         }).sort((a, b) => d3.descending(a.score, b.score))
@@ -601,9 +766,24 @@
             d.sScore = d.wScore
             return d
         })
+        let teamData3 = draft.map(({team}) => ({team})).slice(0, 11)
+        teamData3.map(d => {
+            if (QBRs3.filter(f => {
+                    return draft.filter(ff => ff.team == d.team).map(dd => dd.id).includes(Number(f.athlete.id))
+                }).length > 0) {
+                d.wScore = QBRs3.filter(f => {
+                    return draft.filter(ff => ff.team == d.team).map(dd => dd.id).includes(Number(f.athlete.id))
+                }).slice(0, 3).reduce((acc, obj) => acc + obj.scoreToUse, 0)
+            } else {
+                d.wScore = 0
+            }
+            
+            d.sScore = d.wScore
+            return d
+        })
 
         teamData.value.map(d => {
-            d.sScore = d.sScore + teamData1.filter(f => f.team == d.team)[0].sScore + teamData2.filter(f => f.team == d.team)[0].sScore
+            d.sScore = d.sScore + teamData1.filter(f => f.team == d.team)[0].sScore + teamData2.filter(f => f.team == d.team)[0].sScore + teamData3.filter(f => f.team == d.team)[0].sScore
             return d
         })
 
@@ -649,144 +829,145 @@
     async function reLoad() {
         store.value = useGameStore()
         weeksTable.value = []
-        scoreBoard.value = []
-        events.value = null
+        // scoreBoard.value = []
+        // events.value = null
         QBRs.value = null
         tableData.value = null
-        QBRsToAdd.value = []
+        // QBRsToAdd.value = []
         eachTeamTable.value = []
-        gameBox.value = null
+        // gameBox.value = null
         counter.value = 0
         weeksTable.value = selectedWeek.value == 1 ? await store.weeksTable1 : 
                                 (selectedWeek.value == 2 ? await store.weeksTable2 : 
-                                (selectedWeek.value == 3 ? await store.weeksTable3 : []))
+                                (selectedWeek.value == 3 ? await store.weeksTable3 : 
+                                (selectedWeek.value == 4 ? await store.weeksTable4 : [])))
         QBRs.value = weeksTable.value.athletes ? weeksTable.value.athletes : []
 
-        scoreBoard.value = selectedWeek.value == 1 ? await store.boxScores1 :
-                                (selectedWeek.value == 2 ? await store.boxScores2 : 
-                                (selectedWeek.value == 3 ? await store.boxScores3 : []))
-        events.value = scoreBoard.value.events
+        // scoreBoard.value = selectedWeek.value == 1 ? await store.boxScores1 :
+        //                         (selectedWeek.value == 2 ? await store.boxScores2 : 
+        //                         (selectedWeek.value == 3 ? await store.boxScores3 : []))
+        // events.value = scoreBoard.value.events
 
-        events.value.map(d => {
-            d.home = d.competitions[0].competitors[0].id
-            d.away = d.competitions[0].competitors[1].id
-            return d
-        })
+        // events.value.map(d => {
+        //     d.home = d.competitions[0].competitors[0].id
+        //     d.away = d.competitions[0].competitors[1].id
+        //     return d
+        // })
 
-        const initPromise = new Promise(resolve => {
-        draft.forEach(async p => {
-            // add in QBs with <20 action plays by grabbing box scores
-            if (!QBRs.value.map(d => d.athlete.id).map(d => {
-                    d = Number(d)
-                    return d
-                }).includes(p.id) && events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id).length > 0) {
-                const boxResponse = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=' + events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].id)
-                gameBox.value = boxResponse
+        // const initPromise = new Promise(resolve => {
+        // draft.forEach(async p => {
+        //     // add in QBs with <20 action plays by grabbing box scores
+        //     if (!QBRs.value.map(d => d.athlete.id).map(d => {
+        //             d = Number(d)
+        //             return d
+        //         }).includes(p.id) && events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id).length > 0) {
+        //         const boxResponse = await $fetch('https://site.web.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=' + events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].id)
+        //         gameBox.value = boxResponse
                 
-                if (Number(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].home) == p.cfb_team_id &&
-                    gameBox.value.boxscore.players && gameBox.value.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
-                    //home
-                    QBRsToAdd.value.push({
-                        'athlete':{
-                            'id': p.id,
-                            'displayName': p.player,
-                            'teamShortName': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
-                        }, 
-                        'categories':[
-                            {
-                                'totals':[
-                                    gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0] ? Number(gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[5]) : 0, 
-                                    0, 
-                                    gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0] ? Number(gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[0].substr(gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[0].indexOf("/") + 1)) : 0
-                                ]
-                            }
-                        ], 
-                        'game':{
-                            'homeAway': 'home',
-                            'teamOpponent': {
-                                'abbreviation': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
-                            }
-                        }
-                    })
-                } else if (Number(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].away) == p.cfb_team_id &&
-                gameBox.value.boxscore.players && gameBox.value.boxscore.players[0].statistics[0].athletes[0].stats[5]) {
-                    //away
-                    QBRsToAdd.value.push({
-                        'athlete':{
-                            'id': p.id,
-                            'displayName': p.player,
-                            'teamShortName': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
-                        }, 
-                        'categories':[
-                            {
-                                'totals':[
-                                    gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0] ? Number(gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[5]) : 0, 
-                                    0, 
-                                    gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0] ? Number(gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[0].substr(gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
-                                        return Number(f.athlete.id) == p.id
-                                    })[0].stats[0].indexOf("/") + 1)) : 0
-                                ]
-                            }
-                        ], 
-                        'game':{
-                            'homeAway': 'away',
-                            'teamOpponent': {
-                                'abbreviation': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
-                            }
-                        }
-                    })
-                } else {
-                    QBRsToAdd.value.push({
-                        'athlete':{
-                            'id': p.id,
-                            'displayName': p.player,
-                            'teamShortName': ''
-                        }, 
-                        'categories':[
-                            {
-                                'totals':[
-                                    0, 
-                                    0, 
-                                    0
-                                ]
-                            }
-                        ], 
-                        'game':{
-                            'homeAway': 'away',
-                            'teamOpponent': {
-                                'abbreviation': ''
-                            }
-                        }
-                    })
-                }
-            }
-        })
-        setTimeout(() => {
-            resolve();
-        }, 3000);
-        })
+        //         if (Number(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].home) == p.cfb_team_id &&
+        //             gameBox.value.boxscore.players && gameBox.value.boxscore.players[1].statistics[0].athletes[0].stats[5]) {
+        //             //home
+        //             QBRsToAdd.value.push({
+        //                 'athlete':{
+        //                     'id': p.id,
+        //                     'displayName': p.player,
+        //                     'teamShortName': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
+        //                 }, 
+        //                 'categories':[
+        //                     {
+        //                         'totals':[
+        //                             gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[5]) : 0, 
+        //                             0, 
+        //                             gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].substr(gameBox.value.boxscore.players[1].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].indexOf("/") + 1)) : 0
+        //                         ]
+        //                     }
+        //                 ], 
+        //                 'game':{
+        //                     'homeAway': 'home',
+        //                     'teamOpponent': {
+        //                         'abbreviation': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
+        //                     }
+        //                 }
+        //             })
+        //         } else if (Number(events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].away) == p.cfb_team_id &&
+        //         gameBox.value.boxscore.players && gameBox.value.boxscore.players[0].statistics[0].athletes[0].stats[5]) {
+        //             //away
+        //             QBRsToAdd.value.push({
+        //                 'athlete':{
+        //                     'id': p.id,
+        //                     'displayName': p.player,
+        //                     'teamShortName': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[1].team.abbreviation
+        //                 }, 
+        //                 'categories':[
+        //                     {
+        //                         'totals':[
+        //                             gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[5]) : 0, 
+        //                             0, 
+        //                             gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0] ? Number(gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].substr(gameBox.value.boxscore.players[0].statistics[0].athletes.filter(f => {
+        //                                 return Number(f.athlete.id) == p.id
+        //                             })[0].stats[0].indexOf("/") + 1)) : 0
+        //                         ]
+        //                     }
+        //                 ], 
+        //                 'game':{
+        //                     'homeAway': 'away',
+        //                     'teamOpponent': {
+        //                         'abbreviation': events.value.filter(f => Number(f.home) == p.cfb_team_id || Number(f.away) == p.cfb_team_id)[0].competitions[0].competitors[0].team.abbreviation
+        //                     }
+        //                 }
+        //             })
+        //         } else {
+        //             QBRsToAdd.value.push({
+        //                 'athlete':{
+        //                     'id': p.id,
+        //                     'displayName': p.player,
+        //                     'teamShortName': ''
+        //                 }, 
+        //                 'categories':[
+        //                     {
+        //                         'totals':[
+        //                             0, 
+        //                             0, 
+        //                             0
+        //                         ]
+        //                     }
+        //                 ], 
+        //                 'game':{
+        //                     'homeAway': 'away',
+        //                     'teamOpponent': {
+        //                         'abbreviation': ''
+        //                     }
+        //                 }
+        //             })
+        //         }
+        //     }
+        // })
+        // setTimeout(() => {
+        //     resolve();
+        // }, 3000);
+        // })
 
-        await initPromise
+        // await initPromise
 
-        QBRs.value.push(...QBRsToAdd.value)
+        // QBRs.value.push(...QBRsToAdd.value)
 
         QBRs.value.map(d => {
             d.score = d.categories[0].totals[2] <= 35 ? d.categories[0].totals[0] * (d.categories[0].totals[2] / 35) : d.categories[0].totals[0] * Math.pow((d.categories[0].totals[2] / 35), 1/4)

@@ -24,6 +24,22 @@
                         </div>
                     </div>
                 </div>
+                <div v-else-if="player.type == 'array' && player.array.length == 4" class="-mt-[40px]" :style="{ 'margin-right': `${player.array[0]['gap' + value]}px` }">
+                    <div v-for="(p, i) in player.array" :key="p.dot_com_id">
+                        <div v-if="i == 0" class="-mr-[30px]">
+                            <PlayerCircle :player="p" :rank="title" :value="value" :title="title" />
+                        </div>
+                        <div v-else-if="i == 1" class="mr-[30px] -mt-[45px]">
+                            <PlayerCircle :player="p" :rank="title" :value="value" :title="title" />
+                        </div>
+                        <div v-else-if="i == 2" class="-mr-[30px] -mt-[45px]">
+                            <PlayerCircle :player="p" :rank="title" :value="value" :title="title" />
+                        </div>
+                        <div v-else class="mr-[30px] -mt-[45px]">
+                            <PlayerCircle :player="p" :rank="title" :value="value" :title="title" />
+                        </div>
+                    </div>
+                </div>
                 <div v-else>
                     <PlayerCircle :player="player" :rank="title" :value="value" :title="title" />
                 </div>

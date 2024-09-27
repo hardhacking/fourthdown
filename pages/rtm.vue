@@ -14,23 +14,17 @@
             <div class="flex flex-col items-center gap-4">
                 <div class="text-4xl font-bold text-center text-espngray-900">ESPN's Receiver Scores</div>
                 <div class="text-espngray-600 font-normal text-sm" v-if="weekUpdate <= 18">Updated through Week {{ weekUpdate }}</div>
-                <div class="text-espngray-600 font-normal text-sm" v-else>2023 Updated through {{ weekUpdate2 }}, 2024 scores will begin following Week 3</div>
+                <div class="text-espngray-600 font-normal text-sm" v-else>Updated through {{ weekUpdate2 }}</div>
                 <div class="p-2 lg:p-0 max-w-4xl text-center font-medium text-espngray-600">These ratings, updated weekly, use player-tracking data from NFL Next Gen Stats to evaluate every route a pass catcher runs and scores his performance in three phases of the
                 game, from 0 to 99<sup class="cursor-pointer" @click="clickedFootnote()">1</sup>.</div>
             </div>
             <div class="hidden sm:block text-xl pt-5 text-center font-bold text-espngray-900">The Top Five: Four Different Ways</div>
-            <!-- <div class="flex flex-col justify-center pt-5">
-                <div class="hidden sm:block text-xl text-center font-black text-espngray-600">The Top Five</div>
-                <div class="hidden sm:block text-xl text-center font-black text-espngray-600">Four Different Ways</div>
-            </div> -->
             <div class="hidden sm:flex flex-col cursor-crosshair mb-12 mt-6">
                 <div ref="overallRef"><LineScale v-if="showOverall" :arr="overall" value="overall" title="Overall" /></div>
                 <div ref="openRef"><LineScale v-if="showOpen" :arr="open" value="open_score" title="Open" /></div>
                 <div ref="catchRef"><LineScale v-if="showCatch" :arr="catches" value="catch_score" title="Catch" /></div>
                 <div ref="yacRef"><LineScale v-if="showYards" :arr="yards" value="yac_score" title="YAC" /></div>
             </div>
-            <!-- <div class="hidden sm:block p-2 lg:p-0 max-w-5xl text-left text-xs m-auto text-espngray-600">Wide receivers and tight ends with at least 20 targets in the 2023 season are eligible for leaderboards. Running backs are not eligible, as different weights 
-                are used to construct their composite scores than wide receiver and tight end composite scores.</div> -->
             <div class="text-xl pt-5 text-center font-bold text-espngray-900">Where Every NFL Pass Catcher Stands</div>
             <div class="p-2 text-center font-medium text-espngray-600">Open, Catch, YAC and Overall receiver ratings</div>
             <div class="max-w-5xl m-auto">
@@ -40,8 +34,8 @@
                             <div class="flex flex-col items-start">
                                 <div class="text-xs text-espngray-900">SHOW ME:</div>
                                 <div class="flex flex-col items-start">
-                                    <label class="text-espngray-900"><input class="mr-0.5" type="radio" name="radio_but" :value=true v-model="radioChoice" @click="updateChartSeason('2023', true)">Individual season(s)</label>
-                                    <label class="text-espngray-900"><input class="mr-0.5 text-espngray-600" type="radio" name="radio_but" :value=false v-model="radioChoice" @click="updateChartSeason('2020-23', true)">Combined seasons</label>
+                                    <label class="text-espngray-900"><input class="mr-0.5" type="radio" name="radio_but" :value=true v-model="radioChoice" @click="updateChartSeason('2024', true)">Individual season(s)</label>
+                                    <label class="text-espngray-900"><input class="mr-0.5 text-espngray-600" type="radio" name="radio_but" :value=false v-model="radioChoice" @click="updateChartSeason('2021-24', true)">Combined seasons</label>
                                 </div>
                             </div>
                             <div class="flex flex-col items-start" v-if="radioChoice">
@@ -56,7 +50,8 @@
                                     <div class="flex">
                                         <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-5" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2021</label></div>
                                         <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-6" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2022</label></div>
-                                        <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-7" name="check_seas" type="checkbox" @click="updateChartSeason('check')" checked>2023</label></div>
+                                        <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-7" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2023</label></div>
+                                        <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-8" name="check_seas" type="checkbox" @click="updateChartSeason('check')" checked>2024</label></div>
                                     </div>
                                 </div>
                             </div>
@@ -64,14 +59,15 @@
                                 <div class="text-sm text-left lg:pl-1 text-espngray-900">CHOOSE COMBINED SEASONS</div>
                                 <div class="flex flex-wrap">
                                     <div class="flex">
-                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2017-23')" />2017-23</label></div>
-                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2018-23')" />2018-23</label></div>
-                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2019-23')" />2019-23</label></div>
+                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2017-24')" />2017-24</label></div>
+                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2018-24')" />2018-24</label></div>
+                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2019-24')" />2019-24</label></div>
+                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2020-24')" />2020-24</label></div>
                                     </div>
                                     <div class="flex">
-                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="initial-check" name="radio_seas" type="radio" @click="updateChartSeason('2020-23')" />2020-23</label></div>
-                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2021-23')" />2021-23</label></div>
-                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2022-23')" />2022-23</label></div>
+                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="initial-check" name="radio_seas" type="radio" @click="updateChartSeason('2021-24')" />2021-24</label></div>
+                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2022-24')" />2022-24</label></div>
+                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2023-24')" />2023-24</label></div>
                                     </div>
                                 </div>
                             </div>
@@ -187,7 +183,7 @@
                     </div>
                 </div>
             </div>
-            <div class="p-2 lg:p-0 lg:mt-4 max-w-5xl mx-auto py-5 text-left text-xs text-espngray-600">Wide receivers and tight ends with at least {{ minWrTgt }} targets and running backs with at least {{ minRbTgt }} in the 2023 season are eligible for a score. Only WR/TE are eligible for the Top 5 leaderboard graphic. For prior seasons, all players with at least 48 targets are included.</div>
+            <div class="p-2 lg:p-0 lg:mt-4 max-w-5xl mx-auto py-5 text-left text-xs text-espngray-600">Wide receivers and tight ends with at least {{ minWrTgt }} targets and running backs with at least {{ minRbTgt }} in the 2024 season are eligible for a score. Only WR/TE are eligible for the Top 5 leaderboard graphic. For prior seasons, the cuttoffs are 20 targets for WR/TE and 30 for RB.</div>
             <div class="p-2 lg:p-0 lg:pb-4 lg:mt-4 max-w-5xl mx-auto pt-5 pb-10 text-left text-xs text-espngray-600"><sup>1</sup><a class="text-blue-600 underline" href="https://www.espn.com/nfl/story/_/id/34649390/espn-receiver-tracking-metrics-how-new-nfl-stats-work-open-catch-yac-scores" target="_blank">Read more</a> about how ESPN Analytics's receiver ratings work.</div>
             <!-- <div class="footnote">Design ideas from <a href="https://fivethirtyeight.com/contributors/ryan-best/" target="_blank">Ryan Best</a>. Statistical model by Brian Burke. Additional contributions by <a href="https://benjaminharden.vercel.app/" target="_blank">Ben Harden</a>, Henry Gargiulo, Matt Morris and Chris Harden.</div> -->
         </div>
@@ -220,8 +216,8 @@ export default {
           showYards: false,
 
           radioChoice: true,
-          chartSeason: '2023',
-          chartSeasons: [2023],
+          chartSeason: '2024',
+          chartSeasons: [2024],
           chartPos: 'wrte',
           chartSort: 'overall',
           prevChartSort: -1,
@@ -251,33 +247,37 @@ export default {
   async mounted() {
     await this.getData();
     this.minWrTgt = this.json.filter(f => {
-        return f.min_season == 2023 & f.max_season == 2023 & (f.position == 'WR' | f.position == 'TE')
+        return f.min_season == 2024 & f.max_season == 2024 & (f.position == 'WR' | f.position == 'TE')
     })[0].min_rtm_targets
     this.minRbTgt = this.json.filter(f => {
-        return f.min_season == 2023 & f.max_season == 2023 & (f.position == 'RB' | f.position == 'FB')
+        return f.min_season == 2024 & f.max_season == 2024 & (f.position == 'RB' | f.position == 'FB')
     })[0].min_rtm_targets
     const lastMod = new Date(this.response.headers['last-modified'])
-    const week0 = new Date("2023-09-05")
+    const week0 = new Date("2024-09-03")
     const timeDifferenceInMilliseconds = lastMod.getTime() - week0.getTime()
     this.weekUpdate = Math.round(timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24) / 7)
     this.weekUpdate2 = this.weekUpdate == 19 ? 'Wild Card Round' : (this.weekUpdate == 20 ? 'Divisional Round' : (this.weekUpdate == 21 ? 'Conference Championship' : 'Super Bowl'))
-      await this.getSeason(this.json);
-      
-      this.buildPage();
-      this.buildScatter();
-      window.addEventListener('resize', this.handleResize);
-      var tm = this.chartArr.map(function(i) {
-          return i.tm;
-      });
-      var team_name = this.chartArr.map(function(i) {
-          return i.team_name;
-      })
-      tm = [... new Set(tm)];
-      team_name = [... new Set(team_name)];
-      this.teams = tm.map(function(x, i) {
-          return {tm: x, team_name: team_name[i]};
-      });
-      this.teams.sort((a, b) => d3.ascending(a.team_name, b.team_name));
+    if (timeDifferenceInMilliseconds == 2129937000) {
+        this.weekUpdate = 20
+        this.weekUpdate2 = 'Sep 26'
+    }
+    await this.getSeason(this.json);
+    
+    this.buildPage();
+    this.buildScatter();
+    window.addEventListener('resize', this.handleResize);
+    var tm = this.chartArr.map(function(i) {
+        return i.tm;
+    });
+    var team_name = this.chartArr.map(function(i) {
+        return i.team_name;
+    })
+    tm = [... new Set(tm)];
+    team_name = [... new Set(team_name)];
+    this.teams = tm.map(function(x, i) {
+        return {tm: x, team_name: team_name[i]};
+    });
+    this.teams.sort((a, b) => d3.ascending(a.team_name, b.team_name));
   },
   methods: {
     handleClick() {
@@ -665,7 +665,7 @@ export default {
       },
       getSeason(arr) {
           arr.forEach((player) => {
-              if (player.max_season == '2023' && player.min_season == '2023' && 
+              if (player.max_season == '2024' && player.min_season == '2024' && 
               (player.position == 'WR' || player.position == 'TE')) {
                   this.seasonArr.push(player);
               }
@@ -722,7 +722,7 @@ export default {
                 }
               } else if (this.chartPos == 'wrte') {
                   arr.forEach((player) => {
-                      if (player.min_season == this.chartSeason.substring(0, 4) && player.max_season == '2023' && 
+                      if (player.min_season == this.chartSeason.substring(0, 4) && player.max_season == '2024' && 
                       player.position != 'RB' && player.position != 'FB') {
                           tmpArr.push(player);
                       }
@@ -730,14 +730,14 @@ export default {
               } else {
                 if (this.chartPos == 'RB') {
                     arr.forEach((player) => {
-                        if (player.min_season == this.chartSeason.substring(0, 4) && player.max_season == '2023' && 
+                        if (player.min_season == this.chartSeason.substring(0, 4) && player.max_season == '2024' && 
                         (player.position == 'RB' || player.position == 'FB')) {
                             tmpArr.push(player);
                         }
                     });
                 } else {
                   arr.forEach((player) => {
-                      if (player.min_season == this.chartSeason.substring(0, 4) && player.max_season == '2023' && 
+                      if (player.min_season == this.chartSeason.substring(0, 4) && player.max_season == '2024' && 
                       player.position == this.chartPos) {
                           tmpArr.push(player);
                       }
@@ -814,6 +814,7 @@ export default {
               }
           })
           const final = this.mergeObjectsWithSameScore(top5, value);
+          console.log(final)
           switch (value) {
               case "overall":
                   this.overall = final;
@@ -969,7 +970,7 @@ export default {
           if (radioBool) this.radioChoice = !this.radioChoice;
           if (value != 'check') {
               this.chartSeason = value;
-              this.chartSeasons = [2023];
+              this.chartSeasons = [2024];
               await this.updateScatterData();
           } else {
               this.chartSeasons = [];
@@ -994,9 +995,12 @@ export default {
               if (document.getElementById('check-7').checked) {
                   this.chartSeasons.push(2023);
               } 
+              if (document.getElementById('check-8').checked) {
+                  this.chartSeasons.push(2024);
+              } 
               await this.updateScatterData();
           }
-        if (value == '2020-23') document.getElementById('initial-check').checked = true;
+        if (value == '2021-24') document.getElementById('initial-check').checked = true;
       },
   },
 }

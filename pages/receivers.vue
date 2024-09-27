@@ -1,6 +1,6 @@
 <template>
     <Head>
-        <Title>NFL Receiver Score - ESPN Analytics</Title>
+        <Title>NFL Receiver Scores - ESPN Analytics</Title>
         <Meta property="og:title" content="NFL Receiver Scores - ESPN Analytics"/>
         <Meta property="og:site_name" content="NFL Receiver Scores - ESPN Analytics" />
         <Meta property="og:url" content="https://www.espnanalytics.com/receivers" />

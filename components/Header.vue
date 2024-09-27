@@ -139,8 +139,9 @@ import { InformationCircleIcon, PresentationChartLineIcon, ForwardIcon, ChartBar
          ArrowTrendingUpIcon, ListBulletIcon } from '@heroicons/vue/24/outline'
 import { CalendarDaysIcon } from '@heroicons/vue/20/solid'
 const navigation = [ 
-  { name: 'NBA Draft', href: '/nba-draft-predictor'},
-  { name: 'Everything Else', href: '/features'}
+  { name: 'WNBA Player Metrics', href: '/wnba-wpa'},
+  { name: 'NFL 4th Downs', href: '/decision'},
+  { name: 'NFL Receiver Scores', href: '/receivers'}
 ]
 // const nfl = [
 //   { name: 'Receiver Scores', description: 'Evaluate pass catchers a number of ways', href: '/receivers', icon: CubeTransparentIcon },
@@ -149,8 +150,8 @@ const navigation = [
 // ]
 const mcbb = [
   { name: '4th Downs', description: 'See 4th down decision breakdowns', href: '/decision', icon: InformationCircleIcon }, 
-  { name: 'NFL Receiver Scores', description: 'Evaluate pass catchers a number of ways', href: '/receivers', icon: CubeTransparentIcon },
-  { name: 'NFL Schedule Analysis', description: 'How does the NFL schedule impact each team?', href: '/schedule', icon: CalendarDaysIcon }
+  { name: 'Receiver Scores', description: 'Evaluate pass catchers a number of ways', href: '/receivers', icon: CubeTransparentIcon },
+  { name: 'Schedule Analysis', description: 'How does the NFL schedule impact each team?', href: '/schedule', icon: CalendarDaysIcon }
 ]
 const wcbb = [
   { name: 'WNBA Player Metrics', description: 'Measuring impact for WNBA players using Win Probability Added', href: '/wnba-wpa', icon: CubeTransparentIcon },

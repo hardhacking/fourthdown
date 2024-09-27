@@ -1,12 +1,12 @@
 <template>
     <Head>
-        <Title>NFL Receiver Tracking Metrics - ESPN Analytics</Title>
-        <Meta property="og:title" content="NFL Receiver Tracking Metrics - ESPN Analytics"/>
-        <Meta property="og:site_name" content="NFL Receiver Tracking Metrics - ESPN Analytics" />
-        <Meta property="og:url" content="https://www.espnanalytics.com/rtm" />
-        <Meta name="twitter:url" content="https://www.espnanalytics.com/rtm" />
-        <Meta name="twitter:title" content="NFL Receiver Tracking Metrics - ESPN Analytics"/>
-        <Meta name="title" content="NFL Receiver Tracking Metrics - ESPN Analytics"/>
+        <Title>NFL Receiver Score - ESPN Analytics</Title>
+        <Meta property="og:title" content="NFL Receiver Scores - ESPN Analytics"/>
+        <Meta property="og:site_name" content="NFL Receiver Scores - ESPN Analytics" />
+        <Meta property="og:url" content="https://www.espnanalytics.com/receivers" />
+        <Meta name="twitter:url" content="https://www.espnanalytics.com/receivers" />
+        <Meta name="twitter:title" content="NFL Receiver Scores - ESPN Analytics"/>
+        <Meta name="title" content="NFL Receiver Scores - ESPN Analytics"/>
     </Head>
     <div class="bg-espngray-100">
         <Header></Header>

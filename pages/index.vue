@@ -25,13 +25,13 @@
         <div class="mx-auto px-6 lg:px-8 xl:px-16">
           <div class="mx-auto max-w-2xl text-center">
             <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">ESPN Analytics</h1>
-            <p class="mt-6 text-lg leading-8 text-gray-600">Models and data visualization from ESPN Analytics! Run a simulation of the NFL Draft, look at the Draft Day Predictor, compare receiver tracking metrics and more.</p>
+            <p class="mt-6 text-lg leading-8 text-gray-600">Models and data visualization from ESPN Analytics! Run a simulation of the NFL Draft, look at the Draft Day Predictor, compare receiver scores and more.</p>
             <div class="mt-10 flex items-center justify-center gap-x-6 flex-wrap">
               <div class="flex gap-x-6">
                 <!-- <a href="/schedule" class="flex items-center max-w-[200px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL Schedule Analysis</a> -->
                 <a href="https://espnanalytics.com/wnba-wpa" class="flex items-center max-w-[120px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">WNBA Player Metrics</a>
                 <a href="https://espnanalytics.com/decision" class="flex items-center max-w-[120px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL 4th Downs</a>
-                <a href="https://espnanalytics.com/rtm" class="flex items-center max-w-[120px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL Receiver Scores</a>
+                <a href="https://espnanalytics.com/receivers" class="flex items-center max-w-[120px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL Receiver Scores</a>
               </div>
               <a href="/features" class="pt-4 temp:pt-0 text-sm font-semibold leading-6 text-gray-900">Other ESPN Analytics Features <span aria-hidden="true">→</span></a>
             </div>
@@ -39,7 +39,7 @@
           <div class="flex flex-wrap justify-between items-center">
             <div class="mt-8 flow-root sm:mt-12">
               <div class="sm:-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                <a href="/rtm"><img src="../assets/rtm_screenshot.png" alt="App screenshot" width="2432" height="1442" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
+                <a href="/receivers"><img src="../assets/rtm_screenshot.png" alt="App screenshot" width="2432" height="1442" class="rounded-md shadow-2xl ring-1 ring-gray-900/10" /></a>
               </div>
             </div>
             <!-- <div class="mt-8 flow-root sm:mt-12">

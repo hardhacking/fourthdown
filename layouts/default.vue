@@ -1,13 +1,13 @@
 <template>
     <Head>
-        <Meta name="description" content="Models and data visualization from ESPN Analytics. NBA & NFL Draft, schedule analysis, receiver tracking metrics and more." />
-        <Meta property="og:description" content="Models and data visualization from ESPN Analytics. NBA & NFL Draft, schedule analysis, receiver tracking metrics and more." />
+        <Meta name="description" content="Models and data visualization from ESPN Analytics. NBA & NFL Draft, schedule analysis, receiver scores and more." />
+        <Meta property="og:description" content="Models and data visualization from ESPN Analytics. NBA & NFL Draft, schedule analysis, receiver scores and more." />
         <Meta property="og:image" content="https://ea-images-hosting.s3.amazonaws.com/black_475.png"/>
         <Meta property="og:image:alt" content="ESPN Analytics"/>
         <Meta property="og:image:secure_url" content="https://ea-images-hosting.s3.amazonaws.com/black_475.png"/>
         <Meta name="twitter:image" content="https://ea-images-hosting.s3.amazonaws.com/black_475.png"/>
         <Meta property="og:type" content="website" />
-        <Meta name="twitter:description" content="Models and data visualization from ESPN Analytics. NBA & NFL Draft, schedule analysis, receiver tracking metrics and more." />
+        <Meta name="twitter:description" content="Models and data visualization from ESPN Analytics. NBA & NFL Draft, schedule analysis, receiver scores and more." />
         <Meta name="twitter:card" content="summary"/>
         <Meta name="twitter:creator" content="@sportsdada" />
         <Meta name="medium" content="index" />

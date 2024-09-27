@@ -143,13 +143,13 @@ const navigation = [
   { name: 'Everything Else', href: '/features'}
 ]
 // const nfl = [
-//   { name: 'Receiver Tracking Metrics', description: 'Evaluate pass catchers a number of ways', href: '/rtm', icon: CubeTransparentIcon },
+//   { name: 'Receiver Scores', description: 'Evaluate pass catchers a number of ways', href: '/receivers', icon: CubeTransparentIcon },
 //   { name: '4th Downs', description: 'See 4th down decision breakdowns', href: '/decision', icon: InformationCircleIcon },
 //   { name: 'Live Draft Pick Chances', description: "Live chances at a top 5 pick during Week 18", href: '/draft-order', icon: PresentationChartLineIcon },
 // ]
 const mcbb = [
   { name: '4th Downs', description: 'See 4th down decision breakdowns', href: '/decision', icon: InformationCircleIcon }, 
-  { name: 'Receiver Tracking Metrics', description: 'Evaluate pass catchers a number of ways', href: '/rtm', icon: CubeTransparentIcon },
+  { name: 'NFL Receiver Scores', description: 'Evaluate pass catchers a number of ways', href: '/receivers', icon: CubeTransparentIcon },
   { name: 'NFL Schedule Analysis', description: 'How does the NFL schedule impact each team?', href: '/schedule', icon: CalendarDaysIcon }
 ]
 const wcbb = [

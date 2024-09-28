@@ -266,10 +266,10 @@ export default {
     this.buildPage();
     this.buildScatter();
     window.addEventListener('resize', this.handleResize);
-    var tm = this.chartArr.map(function(i) {
+    var tm = this.json.map(function(i) {
         return i.tm;
     });
-    var team_name = this.chartArr.map(function(i) {
+    var team_name = this.json.map(function(i) {
         return i.team_name;
     })
     tm = [... new Set(tm)];
@@ -814,7 +814,6 @@ export default {
               }
           })
           const final = this.mergeObjectsWithSameScore(top5, value);
-          console.log(final)
           switch (value) {
               case "overall":
                   this.overall = final;

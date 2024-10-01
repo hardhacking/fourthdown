@@ -257,10 +257,6 @@ export default {
     const timeDifferenceInMilliseconds = lastMod.getTime() - week0.getTime()
     this.weekUpdate = Math.round(timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24) / 7)
     this.weekUpdate2 = this.weekUpdate == 19 ? 'Wild Card Round' : (this.weekUpdate == 20 ? 'Divisional Round' : (this.weekUpdate == 21 ? 'Conference Championship' : 'Super Bowl'))
-    if (timeDifferenceInMilliseconds > 2129937000 - 1000 * 60 * 60 * 24 || timeDifferenceInMilliseconds < 2129937000 + 1000 * 60 * 60 * 24) {
-        this.weekUpdate = 20
-        this.weekUpdate2 = 'Sep 26'
-    }
     await this.getSeason(this.json);
     
     this.buildPage();

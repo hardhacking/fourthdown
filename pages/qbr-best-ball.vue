@@ -409,6 +409,8 @@
     }
 
     async function reLoad() {
+        sortedBy.value = 'wScore'
+        sortedDir.value = 'd'
         store.value = useGameStore()
         weeksTable.value = []
         // scoreBoard.value = []

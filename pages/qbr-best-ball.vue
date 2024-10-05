@@ -3,7 +3,7 @@
         <h1 class="text-3xl flex w-full justify-around py-8">ESPN QBR Best Ball League</h1>
         <div class="flex w-full justify-around">
             <select class="text-2xl my-4" v-model="selectedWeek" v-on:change="reLoad">
-                <option v-for="option in [1, 2, 3, 4, 5]" :value="option">Week {{option}}</option>
+                <option v-for="option in [1, 2, 3, 4, 5, 6]" :value="option">Week {{option}}</option>
             </select>
         </div>
         <h2 class="text-2xl flex w-full justify-around py-4">Team Standings</h2>
@@ -15,9 +15,33 @@
                             <table class="min-w-full divide-y divide-gray-300">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8">Team</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Week Score</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Season Score</th>
+                                    <th 
+                                        scope="col" 
+                                        class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8 cursor-pointer" 
+                                        v-on:click="sortTeamsTable('team')"
+                                    >
+                                        Team 
+                                        <span v-if="sortedBy == 'team' && sortedDir == 'd'">↓</span>
+                                        <span v-else-if="sortedBy == 'team'">↑</span>
+                                    </th>
+                                    <th 
+                                        scope="col" 
+                                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 cursor-pointer" 
+                                        v-on:click="sortTeamsTable('wScore')"
+                                    >
+                                        Week Score 
+                                        <span v-if="sortedBy == 'wScore' && sortedDir == 'd'">↓</span>
+                                        <span v-else-if="sortedBy == 'wScore'">↑</span>
+                                    </th>
+                                    <th 
+                                        scope="col" 
+                                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 cursor-pointer" 
+                                        v-on:click="sortTeamsTable('sScore')"
+                                    >
+                                        Season Score 
+                                        <span v-if="sortedBy == 'sScore' && sortedDir == 'd'">↓</span>
+                                        <span v-else-if="sortedBy == 'sScore'">↑</span>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
@@ -131,7 +155,9 @@
     ] 
 
     const selectedTeam = ref('Andre')
-    const selectedWeek = ref(5)
+    const selectedWeek = ref(6)
+    const sortedBy = ref('wScore')
+    const sortedDir = ref('d')
 
     const store = useGameStore()
     const weeksTable = ref([])
@@ -148,19 +174,22 @@
     const teamData3 = ref([])
     const teamData4 = ref([])
     const teamData5 = ref([])
+    const teamData6 = ref([])
     // const gameBox = ref(null)
     onMounted(async () => {
-        weeksTable.value = await store.weeksTable5
+        weeksTable.value = await store.weeksTable6
         let weeksTable1 = await store.weeksTable1
         let weeksTable2 = await store.weeksTable2
         let weeksTable3 = await store.weeksTable3
         let weeksTable4 = await store.weeksTable4
+        let weeksTable5 = await store.weeksTable5
                                 
         QBRs.value = weeksTable.value.athletes ? weeksTable.value.athletes : []
         let QBRs1 = weeksTable1.athletes ? weeksTable1.athletes : []
         let QBRs2 = weeksTable2.athletes ? weeksTable2.athletes : []
         let QBRs3 = weeksTable3.athletes ? weeksTable3.athletes : []
         let QBRs4 = weeksTable4.athletes ? weeksTable4.athletes : []
+        let QBRs5 = weeksTable5.athletes ? weeksTable5.athletes : []
 
         QBRs.value = QBRs.value.map(d => {
             d.score = d.categories[0].totals[2] <= 35 ? d.categories[0].totals[0] * (d.categories[0].totals[2] / 35) : d.categories[0].totals[0] * Math.pow((d.categories[0].totals[2] / 35), 1/4)
@@ -194,6 +223,11 @@
             d.scoreToUse = d.score
             return d
         }).sort((a, b) => d3.descending(a.score, b.score))
+        QBRs5 = QBRs5.map(d => {
+            d.score = d.categories[0].totals[2] <= 35 ? d.categories[0].totals[0] * (d.categories[0].totals[2] / 35) : d.categories[0].totals[0] * Math.pow((d.categories[0].totals[2] / 35), 1/4)
+            d.scoreToUse = d.score
+            return d
+        }).sort((a, b) => d3.descending(a.score, b.score))
         
         tableData.value = QBRs.value.slice(0, counter.value * 10 + 10)
 
@@ -213,8 +247,8 @@
             return d
         })
 
-        teamData5.value = draft.map(({team}) => ({team})).slice(0, 11)
-        teamData5.value.map(d => {
+        teamData6.value = draft.map(({team}) => ({team})).slice(0, 11)
+        teamData6.value.map(d => {
             if (QBRs.value.filter(f => {
                     return draft.filter(ff => ff.team == d.team).map(dd => dd.id).includes(Number(f.athlete.id))
                 }).length > 0) {
@@ -288,12 +322,27 @@
             d.sScore = d.wScore
             return d
         })
+        teamData5.value = draft.map(({team}) => ({team})).slice(0, 11)
+        teamData5.value.map(d => {
+            if (QBRs5.filter(f => {
+                    return draft.filter(ff => ff.team == d.team).map(dd => dd.id).includes(Number(f.athlete.id))
+                }).length > 0) {
+                d.wScore = QBRs5.filter(f => {
+                    return draft.filter(ff => ff.team == d.team).map(dd => dd.id).includes(Number(f.athlete.id))
+                }).slice(0, 3).reduce((acc, obj) => acc + obj.scoreToUse, 0)
+            } else {
+                d.wScore = 0
+            }
+            
+            d.sScore = d.wScore
+            return d
+        })
 
         teamData.value = teamData.value.sort((a, b) => d3.descending(a.wScore, b.wScore))
         teamData.value.map((d, i) => {
             d.sScore = teamData1.value.filter(f => f.team == d.team)[0].sScore + teamData2.value.filter(f => f.team == d.team)[0].sScore + 
                        teamData3.value.filter(f => f.team == d.team)[0].sScore + teamData4.value.filter(f => f.team == d.team)[0].sScore + 
-                       teamData5.value.filter(f => f.team == d.team)[0].sScore
+                       teamData5.value.filter(f => f.team == d.team)[0].sScore + teamData6.value.filter(f => f.team == d.team)[0].sScore
             d.wRank = i + 1
             return d
         })
@@ -343,6 +392,22 @@
         tableData.value = QBRs.value.slice(0, counter.value * 10 + 10)
     }
 
+    function sortTeamsTable(v) {
+        if (v == sortedBy.value) {
+            if (sortedDir.value == 'a') {
+                teamData.value = teamData.value.sort((a, b) => d3.descending(a[v], b[v]))
+                sortedDir.value = 'd'
+            } else {
+                teamData.value = teamData.value.sort((a, b) => d3.ascending(a[v], b[v]))
+                sortedDir.value = 'a'
+            }
+        } else {
+            teamData.value = teamData.value.sort((a, b) => d3.descending(a[v], b[v]))
+            sortedDir.value = 'd'
+        }
+        sortedBy.value = v
+    }
+
     async function reLoad() {
         store.value = useGameStore()
         weeksTable.value = []
@@ -358,7 +423,8 @@
                                 (selectedWeek.value == 2 ? await store.weeksTable2 : 
                                 (selectedWeek.value == 3 ? await store.weeksTable3 : 
                                 (selectedWeek.value == 4 ? await store.weeksTable4 : 
-                                (selectedWeek.value == 5 ? await store.weeksTable5 : []))))
+                                (selectedWeek.value == 5 ? await store.weeksTable5 : 
+                                (selectedWeek.value == 6 ? await store.weeksTable6 : [])))))
         QBRs.value = weeksTable.value.athletes ? weeksTable.value.athletes : []
 
         QBRs.value = QBRs.value.map(d => {
@@ -389,7 +455,7 @@
         teamData.value.map(d => {
             d.sScore = (selectedWeek.value >= 1 ? teamData1.value.filter(f => f.team == d.team)[0].sScore : 0) + (selectedWeek.value >= 2 ? teamData2.value.filter(f => f.team == d.team)[0].sScore : 0) + 
                        (selectedWeek.value >= 3 ? teamData3.value.filter(f => f.team == d.team)[0].sScore : 0) + (selectedWeek.value >= 4 ? teamData4.value.filter(f => f.team == d.team)[0].sScore : 0) + 
-                       (selectedWeek.value >= 5 ? teamData5.value.filter(f => f.team == d.team)[0].sScore : 0)
+                       (selectedWeek.value >= 5 ? teamData5.value.filter(f => f.team == d.team)[0].sScore : 0) + (selectedWeek.value >= 6 ? teamData6.value.filter(f => f.team == d.team)[0].sScore : 0)
             return d
         })
         teamData.value = teamData.value.sort((a, b) => d3.descending(a.sScore, b.sScore))

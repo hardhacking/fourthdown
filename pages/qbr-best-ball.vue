@@ -155,7 +155,7 @@
     ] 
 
     const selectedTeam = ref('Andre')
-    const selectedWeek = ref(7)
+    const selectedWeek = ref(8)
     const sortedBy = ref('wScore')
     const sortedDir = ref('d')
 

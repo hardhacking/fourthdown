@@ -29,9 +29,9 @@
             <div class="mt-10 flex items-center justify-center gap-x-6 flex-wrap">
               <div class="flex gap-x-6">
                 <!-- <a href="/schedule" class="flex items-center max-w-[200px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL Schedule Analysis</a> -->
-                <a href="https://espnanalytics.com/wnba-wpa" class="flex items-center max-w-[120px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">WNBA Player Metrics</a>
                 <a href="https://espnanalytics.com/decision" class="flex items-center max-w-[120px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL 4th Downs</a>
                 <a href="https://espnanalytics.com/receivers" class="flex items-center max-w-[120px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">NFL Receiver Scores</a>
+                <a href="https://espnanalytics.com/wnba-wpa" class="flex items-center max-w-[120px] rounded-md bg-espncyan-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-espncyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espncyan-900">WNBA Player Metrics</a>
               </div>
               <a href="/features" class="pt-4 temp:pt-0 text-sm font-semibold leading-6 text-gray-900">Other ESPN Analytics Features <span aria-hidden="true">→</span></a>
             </div>

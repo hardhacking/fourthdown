@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const useGameStore = defineStore('game', () => {
+export const useQBRStore = defineStore('game', () => {
 
   // const draft = [
   //   {"rd":1,"pick":1,"player":"Will Howard","id":4429955,"team":"Andre"},

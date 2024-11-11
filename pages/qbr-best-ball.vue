@@ -145,7 +145,7 @@
 </template>
 
 <script setup>
-    import { useGameStore } from '../stores/QBRStore'
+    import { useQBRStore } from '../stores/QBRStore'
     import * as d3 from 'd3'
 
     const draft = [
@@ -159,7 +159,7 @@
     const sortedBy = ref('wScore')
     const sortedDir = ref('d')
 
-    const store = useGameStore()
+    const store = useQBRStore()
     const weeksTable = ref([])
     // const scoreBoard = ref([])
     // const events = ref(null)
@@ -534,7 +534,7 @@
     async function reLoad() {
         sortedBy.value = 'wScore'
         sortedDir.value = 'd'
-        store.value = useGameStore()
+        store.value = useQBRStore()
         weeksTable.value = []
         // scoreBoard.value = []
         // events.value = null

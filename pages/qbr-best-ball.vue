@@ -3,7 +3,7 @@
         <h1 class="text-3xl flex w-full justify-around py-8">ESPN QBR Best Ball League</h1>
         <div class="flex w-full justify-around">
             <select class="text-2xl my-4" v-model="selectedWeek" v-on:change="reLoad">
-                <option v-for="option in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]" :value="option">Week {{option}}</option>
+                <option v-for="option in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]" :value="option">Week {{option}}</option>
             </select>
         </div>
         <h2 class="text-2xl flex w-full justify-around py-4">Team Standings</h2>
@@ -46,7 +46,8 @@
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
                                 <tr v-for="team in teamData">
-                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">{{ team.team }}</td>
+                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8" v-if="playoffs.includes(team.team)">{{ team.team }} <span class="font-bold">(Playoffs)</span></td>
+                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8" v-else>{{ team.team }}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500" v-if="team.wScore > 0">{{ Math.round(team.wScore * 10) / 10 }} ({{ team.wRank }})</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500" v-else>{{ Math.round(team.wScore * 10) / 10 }}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ Math.round(team.sScore * 10) / 10 }} ({{ team.sRank }})</td>
@@ -154,8 +155,10 @@
         {"rd":7,"pick":77,"player":"DJ Lagway","id":5079555,"team":"Dean","cfb_team_id":57}
     ] 
 
+    const playoffs = ['Lauren', 'Matt', 'Andre', 'Nitz', 'Chris']
+
     const selectedTeam = ref('Andre')
-    const selectedWeek = ref(11)
+    const selectedWeek = ref(12)
     const sortedBy = ref('wScore')
     const sortedDir = ref('d')
 
@@ -187,7 +190,7 @@
     const teamData16 = ref([])
     // const gameBox = ref(null)
     onMounted(async () => {
-        weeksTable.value = await store.weeksTable11
+        weeksTable.value = await store.weeksTable12
         let weeksTable1 = await store.weeksTable1
         let weeksTable2 = await store.weeksTable2
         let weeksTable3 = await store.weeksTable3
@@ -198,6 +201,7 @@
         let weeksTable8 = await store.weeksTable8
         let weeksTable9 = await store.weeksTable9
         let weeksTable10 = await store.weeksTable10
+        let weeksTable11 = await store.weeksTable11
                                 
         QBRs.value = weeksTable.value.athletes ? weeksTable.value.athletes : []
         let QBRs1 = weeksTable1.athletes ? weeksTable1.athletes : []
@@ -210,6 +214,7 @@
         let QBRs8 = weeksTable8.athletes ? weeksTable8.athletes : []
         let QBRs9 = weeksTable9.athletes ? weeksTable9.athletes : []
         let QBRs10 = weeksTable10.athletes ? weeksTable10.athletes : []
+        let QBRs11 = weeksTable11.athletes ? weeksTable11.athletes : []
 
         QBRs.value = QBRs.value.map(d => {
             d.score = d.categories[0].totals[2] <= 35 ? d.categories[0].totals[0] * (d.categories[0].totals[2] / 35) : d.categories[0].totals[0] * Math.pow((d.categories[0].totals[2] / 35), 1/4)
@@ -273,6 +278,11 @@
             d.scoreToUse = d.score
             return d
         }).sort((a, b) => d3.descending(a.score, b.score))
+        QBRs11 = QBRs11.map(d => {
+            d.score = d.categories[0].totals[2] <= 35 ? d.categories[0].totals[0] * (d.categories[0].totals[2] / 35) : d.categories[0].totals[0] * Math.pow((d.categories[0].totals[2] / 35), 1/4)
+            d.scoreToUse = d.score
+            return d
+        }).sort((a, b) => d3.descending(a.score, b.score))
         
         tableData.value = QBRs.value.slice(0, counter.value * 10 + 10)
 
@@ -292,8 +302,8 @@
             return d
         })
 
-        teamData11.value = draft.map(({team}) => ({team})).slice(0, 11)
-        teamData11.value.map(d => {
+        teamData12.value = draft.map(({team}) => ({team})).slice(0, 11)
+        teamData12.value.map(d => {
             if (QBRs.value.filter(f => {
                     return draft.filter(ff => ff.team == d.team).map(dd => dd.id).includes(Number(f.athlete.id))
                 }).length > 0) {
@@ -457,6 +467,21 @@
             d.sScore = d.wScore
             return d
         })
+        teamData11.value = draft.map(({team}) => ({team})).slice(0, 11)
+        teamData11.value.map(d => {
+            if (QBRs11.filter(f => {
+                    return draft.filter(ff => ff.team == d.team).map(dd => dd.id).includes(Number(f.athlete.id))
+                }).length > 0) {
+                d.wScore = QBRs11.filter(f => {
+                    return draft.filter(ff => ff.team == d.team).map(dd => dd.id).includes(Number(f.athlete.id))
+                }).slice(0, 3).reduce((acc, obj) => acc + obj.scoreToUse, 0)
+            } else {
+                d.wScore = 0
+            }
+            
+            d.sScore = d.wScore
+            return d
+        })
 
         teamData.value = teamData.value.sort((a, b) => d3.descending(a.wScore, b.wScore))
         teamData.value.map((d, i) => {
@@ -465,7 +490,7 @@
                        teamData5.value.filter(f => f.team == d.team)[0].sScore + teamData6.value.filter(f => f.team == d.team)[0].sScore + 
                        teamData7.value.filter(f => f.team == d.team)[0].sScore + teamData8.value.filter(f => f.team == d.team)[0].sScore + 
                        teamData9.value.filter(f => f.team == d.team)[0].sScore + teamData10.value.filter(f => f.team == d.team)[0].sScore + 
-                       teamData11.value.filter(f => f.team == d.team)[0].sScore
+                       teamData11.value.filter(f => f.team == d.team)[0].sScore + teamData12.value.filter(f => f.team == d.team)[0].sScore
             d.wRank = i + 1
             return d
         })
@@ -554,7 +579,8 @@
                                 (selectedWeek.value == 8 ? await store.weeksTable8 : 
                                 (selectedWeek.value == 9 ? await store.weeksTable9 : 
                                 (selectedWeek.value == 10 ? await store.weeksTable10 : 
-                                (selectedWeek.value == 11 ? await store.weeksTable11 : []))))))))))
+                                (selectedWeek.value == 11 ? await store.weeksTable11 : 
+                                (selectedWeek.value == 12 ? await store.weeksTable12 : [])))))))))))
         QBRs.value = weeksTable.value.athletes ? weeksTable.value.athletes : []
 
         QBRs.value = QBRs.value.map(d => {
@@ -588,7 +614,7 @@
                        (selectedWeek.value >= 5 ? teamData5.value.filter(f => f.team == d.team)[0].sScore : 0) + (selectedWeek.value >= 6 ? teamData6.value.filter(f => f.team == d.team)[0].sScore : 0) + 
                        (selectedWeek.value >= 7 ? teamData7.value.filter(f => f.team == d.team)[0].sScore : 0) + (selectedWeek.value >= 8 ? teamData8.value.filter(f => f.team == d.team)[0].sScore : 0) + 
                        (selectedWeek.value >= 9 ? teamData9.value.filter(f => f.team == d.team)[0].sScore : 0) + (selectedWeek.value >= 10 ? teamData10.value.filter(f => f.team == d.team)[0].sScore : 0) + 
-                       (selectedWeek.value >= 11 ? teamData11.value.filter(f => f.team == d.team)[0].sScore : 0)
+                       (selectedWeek.value >= 11 ? teamData11.value.filter(f => f.team == d.team)[0].sScore : 0) + (selectedWeek.value >= 12 ? teamData12.value.filter(f => f.team == d.team)[0].sScore : 0)
             return d
         })
         teamData.value = teamData.value.sort((a, b) => d3.descending(a.sScore, b.sScore))

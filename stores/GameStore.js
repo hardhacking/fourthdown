@@ -2,6 +2,12 @@ import { defineStore } from 'pinia'
 
 export const useGameStore = defineStore('game', () => {
 
+  const formatTime = (seconds) => {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
+
   const getTeamLogo = (str) => {
     if (str == 'NYG') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/nyg.png'
     if (str == 'SF') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sf.png'
@@ -39,6 +45,17 @@ export const useGameStore = defineStore('game', () => {
     if (str == 'PHI' || str == 'PHL' || str == 'PIL') return 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/phi.png'
   }
 
+  const teamNameSwitch = (str) => {
+    str = str.replace('ARZ', 'ARI')
+    if (!str.includes('LAC')) {
+      str = str.replace('LA', 'LAR')
+    }
+    str = str.replace('HST', 'HOU')
+    str = str.replace('BLT', 'BAL')
+    str = str.replace('CLV', 'CLE')
+    return str
+  }
+
   var gamesArray = ref([])
   const games = computed(async () => {
     if (gamesArray > 0) return gamesArray 
@@ -48,14 +65,10 @@ export const useGameStore = defineStore('game', () => {
       const groupByGame = {};
 
       plays.forEach(play => {
-
-        play.Game = play.Game.replace('ARZ', 'ARI')
-        play.Game = play.Game.replace(' LA$', ' LAR')
-        play.Game = play.Game.replace('LA ', 'LAR ')
-        play.Game = play.Game.replace('HST', 'HOU')
-        play.Game = play.Game.replace('BLT', 'BAL')
-        play.Game = play.Game.replace('CLV', 'CLE')
-        play.CLOCK_TIME = play.CLOCK_TIME.substr(0, 5);
+        
+        play.Game = teamNameSwitch(play.Game)
+        play.team = teamNameSwitch(play.team)
+        play.CLOCK_TIME = formatTime(play.CLOCK_TIME)
         if (play.winProbPunt) play.winProbPunt = (100 * play.winProbPunt.toFixed(3)).toFixed(1);
         if (play.winProbFG) play.winProbFG = (100 * play.winProbFG.toFixed(3)).toFixed(1);
         if (play.winProbGo) play.winProbGo = (100 * play.winProbGo.toFixed(3)).toFixed(1);
@@ -64,11 +77,18 @@ export const useGameStore = defineStore('game', () => {
         if (play.breakEvenGo) play.breakEvenGo = (100 * play.breakEvenGo.toFixed(3)).toFixed(1);
         if (play.goKickDelta) play.goKickDelta = (100 * play.goKickDelta.toFixed(3)).toFixed(1);
 
-        // if (play.STARTPLAY_YARDSTOEZ.includes('50')) play.STARTPLAY_YARDSTOEZ = 50;
+        const teams = play.Game.split(" at ").map(team => team.trim());
 
-        const parts = play.Game.split(' ');
-        play.firstTeamLogo = getTeamLogo(parts[0])
-        play.secondTeamLogo = getTeamLogo(parts[2])
+        if (play.STARTPLAY_YARDSTOEZ != 50) {
+          if (play.STARTPLAY_YARDSTOEZ > 50) {
+            play.STARTPLAY_YARDSTOEZ = play.team + ' ' + (100 - play.STARTPLAY_YARDSTOEZ)
+          } else {
+            play.STARTPLAY_YARDSTOEZ = teams.filter(f => f != play.team) + ' ' + play.STARTPLAY_YARDSTOEZ
+          }
+        }
+
+        play.firstTeamLogo = getTeamLogo(teams[0])
+        play.secondTeamLogo = getTeamLogo(teams[1])
 
         if (play.play.toLowerCase().includes("punt")) play.play = "P";
         else if (play.play.toLowerCase().includes("field")) play.play = "FG";

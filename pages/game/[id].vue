@@ -329,12 +329,16 @@ const setToolTip = (play) => {
   }
 }
 const getPlayWP = (playId, tm) => {
-  let playWP = playsArr.value.filter(f => Number(f.playId.slice(9)) == playId)
+  let playWP = playsArr.value.reduce((closest, current) => {
+    const currentDiff = Math.abs(Number(current.playId.slice(9)) - playId);
+    const closestDiff = Math.abs(Number(closest.playId.slice(9)) - playId);
+    return currentDiff < closestDiff ? current : closest;
+  });
   
   if (games.value[id.value].filter(f => f.UNQPLY_GROUP == playId)[0].firstTeamLogo == getTeamAbbr(tm)) {
-    return " WP: " + Math.round((1 - playWP[0].homeWinPercentage) * 100 * 10) / 10 + "%"
+    return " WP: " + Math.round((1 - playWP.homeWinPercentage) * 100 * 10) / 10 + "%"
   } else {
-    return " WP: " + Math.round(playWP[0].homeWinPercentage * 100 * 10) / 10 + "%"
+    return " WP: " + Math.round(playWP.homeWinPercentage * 100 * 10) / 10 + "%"
   }
 }
 const flipTool = (play) => {

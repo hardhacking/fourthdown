@@ -42,7 +42,7 @@
             <h3 class="mt-4 text-md font-medium text-gray-900">{{ game[0].Game }}</h3>
             <dl class="flex flex-col justify-between flex-grow mt-1">
               <dt class="sr-only">Title</dt>
-              <dd class="text-sm text-gray-500">{{ getDate(game[0].SCHEDULE_ID) }}</dd>
+              <!-- <dd class="text-sm text-gray-500">{{ getDate(game[0].SCHEDULE_ID) }}</dd> -->
               <!-- <dd class="mt-3">
                 <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-green-700 rounded-full bg-green-50 ring-1 ring-inset ring-green-600/20">{{ person.role }}</span>
               </dd> -->

@@ -64,7 +64,7 @@ export const useGameStore = defineStore('game', () => {
         if (play.breakEvenGo) play.breakEvenGo = (100 * play.breakEvenGo.toFixed(3)).toFixed(1);
         if (play.goKickDelta) play.goKickDelta = (100 * play.goKickDelta.toFixed(3)).toFixed(1);
 
-        if (play.STARTPLAY_YARDSTOEZ.includes('50')) play.STARTPLAY_YARDSTOEZ = 50;
+        // if (play.STARTPLAY_YARDSTOEZ.includes('50')) play.STARTPLAY_YARDSTOEZ = 50;
 
         const parts = play.Game.split(' ');
         play.firstTeamLogo = getTeamLogo(parts[0])

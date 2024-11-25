@@ -23,10 +23,10 @@
                 <div class="hidden sm:block text-xl text-center font-black text-espngray-600">Four Different Ways</div>
             </div> -->
             <div class="hidden sm:flex flex-col cursor-crosshair mb-12 mt-6">
-                <div ref="overallRef"><WNBALineScale v-if="showOverall" :arr="overall" value="overall" title="Overall" /></div>
-                <div ref="shotsRef"><WNBALineScale v-if="showShots" :arr="shots" value="shots_score" title="Shots" /></div>
-                <div ref="rebRef"><WNBALineScale v-if="showReb" :arr="rebs" value="reb_score" title="Reb" /></div>
-                <div ref="astRef"><WNBALineScale v-if="showAsts" :arr="asts" value="ast_score" title="Ast" /></div>
+                <div ref="overallRef"><LineScale v-if="showOverall" :arr="overall" value="overall" title="Overall" league="wnba" /></div>
+                <div ref="shotsRef"><LineScale v-if="showShots" :arr="shots" value="shots_score" title="Shots" league="wnba" /></div>
+                <div ref="rebRef"><LineScale v-if="showReb" :arr="rebs" value="reb_score" title="Reb" league="wnba" /></div>
+                <div ref="astRef"><LineScale v-if="showAsts" :arr="asts" value="ast_score" title="Ast" league="wnba" /></div>
             </div>
             <!-- <div class="hidden sm:block p-2 lg:p-0 max-w-5xl text-left text-xs m-auto text-espngray-600">Wide receivers and tight ends with at least 20 targets in the 2023 season are eligible for leaderboards. Running backs are not eligible, as different weights 
                 are used to construct their composite scores than wide receiver and tight end composite scores.</div> -->

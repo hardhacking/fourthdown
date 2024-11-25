@@ -2,10 +2,11 @@
     <div class="m-12 flex items-center">
         <div class="pr-2.5 w-[67.5px] font-black text-espngray-600">{{ title }}</div>
         <div class="relative grow-[2]">
-            <div class="absolute border-t-2 border-espngray-600 border-dotted h-0 w-full" v-if="title=='Overall'"></div>
-            <div class="absolute border-t-2 border-espnred border-dotted h-0 w-full" v-else-if="title=='Open'"></div>
-            <div class="absolute border-t-2 border-emerald-400 border-dotted h-0 w-full" v-else-if="title=='Catch'"></div>
-            <div class="absolute border-t-2 border-espncyan-200 border-dotted h-0 w-full" v-else-if="title=='YAC'"></div>
+            <div class="absolute border-t-2 border-espngray-600 border-dotted h-0 w-full" v-if="['Overall'].includes(title)"></div>
+            <div class="absolute border-t-2 border-espnred border-dotted h-0 w-full" v-else-if="['Open', 'Shots'].includes(title)"></div>
+            <div class="absolute border-t-2 border-emerald-400 border-dotted h-0 w-full" v-else-if="['Catch', 'Reb'].includes(title)"></div>
+            <div class="absolute border-t-2 border-espncyan-200 border-dotted h-0 w-full" v-else-if="['YAC', 'Ast'].includes(title)"></div>
+            <div class="absolute border-t-2 border-espnblack border-dotted h-0 w-full" v-else-if="['TOV'].includes(title)"></div>
         </div>
         <div class="p-1.5 text-xs">{{ low }} -</div>
         <div class="flex justify-end h-[52px] overflow-visible relative">
@@ -13,41 +14,42 @@
                 <div v-if="player.type == 'array' && player.array.length == 2" class="-mt-[40px]" :style="{ 'margin-right': `${player.array[0]['gap' + value]}px` }">
                     <div v-for="p in player.array" :key="p.dot_com_id">
                         <div>
-                            <PlayerCircle :player="p" :rank="title" :value="value" :title="title" />
+                            <PlayerCircle :player="p" :rank="title" :value="value" :title="title" :league="league" />
                         </div>
                     </div>
                 </div>
                 <div v-else-if="player.type == 'array' && player.array.length == 3" class="-mt-[66px]" :style="{ 'margin-right': `${player.array[0]['gap' + value]}px` }">
                     <div v-for="p in player.array" :key="p.dot_com_id">
                         <div>
-                            <PlayerCircle :player="p" :rank="title" :value="value" :title="title" />
+                            <PlayerCircle :player="p" :rank="title" :value="value" :title="title" :league="league" />
                         </div>
                     </div>
                 </div>
                 <div v-else-if="player.type == 'array' && player.array.length == 4" class="-mt-[40px]" :style="{ 'margin-right': `${player.array[0]['gap' + value]}px` }">
                     <div v-for="(p, i) in player.array" :key="p.dot_com_id">
                         <div v-if="i == 0" class="-mr-[30px]">
-                            <PlayerCircle :player="p" :rank="title" :value="value" :title="title" />
+                            <PlayerCircle :player="p" :rank="title" :value="value" :title="title" :league="league" />
                         </div>
                         <div v-else-if="i == 1" class="mr-[30px] -mt-[45px]">
-                            <PlayerCircle :player="p" :rank="title" :value="value" :title="title" />
+                            <PlayerCircle :player="p" :rank="title" :value="value" :title="title" :league="league" />
                         </div>
                         <div v-else-if="i == 2" class="-mr-[30px] -mt-[45px]">
-                            <PlayerCircle :player="p" :rank="title" :value="value" :title="title" />
+                            <PlayerCircle :player="p" :rank="title" :value="value" :title="title" :league="league" />
                         </div>
                         <div v-else class="mr-[30px] -mt-[45px]">
-                            <PlayerCircle :player="p" :rank="title" :value="value" :title="title" />
+                            <PlayerCircle :player="p" :rank="title" :value="value" :title="title" :league="league" />
                         </div>
                     </div>
                 </div>
                 <div v-else>
-                    <PlayerCircle :player="player" :rank="title" :value="value" :title="title" />
+                    <PlayerCircle :player="player" :rank="title" :value="value" :title="title" :league="league" />
                 </div>
             </div>
-            <div class="h-px w-full bg-espngray-600 absolute top-1/2" v-if="title=='Overall'"></div>
-            <div class="h-px w-full bg-espnred absolute top-1/2" v-else-if="title=='Open'"></div>
-            <div class="h-px w-full bg-emerald-400 absolute top-1/2" v-else-if="title=='Catch'"></div>
-            <div class="h-px w-full bg-espncyan-200 absolute top-1/2" v-else-if="title=='YAC'"></div>
+            <div class="h-px w-full bg-espngray-600 absolute top-1/2" v-if="['Overall'].includes(title)"></div>
+            <div class="h-px w-full bg-espnred absolute top-1/2" v-else-if="['Open', 'Shots'].includes(title)"></div>
+            <div class="h-px w-full bg-emerald-400 absolute top-1/2" v-else-if="['Catch', 'Reb'].includes(title)"></div>
+            <div class="h-px w-full bg-espncyan-200 absolute top-1/2" v-else-if="['YAC', 'Ast'].includes(title)"></div>
+            <div class="h-px w-full bg-espnblack absolute top-1/2" v-else-if="['TOV'].includes(title)"></div>
         </div>
         <div class="highend">- {{ high }}</div>
     </div>
@@ -69,6 +71,7 @@ export default {
         arr: Array,
         title: String,
         value: String,
+        league: String,
     },
     mounted() {
         if (this.arr && this.arr.length > 0) {

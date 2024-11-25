@@ -26,10 +26,11 @@ export default {
         rank: String,
         value: String,
         title: String,
+        league: String,
     },
     mounted() {
         this.subtitle = this.title + ' score: ' + this.player[this.value];
-        this.playerURL = `https://a.espncdn.com/i/headshots/nfl/players/full/${this.player.dot_com_id}.png`
+        this.playerURL = `https://a.espncdn.com/i/headshots/${this.league}/players/full/${this.player.dot_com_id}.png`
     },
 }
 </script>

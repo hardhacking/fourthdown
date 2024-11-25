@@ -20,10 +20,10 @@
             </div>
             <div class="hidden sm:block text-xl pt-5 text-center font-bold text-espngray-900">The Top Five: Four Different Ways</div>
             <div class="hidden sm:flex flex-col cursor-crosshair mb-12 mt-6">
-                <div ref="overallRef"><LineScale v-if="showOverall" :arr="overall" value="overall" title="Overall" league="nfl" /></div>
-                <div ref="openRef"><LineScale v-if="showOpen" :arr="open" value="open_score" title="Open" league="nfl" /></div>
-                <div ref="catchRef"><LineScale v-if="showCatch" :arr="catches" value="catch_score" title="Catch" league="nfl" /></div>
-                <div ref="yacRef"><LineScale v-if="showYards" :arr="yards" value="yac_score" title="YAC" league="nfl" /></div>
+                <div ref="overallRef"><LineScale v-if="showOverall" :arr="overall" value="overall" title="Overall" league="nfl" metric="score" /></div>
+                <div ref="openRef"><LineScale v-if="showOpen" :arr="open" value="open_score" title="Open" league="nfl" metric="score" /></div>
+                <div ref="catchRef"><LineScale v-if="showCatch" :arr="catches" value="catch_score" title="Catch" league="nfl" metric="score" /></div>
+                <div ref="yacRef"><LineScale v-if="showYards" :arr="yards" value="yac_score" title="YAC" league="nfl" metric="score" /></div>
             </div>
             <div class="text-xl pt-5 text-center font-bold text-espngray-900">Where Every NFL Pass Catcher Stands</div>
             <div class="p-2 text-center font-medium text-espngray-600">Open, Catch, YAC and Overall receiver ratings</div>
@@ -811,7 +811,7 @@ export default {
                   player['gap' + value] = 0;
               }
               else {
-                  player['gap' + value] = (previous - player[value]) * (window.innerWidth - 96 - 57.5 - 10 - 24.5 - 10 - 23.5 - 12 - 64 * numUniques - 15) / gap;
+                  player['gap' + value] = (previous - player[value]) * (window.innerWidth - 96 - 59.5 - 10 - 24.5 - 10 - 23.5 - 12 - 64 * numUniques - 15) / gap;
                   previous = player[value];
               }
           })

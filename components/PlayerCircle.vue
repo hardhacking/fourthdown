@@ -27,9 +27,10 @@ export default {
         value: String,
         title: String,
         league: String,
+        metric: String,
     },
     mounted() {
-        this.subtitle = this.title + ' score: ' + this.player[this.value];
+        this.subtitle = this.title + ' ' + this.metric + ': ' + this.player[this.value];
         this.playerURL = `https://a.espncdn.com/i/headshots/${this.league}/players/full/${this.player.dot_com_id}.png`
     },
 }

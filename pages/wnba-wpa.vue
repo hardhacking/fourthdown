@@ -262,10 +262,10 @@ export default {
     this.buildPage();
     this.buildScatter();
     window.addEventListener('resize', this.handleResize);
-    var tm = this.chartArr.map(function(i) {
+    var tm = this.json.map(function(i) {
         return i.tm;
     });
-    var team_name = this.chartArr.map(function(i) {
+    var team_name = this.json.map(function(i) {
         return i.team_name;
     })
     tm = [... new Set(tm)];
@@ -550,6 +550,9 @@ export default {
       sortAndRankBy(arr, sortMetric) {
         if (['full_nm', 'tm', 'first_last_nm', 'position'].includes(sortMetric)) {
             if (this.prevChartSort > 0) {
+                if (['full_nm', 'first_last_nm'].includes(sortMetric)) {
+                    arr.sort((a, b) => b['min_season'] - a['min_season'])
+                }
                 arr.sort((a, b) => {
                     const nameA = a[sortMetric].toUpperCase(); // ignore upper and lowercase
                     const nameB = b[sortMetric].toUpperCase(); // ignore upper and lowercase
@@ -562,6 +565,9 @@ export default {
                     return 0;
                 });
             } else {
+                if (['full_nm', 'first_last_nm'].includes(sortMetric)) {
+                    arr.sort((a, b) => a['min_season'] - b['min_season'])
+                }
                 arr.sort((a, b) => {
                     const nameA = a[sortMetric].toUpperCase(); // ignore upper and lowercase
                     const nameB = b[sortMetric].toUpperCase(); // ignore upper and lowercase

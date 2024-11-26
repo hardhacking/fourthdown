@@ -13,7 +13,7 @@
       <!-- <div class="flex items-center justify-center w-full p-5">
         <img src="../assets/logo.png" @click="navigateTo('/')" class="h-20 cursor-pointer" alt="">
       </div> -->
-      <div class="flex flex-wrap justify-center gap-10 p-10 pt-28 font-medium text-3xl text-espnblack text-center">Undergoing backend update. Be back soon!</div>
+      <div class="flex flex-wrap justify-center gap-10 p-10 pt-28 font-medium text-3xl text-espnblack text-center">Decision Analysis page is undergoing backend update. Be back soon!</div>
     </div>
   </template>
   

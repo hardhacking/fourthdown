@@ -40,39 +40,47 @@
                                 <div class="text-xs text-espngray-900">SHOW ME:</div>
                                 <div class="flex flex-col items-start">
                                     <label class="text-espngray-900"><input class="mr-0.5" type="radio" name="radio_but" :value=true v-model="radioChoice" @click="updateChartSeason('2024', true)">Individual season(s)</label>
-                                    <!-- <label class="text-espngray-900"><input class="mr-0.5 text-espngray-600" type="radio" name="radio_but" :value=false v-model="radioChoice" @click="updateChartSeason('2020-23', true)">Combined seasons</label> -->
+                                    <!-- <label class="text-espngray-900"><input class="mr-0.5 text-espngray-600" type="radio" name="radio_but" :value=false v-model="radioChoice" @click="updateChartSeason('2021-23', true)">Combined seasons</label> -->
                                 </div>
                             </div>
                             <div class="flex flex-col items-start" v-if="radioChoice">
                                 <div class="text-sm text-left lg:pl-1 text-espngray-900">CHOOSE INDIVIDUAL SEASON(S)</div>
                                 <div class="flex flex-wrap">
-                                    <!-- <div class="flex">
-                                        <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-1" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2017</label></div>
-                                        <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-2" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2018</label></div>
+                                    <div class="flex">
+                                        <!-- <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-1" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2017</label></div> -->
+                                        <!-- <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-2" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2018</label></div> -->
                                         <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-3" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2019</label></div>
                                         <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-4" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2020</label></div>
-                                    </div> -->
+                                        <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-5" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2021</label></div>
+                                    </div>
                                     <div class="flex">
-                                        <!-- <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-5" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2021</label></div> -->
-                                        <!-- <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-6" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2022</label></div> -->
-                                        <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-7" name="check_seas" type="checkbox" @click="updateChartSeason('check')" checked>2024</label></div>
+                                        <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-6" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2022</label></div>
+                                        <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-7" name="check_seas" type="checkbox" @click="updateChartSeason('check')">2023</label></div>
+                                        <div><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="check-8" name="check_seas" type="checkbox" @click="updateChartSeason('2024')" checked>2024</label></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="flex flex-col items-start" v-else>
-                                <div class="text-sm text-left lg:pl-1 text-espngray-900">CHOOSE COMBINED SEASONS</div>
+                                <!-- <div class="text-sm text-left lg:pl-1 text-espngray-900">CHOOSE START YEAR</div>
                                 <div class="flex flex-wrap">
-                                    <!-- <div class="flex">
-                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2017-23')" />2017-23</label></div>
-                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2018-23')" />2018-23</label></div>
-                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2019-23')" />2019-23</label></div>
-                                    </div> -->
                                     <div class="flex">
-                                        <!-- <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="initial-check" name="radio_seas" type="radio" @click="updateChartSeason('2020-23')" />2020-23</label></div> -->
-                                        <!-- <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2021-23')" />2021-23</label></div> -->
-                                        <!-- <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas" type="radio" @click="updateChartSeason('2022-23')" />2022-23</label></div> -->
+                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas-1" type="radio" @click="updateChartSeason('2019-')" />2019</label></div>
+                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas-1" type="radio" @click="updateChartSeason('2020-')" />2020</label></div>
+                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="initial-check-1" name="radio_seas-1" type="radio" @click="updateChartSeason('2021-')" />2021</label></div>
+                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas-1" type="radio" @click="updateChartSeason('2022-')" />2022</label></div>
+                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas-1" type="radio" @click="updateChartSeason('2023-')" />2023</label></div>
                                     </div>
                                 </div>
+                                <div class="text-sm text-left lg:pl-1 text-espngray-900">CHOOSE END YEAR</div>
+                                <div class="flex flex-wrap">
+                                    <div class="flex">
+                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas-2" type="radio" @click="updateChartSeason('-19')" />2019</label></div>
+                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas-2" type="radio" @click="updateChartSeason('-20')" />2020</label></div>
+                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas-2" type="radio" @click="updateChartSeason('-21')" />2021</label></div>
+                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" name="radio_seas-2" type="radio" @click="updateChartSeason('-22')" />2022</label></div>
+                                        <div class="block"><label class="pr-2 py-1 lg:p-1 text-espngray-900"><input class="m-0.5" id="initial-check-2" name="radio_seas-2" type="radio" @click="updateChartSeason('-23')" />2023</label></div>
+                                    </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="flex justify-start gap-4 pt-2 flex-wrap">
@@ -207,6 +215,7 @@ import axios from 'axios'
 export default {
   data() {
     this.chart = null
+    this.chart_axis = null
       return {
           seasonArr: [],
           chartArr: [],
@@ -289,37 +298,6 @@ export default {
     async getData() {
         this.response = await axios.get('https://nfl-player-metrics.s3.amazonaws.com/net-pts/nba_net_pts_data.json');
         this.json = this.response.data;
-        var ovrOldMin = Math.min(...this.json.map(o => o.overall))
-        var ovrOldRange = Math.max(...this.json.map(o => o.overall)) - ovrOldMin
-        var offenseOldMin = Math.min(...this.json.map(o => o.offense))
-        var offenseOldRange = Math.max(...this.json.map(o => o.offense)) - offenseOldMin
-        var defenseOldMin = Math.min(...this.json.map(o => o.defense))
-        var defenseOldRange = Math.max(...this.json.map(o => o.defense)) - defenseOldMin
-        // var astOldMin = Math.min(...this.json.map(o => o.ast))
-        // var astOldRange = Math.max(...this.json.map(o => o.ast)) - astOldMin
-        // var tovOldMin = Math.min(...this.json.map(o => o.tov))
-        // var tovOldRange = Math.max(...this.json.map(o => o.tov)) - tovOldMin
-        // var stlOldMin = Math.min(...this.json.map(o => o.stl))
-        // var stlOldRange = Math.max(...this.json.map(o => o.stl)) - stlOldMin
-        // var blkOldMin = Math.min(...this.json.map(o => o.blk))
-        // var blkOldRange = Math.max(...this.json.map(o => o.blk)) - blkOldMin
-        // var cluOldMin = Math.min(...this.json.map(o => o.clutch))
-        // var cluOldRange = Math.max(...this.json.map(o => o.clutch)) - cluOldMin
-        this.json.map(player => {
-            player.first_last_nm = player.first_nm.substring(0, 1) + ". " + player.last_nm;
-            player.overall_z = Math.round((player.overall - ovrOldMin) * 99 / ovrOldRange)
-            player.offense_z = Math.round((player.offense - offenseOldMin) * 99 / offenseOldRange)
-            player.defense_z = Math.round((player.defense - defenseOldMin) * 99 / defenseOldRange)
-            // player.ast_z = Math.round((player.ast - astOldMin) * 99 / astOldRange)
-            // player.tov_z = Math.round((player.tov - tovOldMin) * 99 / tovOldRange)
-            // player.stl_z = Math.round((player.stl - stlOldMin) * 99 / stlOldRange)
-            // player.blk_z = Math.round((player.blk - blkOldMin) * 99 / blkOldRange)
-            // player.clutch_z = Math.round((player.clutch - cluOldMin) * 99 / cluOldRange)
-            return player;
-        })
-        this.dataMin = Math.floor(Math.min(ovrOldMin, offenseOldMin, defenseOldMin)) - 5
-        this.dataMax = Math.ceil(Math.max(Math.max(...this.json.map(o => o.overall)), Math.max(...this.json.map(o => o.offense)), 
-                                Math.max(...this.json.map(o => o.defense)))) + 5
     },
       buildScatter() {
           const ctx = document.getElementById('chart');
@@ -464,7 +442,7 @@ export default {
 
           const ctx2 = document.getElementById('chart2');
 
-          new Chart(ctx2, {
+          this.chart_axis = new Chart(ctx2, {
               type: 'scatter',
               data: {
                   // datasets: [{
@@ -537,8 +515,15 @@ export default {
             this.chart.options.scales.x.max = overallArr.length + 1;
             this.chart.options.scales.x.offset = true;
           }
+          this.chart.options.scales.y.min = this.dataMin
+          this.chart.options.scales.y.max = this.dataMax
+
+          this.chart_axis.options.scales.y.min = this.dataMin
+          this.chart_axis.options.scales.y.max = this.dataMax
           this.chart.update();
           this.chart.resize();
+          this.chart_axis.update();
+          this.chart_axis.resize();
       },
       sortAndRankBy(arr, sortMetric) {
         if (['full_nm', 'tm', 'first_last_nm', 'position'].includes(sortMetric)) {
@@ -707,6 +692,34 @@ export default {
                   this.seasonArr.push(player);
               }
           });
+            var ovrOldMin = Math.min(...this.seasonArr.map(o => o.overall))
+            var ovrOldRange = Math.max(...this.seasonArr.map(o => o.overall)) - ovrOldMin
+            var offenseOldMin = Math.min(...this.seasonArr.map(o => o.offense))
+            var offenseOldRange = Math.max(...this.seasonArr.map(o => o.offense)) - offenseOldMin
+            var defenseOldMin = Math.min(...this.seasonArr.map(o => o.defense))
+            var defenseOldRange = Math.max(...this.seasonArr.map(o => o.defense)) - defenseOldMin
+            // var astOldMin = Math.min(...this.seasonArr.map(o => o.ast))
+            // var astOldRange = Math.max(...this.seasonArr.map(o => o.ast)) - astOldMin
+            // var tovOldMin = Math.min(...this.seasonArr.map(o => o.tov))
+            // var tovOldRange = Math.max(...this.seasonArr.map(o => o.tov)) - tovOldMin
+            // var stlOldMin = Math.min(...this.seasonArr.map(o => o.stl))
+            // var stlOldRange = Math.max(...this.seasonArr.map(o => o.stl)) - stlOldMin
+            // var blkOldMin = Math.min(...this.seasonArr.map(o => o.blk))
+            // var blkOldRange = Math.max(...this.seasonArr.map(o => o.blk)) - blkOldMin
+            // var cluOldMin = Math.min(...this.seasonArr.map(o => o.clutch))
+            // var cluOldRange = Math.max(...this.seasonArr.map(o => o.clutch)) - cluOldMin
+            this.seasonArr.map(player => {
+                player.first_last_nm = player.first_nm.substring(0, 1) + ". " + player.last_nm;
+                player.overall_z = Math.round((player.overall - ovrOldMin) * 99 / ovrOldRange)
+                player.offense_z = Math.round((player.offense - offenseOldMin) * 99 / offenseOldRange)
+                player.defense_z = Math.round((player.defense - defenseOldMin) * 99 / defenseOldRange)
+                // player.ast_z = Math.round((player.ast - astOldMin) * 99 / astOldRange)
+                // player.tov_z = Math.round((player.tov - tovOldMin) * 99 / tovOldRange)
+                // player.stl_z = Math.round((player.stl - stlOldMin) * 99 / stlOldRange)
+                // player.blk_z = Math.round((player.blk - blkOldMin) * 99 / blkOldRange)
+                // player.clutch_z = Math.round((player.clutch - cluOldMin) * 99 / cluOldRange)
+                return player;
+            })
       },
       getChartData(arr) {
           var tmpArr = [];
@@ -753,55 +766,50 @@ export default {
                       }
                   });
               }
-          } //else {
-        //       if (this.chartSeason.length == 4 && this.chartPos == 'wrte') {
-        //           arr.forEach((player) => {
-        //               if (player.max_season == this.chartSeason && player.min_season == this.chartSeason && 
-        //               player.position != 'RB' && player.position != 'FB') {
-        //                   tmpArr.push(player);
-        //               }
-        //           });
-        //       } else if (this.chartSeason.length == 4) {
-        //         if (this.chartPos == 'RB') {
-        //             arr.forEach((player) => {
-        //                 if (player.max_season == this.chartSeason && player.min_season == this.chartSeason && 
-        //                 (player.position == 'RB' || player.position == 'FB')) {
-        //                     tmpArr.push(player);
-        //                 }
-        //             });
-        //         } else {
-        //           arr.forEach((player) => {
-        //               if (player.max_season == this.chartSeason && player.min_season == this.chartSeason && 
-        //               player.position == this.chartPos) {
-        //                   tmpArr.push(player);
-        //               }
-        //           });
-        //         }
-        //       } else if (this.chartPos == 'wrte') {
-        //           arr.forEach((player) => {
-        //               if (player.min_season == this.chartSeason.substring(0, 4) && player.max_season == '2023' && 
-        //               player.position != 'RB' && player.position != 'FB') {
-        //                   tmpArr.push(player);
-        //               }
-        //           });
-        //       } else {
-        //         if (this.chartPos == 'RB') {
-        //             arr.forEach((player) => {
-        //                 if (player.min_season == this.chartSeason.substring(0, 4) && player.max_season == '2023' && 
-        //                 (player.position == 'RB' || player.position == 'FB')) {
-        //                     tmpArr.push(player);
-        //                 }
-        //             });
-        //         } else {
-        //           arr.forEach((player) => {
-        //               if (player.min_season == this.chartSeason.substring(0, 4) && player.max_season == '2023' && 
-        //               player.position == this.chartPos) {
-        //                   tmpArr.push(player);
-        //               }
-        //           });
-        //         }
-        //       }
-        //   }
+          } else {
+            if (this.chartPos == 'all') {
+                  arr.forEach((player) => {
+                      if (player.max_season == ('20' + this.chartSeason.substring(5, 7)) && player.min_season == this.chartSeason.substring(0, 4)) {
+                          tmpArr.push(player);
+                      }
+                  });
+              } else if (this.chartPos == 'gf') {
+                  arr.forEach((player) => {
+                      if ( player.max_season == ('20' + this.chartSeason.substring(5, 7)) && player.min_season == this.chartSeason.substring(0, 4) &&
+                      (player.position == 'G-F')) {
+                          tmpArr.push(player);
+                      }
+                  });
+              } else if (this.chartPos == 'fg') {
+                  arr.forEach((player) => {
+                      if ( player.max_season == ('20' + this.chartSeason.substring(5, 7)) && player.min_season == this.chartSeason.substring(0, 4) &&
+                      (player.position == 'F-G')) {
+                          tmpArr.push(player);
+                      }
+                  });
+              } else if (this.chartPos == 'fc') {
+                arr.forEach((player) => {
+                    if ( player.max_season == ('20' + this.chartSeason.substring(5, 7)) && player.min_season == this.chartSeason.substring(0, 4) && 
+                    (player.position == 'F-C')) {
+                        tmpArr.push(player);
+                    }
+                });
+              } else if (this.chartPos == 'cf') {
+                arr.forEach((player) => {
+                    if ( player.max_season == ('20' + this.chartSeason.substring(5, 7)) && player.min_season == this.chartSeason.substring(0, 4) && 
+                    (player.position == 'C-F')) {
+                        tmpArr.push(player);
+                    }
+                });
+              } else {
+                  arr.forEach((player) => {
+                      if ( player.max_season == ('20' + this.chartSeason.substring(5, 7)) && player.min_season == this.chartSeason.substring(0, 4) &&
+                      player.position == this.chartPos) {
+                          tmpArr.push(player);
+                      }
+                  });
+              }
+          }
           if (this.chartTeams != 'all') {
             if (this.searchString != '') {
                 let search = this.searchString.replace(/ /g, '')
@@ -837,6 +845,37 @@ export default {
                 this.chartArr = tmpArr
             }
           }
+            var ovrOldMin = Math.min(...this.chartArr.map(o => o.overall))
+            var ovrOldRange = Math.max(...this.chartArr.map(o => o.overall)) - ovrOldMin
+            var offenseOldMin = Math.min(...this.chartArr.map(o => o.offense))
+            var offenseOldRange = Math.max(...this.chartArr.map(o => o.offense)) - offenseOldMin
+            var defenseOldMin = Math.min(...this.chartArr.map(o => o.defense))
+            var defenseOldRange = Math.max(...this.chartArr.map(o => o.defense)) - defenseOldMin
+            // var astOldMin = Math.min(...this.seasonArr.map(o => o.ast))
+            // var astOldRange = Math.max(...this.seasonArr.map(o => o.ast)) - astOldMin
+            // var tovOldMin = Math.min(...this.seasonArr.map(o => o.tov))
+            // var tovOldRange = Math.max(...this.seasonArr.map(o => o.tov)) - tovOldMin
+            // var stlOldMin = Math.min(...this.seasonArr.map(o => o.stl))
+            // var stlOldRange = Math.max(...this.seasonArr.map(o => o.stl)) - stlOldMin
+            // var blkOldMin = Math.min(...this.seasonArr.map(o => o.blk))
+            // var blkOldRange = Math.max(...this.seasonArr.map(o => o.blk)) - blkOldMin
+            // var cluOldMin = Math.min(...this.seasonArr.map(o => o.clutch))
+            // var cluOldRange = Math.max(...this.seasonArr.map(o => o.clutch)) - cluOldMin
+            this.chartArr.map(player => {
+                player.first_last_nm = player.first_nm.substring(0, 1) + ". " + player.last_nm;
+                player.overall_z = Math.round((player.overall - ovrOldMin) * 99 / ovrOldRange)
+                player.offense_z = Math.round((player.offense - offenseOldMin) * 99 / offenseOldRange)
+                player.defense_z = Math.round((player.defense - defenseOldMin) * 99 / defenseOldRange)
+                // player.ast_z = Math.round((player.ast - astOldMin) * 99 / astOldRange)
+                // player.tov_z = Math.round((player.tov - tovOldMin) * 99 / tovOldRange)
+                // player.stl_z = Math.round((player.stl - stlOldMin) * 99 / stlOldRange)
+                // player.blk_z = Math.round((player.blk - blkOldMin) * 99 / blkOldRange)
+                // player.clutch_z = Math.round((player.clutch - cluOldMin) * 99 / cluOldRange)
+                return player;
+            })
+            this.dataMin = Math.floor(Math.min(ovrOldMin, offenseOldMin, defenseOldMin)) - 5
+            this.dataMax = Math.ceil(Math.max(Math.max(...this.chartArr.map(o => o.overall)), Math.max(...this.chartArr.map(o => o.offense)), 
+                                    Math.max(...this.chartArr.map(o => o.defense)))) + 5
       },
       getTopFive(arr, value, gap) {
           arr.sort((a, b) => b[value] - a[value]);
@@ -996,35 +1035,58 @@ export default {
       async updateChartSeason(value, radioBool) {
           if (radioBool) this.radioChoice = !this.radioChoice;
           if (value != 'check') {
-              this.chartSeason = value;
+              if (value == '2024') {
+                // document.getElementById('check-1').checked = false
+                // document.getElementById('check-2').checked = false
+                if (document.getElementById('check-3')) document.getElementById('check-3').checked = false
+                if (document.getElementById('check-4')) document.getElementById('check-4').checked = false
+                if (document.getElementById('check-5')) document.getElementById('check-5').checked = false
+                if (document.getElementById('check-6')) document.getElementById('check-6').checked = false
+                if (document.getElementById('check-7')) document.getElementById('check-7').checked = false
+                this.chartSeason = 2024
+              } else {
+                if (radioBool) {
+                    this.chartSeason = '2021-23'
+                } else {
+                    oldChartSeason = this.chartSeason
+                    seasons = oldChartSeason.split("-").map(s => s);
+                    if (value.charAt(0) == '-') {
+                        this.chartSeason = seasons[0] + value
+                    } else {
+                        this.chartSeason = value + seasons[1]
+                    }
+                }
+              }
               this.chartSeasons = [2024];
               await this.updateScatterData();
           } else {
               this.chartSeasons = [];
-              if (document.getElementById('check-1').checked) {
-                  this.chartSeasons.push(2018);
-              } 
-              if (document.getElementById('check-2').checked) {
-                  this.chartSeasons.push(2019);
-              } 
+            //   if (document.getElementById('check-1').checked) {
+            //     this.chartSeasons.push(2017);
+            //   } 
+            //   if (document.getElementById('check-2').checked) {
+            //     this.chartSeasons.push(2018);
+            //   } 
               if (document.getElementById('check-3').checked) {
-                  this.chartSeasons.push(2020);
+                this.chartSeasons.push(2019);
               } 
               if (document.getElementById('check-4').checked) {
-                  this.chartSeasons.push(2021);
+                this.chartSeasons.push(2020);
               } 
               if (document.getElementById('check-5').checked) {
-                  this.chartSeasons.push(2022);
+                this.chartSeasons.push(2021);
               } 
               if (document.getElementById('check-6').checked) {
-                  this.chartSeasons.push(2023);
+                this.chartSeasons.push(2022);
               } 
               if (document.getElementById('check-7').checked) {
-                  this.chartSeasons.push(2024);
+                this.chartSeasons.push(2023);
               } 
+              document.getElementById('check-8').checked = false
               await this.updateScatterData();
           }
-        // if (value == '2020-23') document.getElementById('initial-check').checked = true;
+        if (this.chartSeason == '2021-23') document.getElementById('initial-check-1').checked = true; 
+        if (this.chartSeason == '2021-23') document.getElementById('initial-check-2').checked = true;
       },
   },
 }
